@@ -5,7 +5,7 @@ Add here global page variables to use throughout your website.
 author = "Peter Kandolf"
 mintoclevel = 2
 
-prepath = "ulg22_pgd"
+prepath = "ws22-ulg-python-git-docker"
 
 hasplotly = true
 
