@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/ws22-ulg-python-git-docker/css/jtd.css">
+<link rel="stylesheet" href="/ws22-ulg-python-git-docker/css/extras.css">
+<link rel="icon" href="/ws22-ulg-python-git-docker/assets/favicon.ico">
+
+<style>
+  /* #148 wrap long header */
+  .franklin-content a.header-anchor,
+  .franklin-toc li a
+   {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+</style>
+
+  <title>Tag: parallel_computing</title>
+</head>
+<body>
+  <div class="page-wrap">   <!-- closed in foot.html -->
+  <!-- SIDE BAR -->
+  <div class="side-bar">
+    <div class="header">
+      <a href="/ws22-ulg-python-git-docker/" class="title">
+        Julia
+      </a>
+    </div>
+    <label for="show-menu" class="show-menu">MENU</label>
+    <input type="checkbox" id="show-menu" role="button">
+    <div class="menu" id="side-menu">
+      <ul class="menu-list">
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/" class="menu-list-link ">Start</a>
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link ">python</a>
+          <!--
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/basis_datatypes_and_operations/" class="menu-list-link {{ispage pages/python/basis_datatypes_and_operations/*}}active{{end}}">Basic Data Types and Operations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/package_manager/" class="menu-list-link {{ispage pages/python/package_manager/*}}active{{end}}">Package Manager</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/matrix_vectors/" class="menu-list-link {{ispage pages/python/matrix_vectors/*}}active{{end}}">Matrix and Vector Operations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/conditional_evaluations/" class="menu-list-link {{ispage pages/python/conditional_evaluations/*}}active{{end}}">Conditional evaluations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/loops/" class="menu-list-link {{ispage pages/python/loops/*}}active{{end}}">Loops</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/functions/" class="menu-list-link {{ispage pages/python/functions/*}}active{{end}}">Functions</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/macros/" class="menu-list-link {{ispage pages/python/macros/*}}active{{end}}">Macros</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/worksheet_1/" class="menu-list-link {{ispage pages/python/worksheet_1/*}}active{{end}}">Worksheet 1</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/worksheet_2/" class="menu-list-link {{ispage pages/python/worksheet_2/*}}active{{end}}">Worksheet 2</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/pluto/" class="menu-list-link {{ispage pages/python/pluto/*}}active{{end}}">Pluto Notebook</a>
+          </ul>
+        -->
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link ">git</a>
+          <!--
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/loading_data/" class="menu-list-link {{ispage pages/docker/loading_data/*}}active{{end}}">Loading data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/saving_data/" class="menu-list-link {{ispage pages/docker/saving_data/*}}active{{end}}">Saving data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/exploratory_da/" class="menu-list-link {{ispage pages/docker/exploratory_da/*}}active{{end}}">Exploratory Data Analysis</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/datasets/" class="menu-list-link {{ispage pages/docker/datasets/*}}active{{end}}">Data Sets</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/unsupervised_learning/" class="menu-list-link {{ispage pages/docker/unsupervised_learning/*}}active{{end}}">Unsupervised Learning</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/supervised_learning/" class="menu-list-link {{ispage pages/docker/supervised_learning/*}}active{{end}}">Supervised Learning</a>
+          </ul>
+          -->
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/" class="menu-list-link ">docker</a>
+          <!--
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/performance/" class="menu-list-link {{ispage pages/git/performance/*}}active{{end}}">Measuring performance</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/simd/" class="menu-list-link {{ispage pages/git/simd/*}}active{{end}}">Single Instruction Multiple Data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/pi/" class="menu-list-link {{ispage pages/git/pi/*}}active{{end}}">&pi; example</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/multithreading/" class="menu-list-link {{ispage pages/git/multithreading/*}}active{{end}}">Multithreading</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/distributed/" class="menu-list-link {{ispage pages/git/distributed/*}}active{{end}}">Distributed computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/gpu/" class="menu-list-link {{ispage pages/git/gpu/*}}active{{end}}">GPU computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/worksheet_3/" class="menu-list-link {{ispage pages/git/worksheet_3/*}}active{{end}}">Worksheet 3</a>
+          </ul>
+        -->
+      </ul>
+    </div>
+    <div class="footer">
+      This is <em>Just the docs</em>, adapted from the <a href="https://github.com/pmarsceill/just-the-docs" target="_blank">Jekyll theme</a>.
+    </div>
+  </div>
+  <!-- CONTENT -->
+  <div class="main-content-wrap"> <!-- closed in foot.html -->
+    <div class="main-content">    <!-- closed in foot.html -->
+      <div class="main-header">
+        ULG 971001 - Software (VU 2) - python, git, docker
+      </div>
+
+  <div class="">
+    <h1>Tag: parallel_computing</h1>
+    <ul><li><a href="/ws22-ulg-python-git-docker/pages/git/">Parallel Computing</a></li></ul>
+    <div class="page-foot">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. 
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+
+  </div>
+  <!-- close what is opened in pgwrap.html -->
+  </div> <!-- end of class main-content -->
+  </div> <!-- end of class main-content-wrap -->
+  </div> <!-- end of class page-wrap-->
+</body>
+</html>

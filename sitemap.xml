@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/pages/python/index.html</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/pages/docker/index.html</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/pages/python/package_manager/index.html</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/pages/python/matrix_vectors/index.html</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/404/index.html</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/index.html</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/pages/git/index.html</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/notebooks/html/ds_exploratory_da.jl</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/notebooks/html/ds_unsupervised.jl</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/notebooks/html/ds_supervised.jl</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/notebooks/html/ds_dataset.jl</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://kandolfp.github.io/ws22-ulg-python-git-docker/notebooks/html/pluto_example.jl</loc>
+    <lastmod>2022-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+</urlset>

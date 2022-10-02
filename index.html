@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+  
+  <script src="/ws22-ulg-python-git-docker/libs/plotly-1_58_5.min.js"></script> 
+  <script>
+    // This function is used when calling `\fig{...}` See # Using \fig{...} below
+    const PlotlyJS_json = async (div, url) => {
+      response = await fetch(url); // get file
+      fig = await response.json(); // convert it to json
+      // Make the plot fit the screen responsively. See the documentation of plotly.js. https://plotly.com/javascript/responsive-fluid-layout/
+      if (typeof fig.config === 'undefined') { fig["config"]={} }
+      delete fig.layout.width
+      delete fig.layout.height
+      fig["layout"]["autosize"] = true
+      fig["config"]["autosizable"] = true
+      fig["config"]["responsive"] = true
+
+      // make it easier to scroll throught the website rather than being blocked by a figure.
+      fig.config["scrollZoom"] = false
+
+      // PlotlyJS.savefig by default add the some more attribute to make a static plot.
+      // Disable them to make the website fancier.
+      delete fig.config.staticPlot
+      delete fig.config.displayModeBar
+      delete fig.config.doubleClick
+      delete fig.config.showTips
+
+      Plotly.newPlot(div, fig);
+    };
+  </script>
+  
+  <link rel="stylesheet" href="/ws22-ulg-python-git-docker/css/jtd.css">
+<link rel="stylesheet" href="/ws22-ulg-python-git-docker/css/extras.css">
+<link rel="icon" href="/ws22-ulg-python-git-docker/assets/favicon.ico">
+
+<style>
+  /* #148 wrap long header */
+  .franklin-content a.header-anchor,
+  .franklin-toc li a
+   {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+</style>
+
+   <title>ULG 971001 - Software (VU 2) - python, git, docker</title>  
+</head>
+<body>                      <!-- closed in foot.html -->
+<div class="page-wrap">   <!-- closed in foot.html -->
+  <!-- SIDE BAR -->
+  <div class="side-bar">
+    <div class="header">
+      <a href="/ws22-ulg-python-git-docker/" class="title">
+        Julia
+      </a>
+    </div>
+    <label for="show-menu" class="show-menu">MENU</label>
+    <input type="checkbox" id="show-menu" role="button">
+    <div class="menu" id="side-menu">
+      <ul class="menu-list">
+        <li class="menu-list-item active"><a href="/ws22-ulg-python-git-docker/" class="menu-list-link active">Start</a>
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link ">python</a>
+          <!--
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/basis_datatypes_and_operations/" class="menu-list-link {{ispage pages/python/basis_datatypes_and_operations/*}}active{{end}}">Basic Data Types and Operations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/package_manager/" class="menu-list-link {{ispage pages/python/package_manager/*}}active{{end}}">Package Manager</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/matrix_vectors/" class="menu-list-link {{ispage pages/python/matrix_vectors/*}}active{{end}}">Matrix and Vector Operations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/conditional_evaluations/" class="menu-list-link {{ispage pages/python/conditional_evaluations/*}}active{{end}}">Conditional evaluations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/loops/" class="menu-list-link {{ispage pages/python/loops/*}}active{{end}}">Loops</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/functions/" class="menu-list-link {{ispage pages/python/functions/*}}active{{end}}">Functions</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/macros/" class="menu-list-link {{ispage pages/python/macros/*}}active{{end}}">Macros</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/worksheet_1/" class="menu-list-link {{ispage pages/python/worksheet_1/*}}active{{end}}">Worksheet 1</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/worksheet_2/" class="menu-list-link {{ispage pages/python/worksheet_2/*}}active{{end}}">Worksheet 2</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/pluto/" class="menu-list-link {{ispage pages/python/pluto/*}}active{{end}}">Pluto Notebook</a>
+          </ul>
+        -->
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link ">git</a>
+          <!--
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/loading_data/" class="menu-list-link {{ispage pages/docker/loading_data/*}}active{{end}}">Loading data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/saving_data/" class="menu-list-link {{ispage pages/docker/saving_data/*}}active{{end}}">Saving data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/exploratory_da/" class="menu-list-link {{ispage pages/docker/exploratory_da/*}}active{{end}}">Exploratory Data Analysis</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/datasets/" class="menu-list-link {{ispage pages/docker/datasets/*}}active{{end}}">Data Sets</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/unsupervised_learning/" class="menu-list-link {{ispage pages/docker/unsupervised_learning/*}}active{{end}}">Unsupervised Learning</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/supervised_learning/" class="menu-list-link {{ispage pages/docker/supervised_learning/*}}active{{end}}">Supervised Learning</a>
+          </ul>
+          -->
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/" class="menu-list-link ">docker</a>
+          <!--
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/performance/" class="menu-list-link {{ispage pages/git/performance/*}}active{{end}}">Measuring performance</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/simd/" class="menu-list-link {{ispage pages/git/simd/*}}active{{end}}">Single Instruction Multiple Data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/pi/" class="menu-list-link {{ispage pages/git/pi/*}}active{{end}}">&pi; example</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/multithreading/" class="menu-list-link {{ispage pages/git/multithreading/*}}active{{end}}">Multithreading</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/distributed/" class="menu-list-link {{ispage pages/git/distributed/*}}active{{end}}">Distributed computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/gpu/" class="menu-list-link {{ispage pages/git/gpu/*}}active{{end}}">GPU computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/worksheet_3/" class="menu-list-link {{ispage pages/git/worksheet_3/*}}active{{end}}">Worksheet 3</a>
+          </ul>
+        -->
+      </ul>
+    </div>
+    <div class="footer">
+      This is <em>Just the docs</em>, adapted from the <a href="https://github.com/pmarsceill/just-the-docs" target="_blank">Jekyll theme</a>.
+    </div>
+  </div>
+  <!-- CONTENT -->
+  <div class="main-content-wrap"> <!-- closed in foot.html -->
+    <div class="main-content">    <!-- closed in foot.html -->
+      <div class="main-header">
+        ULG 971001 - Software (VU 2) - python, git, docker
+      </div>
+
+
+
+<!-- Content appended here (in class franklin-content) -->
+<div class="franklin-content"><h1 id="971001_software_-_introduction_to_python_git_and_docker"><a href="#971001_software_-_introduction_to_python_git_and_docker" class="header-anchor">971001 Software - Introduction to python, git and docker</a></h1>
+
+<p class="author"><em>Peter Kandolf <a href='https://orcid.org/0000-0003-3601-0852' class='ORCID'></a></em></p>
+<p class="date"><em>Last updated: October 02, 2022</em></p>
+
+<h1 id="preface"><a href="#preface" class="header-anchor">Preface</a></h1>
+<p>This notes are under construction&#33;</p>
+<h1 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started </a></h1>
+<h2 id="acknowledgment"><a href="#acknowledgment" class="header-anchor">Acknowledgment</a></h2>
+<h2 id="some_general_words_on_the_organization_of_this_workshop"><a href="#some_general_words_on_the_organization_of_this_workshop" class="header-anchor">Some general words on the organization of this workshop</a></h2>
+<p>For this workshop you do not need to be an Julia expert, not even a programming expert. We will introduce programming and Julia concepts along with examples. For this purpose you will find code blocks that you can copy if necessary &#40;top right corner <code>copy</code>&#41;. Furthermore, if we think something is very important we will highlight it with a box:</p>
+<div class="important">Pay extra attention to the content here.</div>
+<p>We also have various environments with different color coding that usually are collapsed to not hinder the reading process:</p>
+<ul>
+<li><p>Examples are green</p>
+</li>
+</ul>
+<button type="button" class="collapsible" style="background-color:#caffa5"> Example </button><div class="collapsiblecontent">  Examples are also quite nice because they make sure you have an idea what is happening. </div>
+<ul>
+<li><p>Exercises are blue</p>
+</li>
+</ul>
+<button type="button" class="collapsible" style="background-color:#b5ddff"> Exercise </button><div class="collapsiblecontent">  Exercises are here for you to work on, no worries not at home or in your off hours but with us in the workshop.</p>
+<p>Some exercises will have <em>hidden</em> solutions which can be accessed by adding <code>?solution&#61;true</code> to the URL of the page.  This way it is more likely that everybody tries to do the exercises without first looking at the sample solution. </div>
+<p>That is about all we wanted to let you know, so let us get into it.</p>
+<h2 id="setup"><a href="#setup" class="header-anchor">Setup</a></h2>
+<div class="important">We ask you to install Julia, VSCode and the Julia extension for VSCode <strong>before</strong> the workshop so we can get right into the lecture. If you have difficulties please let us know and we update the content on this page.</div>
+<div class="important">This workshop was prepared with Julia v1.7.3.</div>
+<p>Follow the setup in this section to install everything that is required to get started.</p>
+<h3 id="13633231208144796923"><a href="#13633231208144796923" class="header-anchor"></a></h3>
+<div class="page-foot">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 02, 2022.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    </div> <!-- end of class main-content -->
+    </div> <!-- end of class main-content-wrap -->
+    </div> <!-- end of class page-wrap-->
+    
+    
+  </body>
+</html>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
+
+<script>
+  var coll = document.getElementsByClassName("solutioncollapsible");
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const myVar = urlParams.get('solution')
+  if ( myVar == 'true') {
+    for (i = 0; i < coll.length; i++) {
+      coll[i].style.display = "block";
+    }
+  }
+</script>
