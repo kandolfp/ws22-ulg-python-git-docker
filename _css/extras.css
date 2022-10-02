@@ -85,3 +85,13 @@
   overflow: hidden;
   background-color: #f2fde2;
 }
+
+p.author a.ORCID {
+  display: inline-block;
+  width: 1.0em;
+  height: 1.0em;
+  background-image: url("../assets/ORCID.svg") !important;
+  background-position: top left !important;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+}

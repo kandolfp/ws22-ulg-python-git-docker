@@ -1,20 +1,23 @@
 @def title = "ULG 971001 - Software (VU 2) - python, git, docker"
 @def tags = ["syntax", "code"]
 
-# 971001 Software - Introduction to pyhton, git and docker
-<a href='https://orcid.org/0000-0003-3601-0852' class='ORCID'>
+# 971001 Software - Introduction to python, git and docker
+~~~
+<p class="author"><em>Peter Kandolf <a href='https://orcid.org/0000-0003-3601-0852' class='ORCID'></a></em></p>
+<p class="date"><em>Last updated: {{ fill fd_mtime }}</em></p>
+~~~
 
 # Preface
 
+This notes are under construction!
  
 
-# Getting started with Julia
-
+# Getting started 
 
 
 ## Acknowledgment
 
-We want to give a huge shout-out to [Stephan Antholzer](https://www.uibk.ac.at/mathematik/personal/antholzer/) for advice and numerous suggestions that have helped us to improve the quality of the content in many places.
+
 
 ## Some general words on the organization of this workshop
 

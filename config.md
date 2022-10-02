@@ -19,7 +19,7 @@ ignore = ["node_modules/"]
 generate_rss = true
 website_title = "ULG 971001 - Software (VU 2) for the python, git and docker part"
 website_descr = "Lecture Material | ULG 971001 - Software (VU 2)"
-website_url   = "https://noxthot.github.io/ss22_julia_workshop/"
+website_url   = "https://kandolfp.github.io/ws22-ulg-python-git-docker/"
 +++
 
 <!--
