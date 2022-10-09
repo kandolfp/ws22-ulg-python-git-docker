@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/highlight/github.min.css">
+   
+    <script src="/ws22-ulg-python-git-docker/libs/clipboard.min.js"></script>
+  
+  
+  <script src="/ws22-ulg-python-git-docker/libs/plotly-1_58_5.min.js"></script> 
+  <script>
+    // This function is used when calling `\fig{...}` See # Using \fig{...} below
+    const PlotlyJS_json = async (div, url) => {
+      response = await fetch(url); // get file
+      fig = await response.json(); // convert it to json
+      // Make the plot fit the screen responsively. See the documentation of plotly.js. https://plotly.com/javascript/responsive-fluid-layout/
+      if (typeof fig.config === 'undefined') { fig["config"]={} }
+      delete fig.layout.width
+      delete fig.layout.height
+      fig["layout"]["autosize"] = true
+      fig["config"]["autosizable"] = true
+      fig["config"]["responsive"] = true
+
+      // make it easier to scroll throught the website rather than being blocked by a figure.
+      fig.config["scrollZoom"] = false
+
+      // PlotlyJS.savefig by default add the some more attribute to make a static plot.
+      // Disable them to make the website fancier.
+      delete fig.config.staticPlot
+      delete fig.config.displayModeBar
+      delete fig.config.doubleClick
+      delete fig.config.showTips
+
+      Plotly.newPlot(div, fig);
+    };
+  </script>
+  
+  <link rel="stylesheet" href="/ws22-ulg-python-git-docker/css/jtd.css">
+<link rel="stylesheet" href="/ws22-ulg-python-git-docker/css/extras.css">
+<link rel="icon" href="/ws22-ulg-python-git-docker/assets/favicon.ico">
+
+<style>
+  /* #148 wrap long header */
+  .franklin-content a.header-anchor,
+  .franklin-toc li a
+   {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+</style>
+
+   <title>Git - Basics</title>  
+</head>
+<body>                      <!-- closed in foot.html -->
+<div class="page-wrap">   <!-- closed in foot.html -->
+  <!-- SIDE BAR -->
+  <div class="side-bar">
+    <div class="header">
+      <a href="/ws22-ulg-python-git-docker/" class="title">
+        Julia
+      </a>
+    </div>
+    <label for="show-menu" class="show-menu">MENU</label>
+    <input type="checkbox" id="show-menu" role="button">
+    <div class="menu" id="side-menu">
+      <ul class="menu-list">
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/" class="menu-list-link ">Start</a>
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link ">Python</a>
+          <!--
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/basis_datatypes_and_operations/" class="menu-list-link {{ispage pages/python/basis_datatypes_and_operations/*}}active{{end}}">Basic Data Types and Operations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/package_manager/" class="menu-list-link {{ispage pages/python/package_manager/*}}active{{end}}">Package Manager</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/matrix_vectors/" class="menu-list-link {{ispage pages/python/matrix_vectors/*}}active{{end}}">Matrix and Vector Operations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/conditional_evaluations/" class="menu-list-link {{ispage pages/python/conditional_evaluations/*}}active{{end}}">Conditional evaluations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/loops/" class="menu-list-link {{ispage pages/python/loops/*}}active{{end}}">Loops</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/functions/" class="menu-list-link {{ispage pages/python/functions/*}}active{{end}}">Functions</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/macros/" class="menu-list-link {{ispage pages/python/macros/*}}active{{end}}">Macros</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/worksheet_1/" class="menu-list-link {{ispage pages/python/worksheet_1/*}}active{{end}}">Worksheet 1</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/worksheet_2/" class="menu-list-link {{ispage pages/python/worksheet_2/*}}active{{end}}">Worksheet 2</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/pluto/" class="menu-list-link {{ispage pages/python/pluto/*}}active{{end}}">Pluto Notebook</a>
+          </ul>
+        -->
+           <li class="menu-list-item active"><a href="/ws22-ulg-python-git-docker/pages/git/" class="menu-list-link active">Git</a>
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/basics" class="menu-list-link active">Basics</a>
+          <!--  <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/simd/" class="menu-list-link {{ispage pages/git/simd/*}}active{{end}}">Single Instruction Multiple Data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/pi/" class="menu-list-link {{ispage pages/git/pi/*}}active{{end}}">&pi; example</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/multithreading/" class="menu-list-link {{ispage pages/git/multithreading/*}}active{{end}}">Multithreading</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/distributed/" class="menu-list-link {{ispage pages/git/distributed/*}}active{{end}}">Distributed computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/gpu/" class="menu-list-link {{ispage pages/git/gpu/*}}active{{end}}">GPU computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/worksheet_3/" class="menu-list-link {{ispage pages/git/worksheet_3/*}}active{{end}}">Worksheet 3</a>
+              -->
+          </ul>
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link ">Docker</a>
+          <!--
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/loading_data/" class="menu-list-link {{ispage pages/docker/loading_data/*}}active{{end}}">Loading data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/saving_data/" class="menu-list-link {{ispage pages/docker/saving_data/*}}active{{end}}">Saving data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/exploratory_da/" class="menu-list-link {{ispage pages/docker/exploratory_da/*}}active{{end}}">Exploratory Data Analysis</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/datasets/" class="menu-list-link {{ispage pages/docker/datasets/*}}active{{end}}">Data Sets</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/unsupervised_learning/" class="menu-list-link {{ispage pages/docker/unsupervised_learning/*}}active{{end}}">Unsupervised Learning</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/supervised_learning/" class="menu-list-link {{ispage pages/docker/supervised_learning/*}}active{{end}}">Supervised Learning</a>
+          </ul>
+          -->
+      </ul>
+    </div>
+    <div class="footer">
+      This is <em>Just the docs</em>, adapted from the <a href="https://github.com/pmarsceill/just-the-docs" target="_blank">Jekyll theme</a>.
+    </div>
+  </div>
+  <!-- CONTENT -->
+  <div class="main-content-wrap"> <!-- closed in foot.html -->
+    <div class="main-content">    <!-- closed in foot.html -->
+      <div class="main-header">
+        ULG 971001 - Software (VU 2) - python, git, docker
+      </div>
+
+
+
+<!-- Content appended here (in class franklin-content) -->
+<div class="franklin-content"><h1 id="basics_of_git"><a href="#basics_of_git" class="header-anchor">Basics of Git</a></h1>
+<p>Git is a distributed VCS, in this case this means the entire <em>repository</em> is distributed on various machines and possible multiple <em>remotes</em>.  This was a clear design choice that allows individual contributors to work independently of the availability of a <em>remote</em> but still have the full history available.  The following is based on the <a href="https://github.com/UnseenWizzard/git_training">git training by the UnseenWizzard</a>.  The main structure as well as the basic idea in the pictures follows this notes, with a view adaptations where needed. </p>
+<p>In particular, such a setup could look something like this: 
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/distributed1.svg" style="padding:0; " alt=" Basic setup"/>
+<figcaption> Basic setup</figcaption>
+</figure>
+</p>
+<p>In this setup the <em>Remote Repository</em> is the place you send your changes to in order to have them visible for others, and in return you can get changes from them via the <em>Remote Repository</em>. </p>
+<p>Like the name suggests the <em>Local &#40;development&#41; environment</em> sits on your machine.  The <em>working directory</em> is your current version of the files contained in the repository and the <em>Local Repository</em> is the copy of the entire repository &#40;with all changes&#41; on your machine.  We will learn more about these parts as we go along. </p>
+<h2 id="let_us_start_with_getting_a_remote_repository"><a href="#let_us_start_with_getting_a_remote_repository" class="header-anchor">Let us start with getting a <em>Remote Repository</em></a></h2>
+<p>In order to allow a playfield for this class I created a repository that we are going to use.  In order to get it onto you local machine type the following commands in the Terminal:</p>
+<pre><code class="bash hljs"><span class="hljs-comment">#Navigate to a suitable directory</span>
+git <span class="hljs-built_in">clone</span> https://{YOUR ID}@git.uibk.ac.at/c102338/ulg22_playground.git</code></pre>
+<p>This will perform the following two actions:</p>
+<ol>
+<li><p><em>Checkout</em> the content of the <em>remote repository</em> into the <em>
+<span style="color: #e67700"> working directory</span>
+</em>. By default this is the name of the repository, in your case the folder <code>ulg22_playground</code> is created and all files are put there. </p>
+</li>
+<li><p>A copy of the <em>remote repository</em> is stored in the <em>
+<span style="color: #1864ab"> local repository</span>
+</em>. For all intended purposes, it acts exactly the same as the <em>Remote Repository</em>, with the sole exception that is not shared with others. </p>
+</li>
+</ol>
+
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/distributed2.svg" style="padding:0; " alt=" Clone a remote repository to your machine"/>
+<figcaption> Clone a remote repository to your machine</figcaption>
+</figure>
+
+<h2 id="adding_content"><a href="#adding_content" class="header-anchor">Adding content</a></h2>
+<p>With the following snippet you can view the content of the repository &#40;the second line is the response&#41;:</p>
+<pre><code class="bash hljs">&gt; <span class="hljs-built_in">ls</span> ulg22_playground
+python_ex1 README.md</code></pre>
+<p>As you can see there is currently only a <code>README.md</code> and the folder <code>python_ex1</code>. </p>
+<p>Now lets add our solutions of the exercises we did in Python to the repository. </p>
+<p>First we copy the file to exercise directory</p>
+<pre><code class="bash hljs"><span class="hljs-built_in">cp</span> PATH/TO/YOUR/FILE/solution_ex1.py python_ex1/{YOUR ID}.py</code></pre>
+<p>In my case the command reads like this:</p>
+<pre><code class="bash hljs">&gt; <span class="hljs-built_in">cp</span> ../Exercixes/reference_solution.py python_ex1/ID.py
+<span class="hljs-string">&#x27;../Exercixes/reference_solution.py&#x27;</span> -&gt; <span class="hljs-string">&#x27;python_ex1/ID.py&#x27;</span></code></pre>
+<p>This has we modified our <em>working directory</em>. In order to get an idea what Git thinks about this lets run <code>git status</code> in the working directory:</p>
+<pre><code class="bash hljs">&gt; git status
+On branch main
+Your branch is up to <span class="hljs-built_in">date</span> with <span class="hljs-string">&#x27;origin/main&#x27;</span>.
+
+Untracked files:
+  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)
+	python_ex1/ID.py
+
+nothing added to commit but untracked files present (use <span class="hljs-string">&quot;git add&quot;</span> to track)</code></pre>
+<p>Lets break down the output of the command. First, Git tells you on what <em>branch</em> you are on &#40;we will hear more about that later&#41;, second, that <em>local repository</em> is different from the <em>remote repository</em> and it states that you have <em>tracked</em> and <em>untracked</em> files. </p>
+<p>Now, a <em>tracked</em> files is a file that is part of the repository and Git is keeping <em>track</em> of what is happening to it.  An <em>untracked</em> file on the other hand, is a file that is in the same directory but it is not managed by Git. </p>
+<p>Git tells you how to change the status of your <em>untracked</em> file into a <em>tracked</em> file. </p>
+<p>We do this by running <code>git add python_ex1/ID.py</code>.</p>
+<p>Now it is time to introduce another Git concept, namely the <em>
+<span style="color: #862e9c"> staging area</span>
+</em>.  The stating area is the curious white spot  between your <em>working directory</em> and the <em>local repository</em> in the above pictures.  This is the place where Git collects all the changes to your files that you want to put into the <em>local repository</em>. 
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/staging.svg" style="padding:0; " alt=" Staging area with the changes that can be moved to the repository"/>
+<figcaption> Staging area with the changes that can be moved to the repository</figcaption>
+</figure>
+</p>
+<p>By rerunning <code>git status</code> we get</p>
+<pre><code class="bash hljs">&gt; git status
+On branch main
+Your branch is up to <span class="hljs-built_in">date</span> with <span class="hljs-string">&#x27;origin/main&#x27;</span>.
+
+Changes to be committed:
+  (use <span class="hljs-string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)
+	new file:   python_ex1/ID.py</code></pre>
+<p>Now that we are satisfied that all our changes are in the <em>staging area</em> we are ready to <em>commit</em> the changes to the <em>local repository</em>.  This is done by running <code>git commit</code>.  A text editor will open and you are able to write a message telling everybody what you just did in the repository.  Usually you will also see the changes you are about to commit. The <em>commit message</em> is something really important and the message should be meaningful and readable as it will be later used by others to understand your action.  There are several ways to do this and it boils down to what you team wants but here are some links on good commit messages:</p>
+<ul>
+<li><p><a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a></p>
+</li>
+<li><p><a href="https://cbea.ms/git-commit/">https://cbea.ms/git-commit/</a></p>
+</li>
+</ul>
+<p>The same can be achieved directly in the Terminal by writing</p>
+<pre><code class="bash hljs">&gt; git commit -m <span class="hljs-string">&quot;feat: add my solution for python exercises 1&quot;</span>
+[main 578e48f] feat: add my solution <span class="hljs-keyword">for</span> python exercises 1
+ 1 files changed, 85git insertions(+)
+ create mode 100644 python_ex1/ID.py</code></pre>
+
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/commit.svg" style="padding:0; " alt=" Commiting changes the repository"/>
+<figcaption> Commiting changes the repository</figcaption>
+</figure>
+
+<p>In the above message you can see that your commit get some more meta data.  Specifically, it gets a <a href="https://de.wikipedia.org/wiki/Secure_Hash_Algorithm">SHA-1</a> hash, namely <code>578e48f</code> The hash is used to keep track of your commits and is one of the ground breaking ideas that makes Git so successful.  The hash is much longer but due to its nature in most cases already its first seven digits will make it unique. </p>
+<div class="important">Any changes done to a file after running <code>git add &lt;file&gt;</code> will not be part of a <em>commit</em>. If they should be included you need to rerun <code>git add &lt;file&gt;</code>.</div>
+<div class="important">My submitting an <em>empty</em> commit message you can about a commit.</div>
+<p>Now the changes are in the <em>local repository</em> and you can continue working.  In order to share your changes with others you need to get them to the <em>remote repository</em>.  This is done by <em>pushing</em> the changes. </p>
+<pre><code class="bash hljs">&gt; git push
+Enumerating objects: 6, <span class="hljs-keyword">done</span>.
+Counting objects: 100% (6/6), <span class="hljs-keyword">done</span>.
+Delta compression using up to 16 threads
+Compressing objects: 100% (4/4), <span class="hljs-keyword">done</span>.
+Writing objects: 100% (4/4), 1.17 KiB | 1.17 MiB/s, <span class="hljs-keyword">done</span>.
+Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://git.uibk.ac.at/c102338/ulg22_playground.git
+   e8f13f4..0b8a494  main -&gt; main</code></pre>
+
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/push.svg" style="padding:0; " alt=" Pushing changes from the local to the remote repository"/>
+<figcaption> Pushing changes from the local to the remote repository</figcaption>
+</figure>
+
+<p>Now, if you would do this on your own everything is working and your are happy.  Unfortunately, as we are doing this in a class and all at the same time we will run into some difficulties.  After all, this is a crash course for Git, eventually something hat to crash. </p>
+<p>Some of you might get the following message:</p>
+<pre><code class="bash hljs">&gt; git push
+To https://git.uibk.ac.at/c102338/ulg22_playground.git
+ ! [rejected]        main -&gt; main (non-fast-forward)
+error: failed to push some refs to <span class="hljs-string">&#x27;https://git.uibk.ac.at/c102338/ulg22_playground.git&#x27;</span>
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: <span class="hljs-string">&#x27;git pull ...&#x27;</span>) before pushing again.
+hint: See the <span class="hljs-string">&#x27;Note about fast-forwards&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;git push --help&#x27;</span> <span class="hljs-keyword">for</span> details.</code></pre>
+<p>This gives us the opportunity to talk about how to get changes from the <em>remote repository</em> to your <em>local repository</em> after the initial <em>clone</em>.  Unfortunately, in order to do this properly we need to talk about branches first. </p>
+<h1 id="branches"><a href="#branches" class="header-anchor">Branches</a></h1>
+<p>The word <em>branch</em> was mentioned several times before but not explained.  The main idea is rather simple. </p>
+<p>If you consider having one commit after the other in a long chain like the trunk of a tree a branch is the same as for a tree: 
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/branching.svg" style="padding:0; " alt=" A branch in a chain of commits"/>
+<figcaption> A branch in a chain of commits</figcaption>
+</figure>
+</p>
+<p>By default, git always operates on <em>branches</em>.  When we cloned the <em>remote repository</em> we also cloned its branches and we started working on the <code>main</code> branch.  You can go back and check the messages, it is always there. </p>
+<p>Now without knowing we created a branch.  It is not visible to us but it is clear from the point of the <em>remote repository</em>. </p>
+<p>There are several ways of <em>integrating</em> or <em>merging</em> two branchs back into one.</p>
+<p>For now we will only talk about the most elegant and simplest way, with a <code>rebase</code>. </p>
+<p>Naturally, every branch is <em>based</em> on a commit.  In the above example <code>9a98eb2</code> is based on <code>e8f13f4</code>.  As the name suggests, <em>rebase</em> simple changes this base.  This gives us a clean way of how the entire Git commit chain is supposed to be read. One way of performing a rebase we will see shortly.  But first, lets talk about how to </p>
+<h1 id="integrating_remote_changes_into_your_local_environment"><a href="#integrating_remote_changes_into_your_local_environment" class="header-anchor">Integrating remote changes into your local environment</a></h1>
+<p>The above <em>error</em> message gives us already a hint on what to do but lets make it more structured. </p>
+<p>By running a </p>
+<pre><code class="bash hljs">&gt; git status
+On branch main
+Your branch and <span class="hljs-string">&#x27;origin/main&#x27;</span> have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use <span class="hljs-string">&quot;git pull&quot;</span> to merge the remote branch into yours)
+
+nothing to commit, working tree clean</code></pre>
+<p>we can see that the <em>remote</em> and the <em>local</em> repository have different commits. </p>
+<p>With <code>git fetch</code> you can get changes from the <em>remote repository</em> into the <em>local repository</em>. This is the other way around as with the <code>git push</code> command. 
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/fetch.svg" style="padding:0; " alt=" Fetching changes from the remote to the local repository"/>
+<figcaption> Fetching changes from the remote to the local repository</figcaption>
+</figure>
+</p>
+<p>The important part here is, that this does not effect your <em>working directory</em> as the changes are only synchronized with the <em>local repository</em> and when you try to push again you will see the same message.  It does not even effect your <em>local branches</em>, it will only make sure that all of the <em>remote branches</em> are synchronized. </p>
+<h2 id="pulling"><a href="#pulling" class="header-anchor">Pulling</a></h2>
+<p>In order to affect the <em>working directory</em> and your <em>local branches</em>, we need to pull the changes in.  This is done with <code>git pull</code>. </p>
+<p>As we have some <em>conflicts</em> we need to define a strategy how to deal with them.  At the moment we only know one so let us use</p>
+<pre><code class="bash hljs">&gt; git pull --rebase
+Successfully rebased and updated refs/heads/main.</code></pre>
+<p>This should have worked for everybody as all of you added different files to the repository and the Git tree looks something like this: 
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/simplerebase.svg" style="padding:0; " alt=" After pulling and rebasing"/>
+<figcaption> After pulling and rebasing</figcaption>
+</figure>
+</p>
+<p>Next we will see what happens if we modify some files. </p>
+<h1 id="modifying_content_in_a_repository"><a href="#modifying_content_in_a_repository" class="header-anchor">Modifying content in a repository</a></h1>
+<p>Now we include the file to the list in the <code>README.md</code>.  With your favourite editor add the following content next to your <code>ID</code> &#40;btw. this is <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> syntax&#41;:</p>
+<pre><code class="markdown hljs"><span class="hljs-section"># ulg22<span class="hljs-emphasis">_playground
+
+## List of handin the python exercises 1 
+
+| Name/UID    | File        |
+| ----------- | ----------- |
+| ID     | [<span class="hljs-string">my upload</span>](<span class="hljs-link">python_ex1/ID.py</span>) |</span></span></code></pre>
+<div class="page-foot">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 09, 2022.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    </div> <!-- end of class main-content -->
+    </div> <!-- end of class main-content-wrap -->
+    </div> <!-- end of class page-wrap-->
+    
+    
+      
+
+
+      <script>
+    (function(){
+    
+      // Get the elements.
+      // - the 'pre' element.
+      // - the 'div' with the 'paste-content' id.
+    
+      var pre = document.getElementsByTagName('pre');
+    
+      // Add a copy button in the 'pre' element.
+      // which only has the className of 'language-'.
+    
+      for (var i = 0; i < pre.length; i++) {
+        var isLanguage = pre[i].children[0].tagName == 'CODE';
+    
+        if ( isLanguage ) {
+          var button           = document.createElement('button');
+              button.className = 'copy-button';
+              button.textContent = 'Copy';
+    
+              pre[i].appendChild(button);
+        }
+      };
+    
+      // Run Clipboard
+    
+      var copyCode = new Clipboard('.copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+    
+      // On success:
+      // - Change the "Copy" text to "Copied".
+      // - Swap it to "Copy" in 2s.
+      // - Lead user to the "contenteditable" area with Velocity scroll.
+    
+      copyCode.on('success', function(event) {
+        event.clearSelection();
+        event.trigger.textContent = 'Copied';
+        window.setTimeout(function() {
+          event.trigger.textContent = 'Copy';
+        }, 2000);
+    
+      });
+    
+      // On error (Safari):
+      // - Change the  "Press Ctrl+C to copy"
+      // - Swap it to "Copy" in 2s.
+    
+      copyCode.on('error', function(event) {
+        event.trigger.textContent = 'Press "Ctrl + C" to copy';
+        window.setTimeout(function() {
+          event.trigger.textContent = 'Copy';
+        }, 5000);
+      });
+    
+    })();
+</script>
+    
+  </body>
+</html>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
+
+<script>
+  var coll = document.getElementsByClassName("solutioncollapsible");
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const myVar = urlParams.get('solution')
+  if ( myVar == 'true') {
+    for (i = 0; i < coll.length; i++) {
+      coll[i].style.display = "block";
+    }
+  }
+</script>

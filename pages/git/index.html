@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/katex/katex.min.css">
-     
+  
    <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/highlight/github.min.css">
    
     <script src="/ws22-ulg-python-git-docker/libs/clipboard.min.js"></script>
@@ -52,7 +51,7 @@
   }
 </style>
 
-   <title>Parallel Computing</title>  
+   <title>Git</title>  
 </head>
 <body>                      <!-- closed in foot.html -->
 <div class="page-wrap">   <!-- closed in foot.html -->
@@ -68,7 +67,7 @@
     <div class="menu" id="side-menu">
       <ul class="menu-list">
         <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/" class="menu-list-link ">Start</a>
-        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link ">python</a>
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link ">Python</a>
           <!--
           <ul class="menu-list-child-list ">
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/basis_datatypes_and_operations/" class="menu-list-link {{ispage pages/python/basis_datatypes_and_operations/*}}active{{end}}">Basic Data Types and Operations</a>
@@ -83,7 +82,18 @@
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/pluto/" class="menu-list-link {{ispage pages/python/pluto/*}}active{{end}}">Pluto Notebook</a>
           </ul>
         -->
-        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link ">git</a>
+           <li class="menu-list-item active"><a href="/ws22-ulg-python-git-docker/pages/git/" class="menu-list-link active">Git</a>
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/basics" class="menu-list-link ">Basics</a>
+          <!--  <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/simd/" class="menu-list-link {{ispage pages/git/simd/*}}active{{end}}">Single Instruction Multiple Data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/pi/" class="menu-list-link {{ispage pages/git/pi/*}}active{{end}}">&pi; example</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/multithreading/" class="menu-list-link {{ispage pages/git/multithreading/*}}active{{end}}">Multithreading</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/distributed/" class="menu-list-link {{ispage pages/git/distributed/*}}active{{end}}">Distributed computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/gpu/" class="menu-list-link {{ispage pages/git/gpu/*}}active{{end}}">GPU computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/worksheet_3/" class="menu-list-link {{ispage pages/git/worksheet_3/*}}active{{end}}">Worksheet 3</a>
+              -->
+          </ul>
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link ">Docker</a>
           <!--
           <ul class="menu-list-child-list ">
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/loading_data/" class="menu-list-link {{ispage pages/docker/loading_data/*}}active{{end}}">Loading data</a>
@@ -94,18 +104,6 @@
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/supervised_learning/" class="menu-list-link {{ispage pages/docker/supervised_learning/*}}active{{end}}">Supervised Learning</a>
           </ul>
           -->
-        <li class="menu-list-item active"><a href="/ws22-ulg-python-git-docker/pages/git/" class="menu-list-link active">docker</a>
-          <!--
-          <ul class="menu-list-child-list ">
-            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/performance/" class="menu-list-link {{ispage pages/git/performance/*}}active{{end}}">Measuring performance</a>
-            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/simd/" class="menu-list-link {{ispage pages/git/simd/*}}active{{end}}">Single Instruction Multiple Data</a>
-            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/pi/" class="menu-list-link {{ispage pages/git/pi/*}}active{{end}}">&pi; example</a>
-            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/multithreading/" class="menu-list-link {{ispage pages/git/multithreading/*}}active{{end}}">Multithreading</a>
-            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/distributed/" class="menu-list-link {{ispage pages/git/distributed/*}}active{{end}}">Distributed computing</a>
-            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/gpu/" class="menu-list-link {{ispage pages/git/gpu/*}}active{{end}}">GPU computing</a>
-            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/worksheet_3/" class="menu-list-link {{ispage pages/git/worksheet_3/*}}active{{end}}">Worksheet 3</a>
-          </ul>
-        -->
       </ul>
     </div>
     <div class="footer">
@@ -122,37 +120,108 @@
 
 
 <!-- Content appended here (in class franklin-content) -->
-<div class="franklin-content"><h1 id="parallel_computing_with_julia"><a href="#parallel_computing_with_julia" class="header-anchor">Parallel computing with Julia</a></h1>
-<p>Since modern laptops and computers come with multiple cores, parallel computing is not just something for High Performance Computing systems. The general idea is to not only use a single computational thread &#40;linear programming&#41; but run concurring threads at the same time that solve the given task at hand in parallel. Julia by default supports different ways for active <a href="https://docs.julialang.org/en/v1/manual/parallel-computing/">parallel or concurring computing</a>. In this section we follow some of the examples given on <a href="https://github.com/JuliaAcademy/JuliaTutorials">Julia Academy - JuliaTutorials</a>.</p>
-<div class="important">Julia has an excellent section dedicated to general <a href="https://docs.julialang.org/en/v1/manual/performance-tips/">performance tips</a> that are a good read every couple of months.</div>
-<p>This part covers the following sections:</p>
+<div class="franklin-content"><h1 id="what_is_a_version_control_software"><a href="#what_is_a_version_control_software" class="header-anchor">What is a version control software</a></h1>
+<p>A Version Control Software &#40;VCS&#41; is, in its most abstract form, designed to keep track of changes to a file system.  This means it tracks changes in files, such as addition or deletion, but also more basic modifications to files or directories.  A VCS also allows teams to collaborate and therefore inform each other of changes made by others.  Some of the main features of a VCS is that you can: </p>
 <ol>
-<li><p><a href="performance/">Measuring performance</a></p>
+<li><p>Revert a file or an entire directory to a previous state.</p>
 </li>
-<li><p><a href="simd/">Singe Instruction Multiple Data</a></p>
+<li><p>Compare files or directories to a previous version.</p>
 </li>
-<li><p><a href="pi/"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi></mrow><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">π</span></span></span></span> example</a></p>
+<li><p>Help resolving conflicts if multiple changes on the same resource collide with each other. </p>
 </li>
-<li><p><a href="multithreading/">Multithreading</a></p>
+<li><p>Allows you to <em>tag</em> specific versions of a file for alter use.</p>
 </li>
-<li><p><a href="distributed/">Distributed computing</a></p>
+<li><p>Keep track who changed what and when.</p>
 </li>
-<li><p><a href="gpu/">GPU computing</a></p>
+<li><p>Much more</p>
 </li>
 </ol>
+<p>In the scope of an entire file system this is used by operation systems to minimize file loss and allows users to restore unwanted changes.  Most often, and that is also the main focus here, a VCS is used to track of source code.  This might be a software project or a term paper.  Nevertheless, the VCS will  keep track of additions, deletions, modifications and so forth of individual lines of <em>text</em> within these files.  We will focus on <em>Git</em> but there are alternatives around such as <em>Mercurial</em>, <em>CVS</em>, or <em>SVN</em>. All of them have individual strengths and weaknesses but in terms of wide spread use Git is in the lead. </p>
+<h1 id="what_is_git_and_a_bit_of_history"><a href="#what_is_git_and_a_bit_of_history" class="header-anchor">What is git and a bit of history</a></h1>
+<p>Git was developed as a free and open source software by <a href="https://en.wikipedia.org/wiki/Linus_Torvalds">Linus Torvalds</a> in 2005 for the development of the Linux kernel.  The main goals in the development were &#40;according to <a href="https://en.wikipedia.org/wiki/Git">wikipedia</a>&#41;:</p>
+<ul>
+<li><p>Take Concurrent Versions System &#40;CVS&#41; as an example of what not to do; if in doubt, make the exact opposite decision.</p>
+</li>
+<li><p>Support a distributed, <a href="https://en.wikipedia.org/wiki/BitKeeper">BitKeeper</a>-like workflow.</p>
+</li>
+<li><p>Include very strong safeguards against corruption, either accidental or malicious.</p>
+</li>
+</ul>
+<blockquote>
+<p>The development of Git began on 3 April 2005. Torvalds announced the project on 6 April and became self-hosting the next day. The first merge of multiple branches took place on 18 April. Torvalds achieved his performance goals; on 29 April, the nascent Git was benchmarked recording patches to the Linux kernel tree at the rate of 6.7 patches per second. On 16 June, Git managed the kernel 2.6.12 release.</p>
+</blockquote>
+<p>Regarding the name:</p>
+<blockquote>
+<p>Torvalds sarcastically quipped about the name git &#40;which means &quot;unpleasant person&quot; in British English slang&#41;: &quot;I&#39;m an egotistical bastard, and I name all my projects after myself. First &#39;Linux&#39;, now &#39;git&#39;.&quot; The man page describes Git as &quot;the stupid content tracker&quot;. The read-me file of the source code elaborates further:</p>
+</blockquote>
+<p>&quot;git&quot; can mean anything, depending on your mood.</p>
+<ul>
+<li><p>Random three-letter combination that is pronounceable, and not actually used by any common UNIX command. The fact that it is a mispronunciation of &quot;get&quot; may or may not be relevant.</p>
+</li>
+<li><p>Stupid. Contemptible and despicable. Simple. Take your pick from the dictionary of slang.</p>
+</li>
+</ul>
+<p>&quot;Global information tracker&quot;: you&#39;re in a good mood, and it actually works for you. Angels sing, and a light suddenly fills the room.</p>
+<ul>
+<li><p>&quot;Goddamn idiotic truckload of sh&ast;t&quot;: when it breaks.</p>
+</li>
+</ul>
+<p>In the following we try to give a pragmatic hands on introduction to the concepts of git and how it can be uses.  The notes are a mix of several sources but the main ideas are based on the <a href="https://github.com/UnseenWizzard/git_training">git training by the UnseenWizzard</a>.</p>
+<p>This part covers the following sections:</p>
+<ol>
+<li><p><a href="basics/">Getting started with the basics</a></p>
+</li>
+</ol>
+<h1 id="installing_git_on_your_system"><a href="#installing_git_on_your_system" class="header-anchor">Installing Git on your system</a></h1>
+<h2 id="linux"><a href="#linux" class="header-anchor">Linux</a></h2>
+<ol>
+<li><p>Open the terminal</p>
+</li>
+<li><p>Type <code>git --version</code></p>
+</li>
+<li><p>If Git is not installed use your package manager to install it &#40;Ubuntu: <code>apt</code>, Fedora <code>dnf</code>, ...&#41; with <code>sudo apt install git</code></p>
+</li>
+</ol>
+<h2 id="osx"><a href="#osx" class="header-anchor">OSx</a></h2>
+<ol>
+<li><p>Open the terminal</p>
+</li>
+<li><p>Type <code>git --version</code></p>
+</li>
+<li><p>If Git is not installed install it via <code>xcode-select --install</code></p>
+</li>
+</ol>
+<h2 id="windows"><a href="#windows" class="header-anchor">Windows</a></h2>
+<ol>
+<li><p>Download Git von <a href="https://git-scm.com/">https://git-scm.com/</a> and install it with the default settings &#40;unless you really, really know what you are doing&#41;.</p>
+</li>
+<li><p>Open the git bash and verify the installation by typing <code>git --version</code></p>
+</li>
+</ol>
+<div class="important">In the following we will always refer to the Terminal, by which we mean the Git Bash on Windows and the Terminal on Linux or Macs.</div>
+<button type="button" class="collapsible" style="background-color:#b5ddff"> Exercise </button><div class="collapsiblecontent">  Check your installation with the above guide.  Check that you can log into the git service of the University.</p>
+<p>Specify these global variables in the Git Bash on Windows or the Terminal:</p>
+<pre><code class="bash hljs">git config --global user.name <span class="hljs-string">&quot;Your Name&quot;</span>
+git config --global user.email <span class="hljs-string">&quot;Your University Email&quot;</span></code></pre>
+<p></div>
+<h1 id="additional_resources"><a href="#additional_resources" class="header-anchor">Additional resources</a></h1>
+<p>Obviously not everybody learns the same way and the concepts of Git can make your brain twist a bit so here are some additional resources:</p>
+<ul>
+<li><p><a href="https://education.github.com/git-cheat-sheet-education.pdf">Git cheat sheet</a></p>
+</li>
+<li><p><a href="https://git-scm.com/book/en/v2">Pro Git</a> a book on git</p>
+</li>
+<li><p><a href="https://marklodato.github.io/visual-git-guide/index-en.html">A Visual Git Reference</a></p>
+</li>
+</ul>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 02, 2022.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 09, 2022.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
     </div> <!-- end of class main-content -->
     </div> <!-- end of class main-content-wrap -->
     </div> <!-- end of class page-wrap-->
-    
-      
-
-
-
     
     
       
