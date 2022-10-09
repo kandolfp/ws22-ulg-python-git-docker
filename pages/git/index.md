@@ -49,9 +49,39 @@ The notes are a mix of several sources but the main ideas are based on the [git 
 
 This part covers the following sections:
 
-1. [Installation and basics](install/)
+1. [Getting started with the basics](basics/)
+
+# Installing Git on your system
+
+## Linux
+1. Open the terminal
+1. Type `git --version`
+1. If Git is not installed use your package manager to install it (Ubuntu: `apt`, Fedora `dnf`, ...) with `sudo apt install git`
+
+## OSx
+1. Open the terminal
+1. Type `git --version`
+1. If Git is not installed install it via `xcode-select --install`
+
+## Windows
+1. Download Git von [https://git-scm.com/](https://git-scm.com/) and install it with the default settings (unless you really, really know what you are doing).
+1. Open the git bash and verify the installation by typing `git --version`
 
 
+@@important
+In the following we will always refer to the Terminal, by which we mean the Git Bash on Windows and the Terminal on Linux or Macs.
+@@
+
+\exercise{Check your installation with the above guide. 
+Check that you can log into the git service of the University.
+
+Specify these global variables in the Git Bash on Windows or the Terminal:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "Your University Email"
+```
+}
 
 # Additional resources
 Obviously not everybody learns the same way and the concepts of Git can make your brain twist a bit so here are some additional resources:

@@ -56,3 +56,8 @@ Add here global latex commands to use throughout your pages.
 </figure>
 ~~~
 }
+\newcommand{\color}[2]{
+~~~
+<span style="color:#1">#2</span>
+~~~
+}
