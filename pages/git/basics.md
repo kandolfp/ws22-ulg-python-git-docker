@@ -7,6 +7,8 @@
 # Basics of Git
 Git is a distributed VCS, in this case this means the entire _repository_ is distributed on various machines and possible multiple _remotes_. 
 This was a clear design choice that allows individual contributors to work independently of the availability of a _remote_ but still have the full history available. 
+The following is based on the [git training by the UnseenWizzard](https://github.com/UnseenWizzard/git_training). 
+The main structure as well as the basic idea in the pictures follows this notes, with a view adaptations where needed. 
 
 In particular, such a setup could look something like this:
 \figenv{Basic setup}{/assets/pages/git/distributed1.svg}{}
@@ -52,33 +54,18 @@ In my case the command reads like this:
 > cp ../Exercixes/reference_solution.py python_ex1/ID.py
 '../Exercixes/reference_solution.py' -> 'python_ex1/ID.py'
 ```
-Now we also add the file to the table in the `README.md` with your favourite editor (with correct markdown syntax):
-```markdown
-# ulg22_playground
 
-## List of handin the python exercises 1 
-
-| Name/UID    | File        |
-| ----------- | ----------- |
-| ID     | [my upload](python_ex1/ID.py) |
-```
 This has we modified our _working directory_. In order to get an idea what Git thinks about this lets run `git status` in the working directory:
 ```bash
 > git status
 On branch main
 Your branch is up to date with 'origin/main'.
 
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   README.md
-
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 	python_ex1/ID.py
 
-no changes added to commit (use "git add" and/or "git commit -a")
-
+nothing added to commit but untracked files present (use "git add" to track)
 ```
 Lets break down the output of the command.
 First, Git tells you on what _branch_ you are on (we will hear more about that later), second, that _local repository_ is different from the _remote repository_ and it states that you have _tracked_ and _untracked_ files. 
@@ -95,8 +82,6 @@ The stating area is the curious white spot  between your _working directory_ and
 This is the place where Git collects all the changes to your files that you want to put into the _local repository_.
 \figenv{Staging area with the changes that can be moved to the repository}{/assets/pages/git/staging.svg}{}
 
-Now we also want to add the changes in `README.md` and therefore we run `git add README.md`.
-
 By rerunning `git status` we get
 ```bash
 > git status
@@ -105,7 +90,6 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	modified:   README.md
 	new file:   python_ex1/ID.py
 
 ```
@@ -123,11 +107,16 @@ The same can be achieved directly in the Terminal by writing
 ```bash
 > git commit -m "feat: add my solution for python exercises 1"
 [main 578e48f] feat: add my solution for python exercises 1
- 2 files changed, 90 insertions(+)
+ 1 files changed, 85git insertions(+)
  create mode 100644 python_ex1/ID.py
 
 ```
 \figenv{Commiting changes the repository}{/assets/pages/git/commit.svg}{}
+
+In the above message you can see that your commit get some more meta data. 
+Specifically, it gets a [SHA-1](https://de.wikipedia.org/wiki/Secure_Hash_Algorithm) hash, namely `578e48f`
+The hash is used to keep track of your commits and is one of the ground breaking ideas that makes Git so successful. 
+The hash is much longer but due to its nature in most cases already its first seven digits will make it unique. 
 
 @@important
 Any changes done to a file after running `git add <file>` will not be part of a _commit_. If they should be included you need to rerun `git add <file>`.
@@ -143,14 +132,111 @@ This is done by _pushing_ the changes.
 
 ```bash
 > git push
-Enumerating objects: 8, done.
-Counting objects: 100% (8/8), done.
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
 Delta compression using up to 16 threads
-Compressing objects: 100% (5/5), done.
-Writing objects: 100% (5/5), 1.31 KiB | 1.31 MiB/s, done.
-Total 5 (delta 0), reused 0 (delta 0), pack-reused 0
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 1.17 KiB | 1.17 MiB/s, done.
+Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
 To https://git.uibk.ac.at/c102338/ulg22_playground.git
-   e8f13f4..578e48f  main -> main
-
+   e8f13f4..0b8a494  main -> main
 ```
 \figenv{Pushing changes from the local to the remote repository}{/assets/pages/git/push.svg}{}
+
+Now, if you would do this on your own everything is working and your are happy. 
+Unfortunately, as we are doing this in a class and all at the same time we will run into some difficulties. 
+After all, this is a crash course for Git, eventually something hat to crash. 
+
+Some of you might get the following message:
+```bash
+> git push
+To https://git.uibk.ac.at/c102338/ulg22_playground.git
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://git.uibk.ac.at/c102338/ulg22_playground.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+This gives us the opportunity to talk about how to get changes from the _remote repository_ to your _local repository_ after the initial _clone_. 
+Unfortunately, in order to do this properly we need to talk about branches first. 
+
+# Branches
+
+The word _branch_ was mentioned several times before but not explained. 
+The main idea is rather simple. 
+
+If you consider having one commit after the other in a long chain like the trunk of a tree a branch is the same as for a tree:
+\figenv{A branch in a chain of commits}{/assets/pages/git/branching.svg}{}
+
+By default, git always operates on _branches_. 
+When we cloned the _remote repository_ we also cloned its branches and we started working on the `main` branch. 
+You can go back and check the messages, it is always there. 
+
+Now without knowing we created a branch. 
+It is not visible to us but it is clear from the point of the _remote repository_. 
+
+There are several ways of _integrating_ or _merging_ two branchs back into one.
+
+For now we will only talk about the most elegant and simplest way, with a `rebase`. 
+
+Naturally, every branch is _based_ on a commit. 
+In the above example `9a98eb2` is based on `e8f13f4`. 
+As the name suggests, _rebase_ simple changes this base. 
+This gives us a clean way of how the entire Git commit chain is supposed to be read.
+One way of performing a rebase we will see shortly. 
+But first, lets talk about how to 
+
+# Integrating remote changes into your local environment
+
+The above _error_ message gives us already a hint on what to do but lets make it more structured. 
+
+By running a 
+```bash
+> git status
+On branch main
+Your branch and 'origin/main' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+nothing to commit, working tree clean
+```
+we can see that the _remote_ and the _local_ repository have different commits. 
+
+With `git fetch` you can get changes from the _remote repository_ into the _local repository_. This is the other way around as with the `git push` command.
+\figenv{Fetching changes from the remote to the local repository}{/assets/pages/git/fetch.svg}{}
+
+The important part here is, that this does not effect your _working directory_ as the changes are only synchronized with the _local repository_ and when you try to push again you will see the same message. 
+It does not even effect your _local branches_, it will only make sure that all of the _remote branches_ are synchronized. 
+
+
+## Pulling
+
+In order to affect the _working directory_ and your _local branches_, we need to pull the changes in. 
+This is done with `git pull`. 
+
+As we have some _conflicts_ we need to define a strategy how to deal with them. 
+At the moment we only know one so let us use
+```bash
+> git pull --rebase
+Successfully rebased and updated refs/heads/main.
+```
+This should have worked for everybody as all of you added different files to the repository and the Git tree looks something like this:
+\figenv{After pulling and rebasing}{/assets/pages/git/simplerebase.svg}{}
+
+Next we will see what happens if we modify some files. 
+
+# Modifying content in a repository
+
+Now we include the file to the list in the  `README.md`. 
+With your favourite editor add the following content next to your `ID` (btw. this is [markdown](https://en.wikipedia.org/wiki/Markdown) syntax):
+```markdown
+# ulg22_playground
+
+## List of handin the python exercises 1 
+
+| Name/UID    | File        |
+| ----------- | ----------- |
+| ID     | [my upload](python_ex1/ID.py) |
+```
