@@ -24,7 +24,11 @@ UMIT, Hall in Tirol, Österreich_ for his slides on Git.
 
 ## Some general words on the organization of this workshop
 
-For this workshop you do not need to be an Julia expert, not even a programming expert. We will introduce programming and Julia concepts along with examples. For this purpose you will find code blocks that you can copy if necessary (top right corner `copy`). Furthermore, if we think something is very important we will highlight it with a box:
+This material is intended to aid during class and give you some extra material that might be to fast in class and you want to read over in your own time again. 
+
+It is split up into the three parts for *Python*, *Git*, and *Docker*. 
+Where sometimes we will jump between the sections during lecture we try to write it down in such a way that they are self contained. 
+In general, you will find code blocks that you can copy if necessary (top right corner `copy`). Furthermore, if we think something is very important we will highlight it with a box:
 
 @@important
 Pay extra attention to the content here.
@@ -35,8 +39,6 @@ We also have various environments with different color coding that usually are c
 \example{Examples are also quite nice because they make sure you have an idea what is happening.}
 - Exercises are blue
 \exercise{Exercises are here for you to work on, no worries not at home or in your off hours but with us in the workshop.
-
-Some exercises will have *hidden* solutions which can be accessed by adding `?solution=true` to the URL of the page. 
-This way it is more likely that everybody tries to do the exercises without first looking at the sample solution.}
+}
 
 That is about all we wanted to let you know, so let us get into it.
