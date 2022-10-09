@@ -17,6 +17,9 @@ This notes are under construction!
 
 ## Acknowledgment
 
+We want to thank the open source community for providing excellent tutorial and guides for Python, Git, and Docker on the web. Individual sources are cited at the appropriate spot. 
+We also want to thank Elias Tappeiner from the Department of _Biomedizinische Bildanalyse
+UMIT, Hall in Tirol, Österreich_ for his slides on Git.
 
 
 ## Some general words on the organization of this workshop
@@ -37,17 +40,3 @@ Some exercises will have *hidden* solutions which can be accessed by adding `?so
 This way it is more likely that everybody tries to do the exercises without first looking at the sample solution.}
 
 That is about all we wanted to let you know, so let us get into it.
-
-## Setup
-
-@@important
-We ask you to install Julia, VSCode and the Julia extension for VSCode **before** the workshop so we can get right into the lecture. If you have difficulties please let us know and we update the content on this page. 
-@@
-
-@@important
-This workshop was prepared with Julia v1.7.3.
-@@
-
-Follow the setup in this section to install everything that is required to get started.
-
-### 
