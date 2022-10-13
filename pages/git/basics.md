@@ -56,7 +56,7 @@ In my case the command reads like this:
 ```
 
 This has we modified our _working directory_. In order to get an idea what Git thinks about this lets run `git status` in the working directory:
-```git
+```bash
 On branch main
 Your branch is up to date with 'origin/main'.
 
@@ -82,7 +82,7 @@ This is the place where Git collects all the changes to your files that you want
 \figenv{Staging area with the changes that can be moved to the repository}{/assets/pages/git/staging.svg}{}
 
 By rerunning `git status` we get
-```git
+```bash
 On branch main
 Your branch is up to date with 'origin/main'.
 
@@ -128,7 +128,7 @@ Now the changes are in the _local repository_ and you can continue working.
 In order to share your changes with others you need to get them to the _remote repository_. 
 This is done by _pushing_ the changes. 
 We do this by calling `git push` witch gives us an output similar to:
-```git
+```bash
 Enumerating objects: 6, done.
 Counting objects: 100% (6/6), done.
 Delta compression using up to 16 threads
@@ -145,7 +145,7 @@ Unfortunately, as we are doing this in a class and all at the same time we will 
 After all, this is a crash course for Git, eventually something hat to crash. 
 
 Some of you might get the following message for `git push`:
-```git
+```bash
 To https://git.uibk.ac.at/c102338/ulg22_playground.git
  ! [rejected]        main -> main (non-fast-forward)
 error: failed to push some refs to 'https://git.uibk.ac.at/c102338/ulg22_playground.git'
@@ -190,7 +190,7 @@ But first, lets talk about how to
 The above _error_ message gives us already a hint on what to do but lets make it more structured. 
 
 By running a 
-```git
+```bash
 > git status
 On branch main
 Your branch and 'origin/main' have diverged,
@@ -240,7 +240,7 @@ With your favourite editor add the following content next to your `ID` (btw. thi
 ```
 
 If we check with `git status` we can see that `README.md` is modified
-```git
+```bash
 On branch main
 Your branch is ahead of 'origin/main' by 1 commit.
   (use "git push" to publish your local commits)
@@ -285,7 +285,7 @@ Now, before we commit, we decide to modify `README.md` again. Maybe we made a ty
 to make it clear we know what we are doing. 
 
 If we run `git status` we see the following
-```git
+```bash
 On branch main
 Your branch is ahead of 'origin/main' by 1 commit.
   (use "git push" to publish your local commits)
