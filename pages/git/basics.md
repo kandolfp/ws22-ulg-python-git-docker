@@ -56,8 +56,7 @@ In my case the command reads like this:
 ```
 
 This has we modified our _working directory_. In order to get an idea what Git thinks about this lets run `git status` in the working directory:
-```bash
-> git status
+```git
 On branch main
 Your branch is up to date with 'origin/main'.
 
@@ -83,8 +82,7 @@ This is the place where Git collects all the changes to your files that you want
 \figenv{Staging area with the changes that can be moved to the repository}{/assets/pages/git/staging.svg}{}
 
 By rerunning `git status` we get
-```bash
-> git status
+```git
 On branch main
 Your branch is up to date with 'origin/main'.
 
@@ -129,9 +127,8 @@ My submitting an _empty_ commit message you can about a commit.
 Now the changes are in the _local repository_ and you can continue working. 
 In order to share your changes with others you need to get them to the _remote repository_. 
 This is done by _pushing_ the changes. 
-
-```bash
-> git push
+We do this by calling `git push` witch gives us an output similar to:
+```git
 Enumerating objects: 6, done.
 Counting objects: 100% (6/6), done.
 Delta compression using up to 16 threads
@@ -147,9 +144,8 @@ Now, if you would do this on your own everything is working and your are happy.
 Unfortunately, as we are doing this in a class and all at the same time we will run into some difficulties. 
 After all, this is a crash course for Git, eventually something hat to crash. 
 
-Some of you might get the following message:
-```bash
-> git push
+Some of you might get the following message for `git push`:
+```git
 To https://git.uibk.ac.at/c102338/ulg22_playground.git
  ! [rejected]        main -> main (non-fast-forward)
 error: failed to push some refs to 'https://git.uibk.ac.at/c102338/ulg22_playground.git'
@@ -194,7 +190,7 @@ But first, lets talk about how to
 The above _error_ message gives us already a hint on what to do but lets make it more structured. 
 
 By running a 
-```bash
+```git
 > git status
 On branch main
 Your branch and 'origin/main' have diverged,
@@ -236,7 +232,7 @@ With your favourite editor add the following content next to your `ID` (btw. thi
 ```markdown
 # ulg22_playground
 
-## List of handin the python exercises 1 
+## List of handin the python exercises 
 
 | Name/UID    | File        |
 | ----------- | ----------- |
@@ -244,7 +240,7 @@ With your favourite editor add the following content next to your `ID` (btw. thi
 ```
 
 If we check with `git status` we can see that `README.md` is modified
-```bash
+```git
 On branch main
 Your branch is ahead of 'origin/main' by 1 commit.
   (use "git push" to publish your local commits)
@@ -270,9 +266,61 @@ index d9f0acb..9ac3846 100644
  
  | Name/UID    | File        |
  | ----------- | ----------- |
--| c102338  | |
+-| ID  | |
 +| ID  | [my upload](python_ex1/ID.py)|
+ | ID1 | |
+ | ID2 | |
+ | ID3 | |
+```
+
+We already know the next steps, _add_, _commit_, and _push_.
+
+So lets recall, with `git add README.md` we move the file into the staging area. 
+**Note:** If you run `git diff` now, the output is empty. This is because, `git diff` only works on the changes in your _working directory_. You can still get the diffs from your _staging area_ with `git diff --staged` (some editors will use this if you type up your _commit message_).
+
+Now, before we commit, we decide to modify `README.md` again. Maybe we made a typo or we just really want to nail this hand in so we change it, maybe we add
+```markdown
+| ID     | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|
+```
+to make it clear we know what we are doing. 
+
+If we run `git status` we see the following
+```git
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   README.md
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+```
+which tells us that `README.md`is modified and staged. 
+
+If we run a `git diff` again we get
+```diff
+diff --git a/README.md b/README.md
+index 9ac3846..28dba4b 100644
+--- a/README.md
++++ b/README.md
+@@ -4,7 +4,7 @@
+ 
+ | Name/UID    | File        |
+ | ----------- | ----------- |
+-| ID  | [my upload](python_ex1/ID.py)|
++| ID  | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|
  | csad3581 | |
  | csak1512 | |
  | csak4299 | |
 ```
+which show the changes to the _staging area_. 
+If we are satisfied with our changes, we can use `git add README.md` again to add the file to the _staging area_ and finally commit it with `git commit`.
+Of course we do this **with a meaningful commit message**.
+
+Depending on your timing, you might have to _fetch_ and _pull_ in changes to your _local repository_. 
+By the way, you can directly call `git pull`, without first calling `git fetch`, the fetch is done implicitly.  
