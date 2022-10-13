@@ -169,6 +169,7 @@ The main idea is rather simple.
 
 If you consider having one commit after the other in a long chain like the trunk of a tree a branch is the same as for a tree:
 \figenv{A branch in a chain of commits}{/assets/pages/git/branching.svg}{}
+In short, whenever multiple commits are _based_ on the same commit they (and all following commits) form different branches.
 
 By default, git always operates on _branches_. 
 When we cloned the _remote repository_ we also cloned its branches and we started working on the `main` branch. 
@@ -177,7 +178,7 @@ You can go back and check the messages, it is always there.
 Now without knowing we created a branch. 
 It is not visible to us but it is clear from the point of the _remote repository_. 
 
-There are several ways of _integrating_ or _merging_ two branchs back into one.
+There are several ways of _integrating_ or _merging_ two branches back into one.
 
 For now we will only talk about the most elegant and simplest way, with a `rebase`. 
 
@@ -229,7 +230,8 @@ Next we will see what happens if we modify some files.
 
 # Modifying content in a repository
 
-Now we include the file to the list in the  `README.md`. 
+A good start to do this is to link our uploaded file form the `README` contained in the repository. 
+
 With your favourite editor add the following content next to your `ID` (btw. this is [markdown](https://en.wikipedia.org/wiki/Markdown) syntax):
 ```markdown
 # ulg22_playground
@@ -239,4 +241,38 @@ With your favourite editor add the following content next to your `ID` (btw. thi
 | Name/UID    | File        |
 | ----------- | ----------- |
 | ID     | [my upload](python_ex1/ID.py) |
+```
+
+If we check with `git status` we can see that `README.md` is modified
+```bash
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+```
+
+Of course this is only a change in our _working directory_ and not in either of the two _repositories_. 
+Before we add the changes to the _local repository_ we can use `git diff` to see what we actually changed. 
+
+```diff
+diff --git a/README.md b/README.md
+index d9f0acb..9ac3846 100644
+--- a/README.md
++++ b/README.md
+@@ -4,7 +4,7 @@
+ 
+ | Name/UID    | File        |
+ | ----------- | ----------- |
+-| c102338  | |
++| ID  | [my upload](python_ex1/ID.py)|
+ | csad3581 | |
+ | csak1512 | |
+ | csak4299 | |
 ```
