@@ -247,10 +247,10 @@ hint: See the <span class="hljs-string">&#x27;Note about fast-forwards&#x27;</sp
 <img src="/ws22-ulg-python-git-docker/assets/pages/git/branching.svg" style="padding:0; " alt=" A branch in a chain of commits"/>
 <figcaption> A branch in a chain of commits</figcaption>
 </figure>
-</p>
+ In short, whenever multiple commits are <em>based</em> on the same commit they &#40;and all following commits&#41; form different branches.</p>
 <p>By default, git always operates on <em>branches</em>.  When we cloned the <em>remote repository</em> we also cloned its branches and we started working on the <code>main</code> branch.  You can go back and check the messages, it is always there. </p>
 <p>Now without knowing we created a branch.  It is not visible to us but it is clear from the point of the <em>remote repository</em>. </p>
-<p>There are several ways of <em>integrating</em> or <em>merging</em> two branchs back into one.</p>
+<p>There are several ways of <em>integrating</em> or <em>merging</em> two branches back into one.</p>
 <p>For now we will only talk about the most elegant and simplest way, with a <code>rebase</code>. </p>
 <p>Naturally, every branch is <em>based</em> on a commit.  In the above example <code>9a98eb2</code> is based on <code>e8f13f4</code>.  As the name suggests, <em>rebase</em> simple changes this base.  This gives us a clean way of how the entire Git commit chain is supposed to be read. One way of performing a rebase we will see shortly.  But first, lets talk about how to </p>
 <h1 id="integrating_remote_changes_into_your_local_environment"><a href="#integrating_remote_changes_into_your_local_environment" class="header-anchor">Integrating remote changes into your local environment</a></h1>
@@ -284,7 +284,8 @@ Successfully rebased and updated refs/heads/main.</code></pre>
 </p>
 <p>Next we will see what happens if we modify some files. </p>
 <h1 id="modifying_content_in_a_repository"><a href="#modifying_content_in_a_repository" class="header-anchor">Modifying content in a repository</a></h1>
-<p>Now we include the file to the list in the <code>README.md</code>.  With your favourite editor add the following content next to your <code>ID</code> &#40;btw. this is <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> syntax&#41;:</p>
+<p>A good start to do this is to link our uploaded file form the <code>README</code> contained in the repository. </p>
+<p>With your favourite editor add the following content next to your <code>ID</code> &#40;btw. this is <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> syntax&#41;:</p>
 <pre><code class="markdown hljs"><span class="hljs-section"># ulg22<span class="hljs-emphasis">_playground
 
 ## List of handin the python exercises 1 
@@ -292,8 +293,33 @@ Successfully rebased and updated refs/heads/main.</code></pre>
 | Name/UID    | File        |
 | ----------- | ----------- |
 | ID     | [<span class="hljs-string">my upload</span>](<span class="hljs-link">python_ex1/ID.py</span>) |</span></span></code></pre>
+<p>If we check with <code>git status</code> we can see that <code>README.md</code> is modified</p>
+<pre><code class="bash hljs">On branch main
+Your branch is ahead of <span class="hljs-string">&#x27;origin/main&#x27;</span> by 1 commit.
+  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)
+
+Changes not staged <span class="hljs-keyword">for</span> commit:
+  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)
+  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)
+	modified:   README.md
+
+no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)</code></pre>
+<p>Of course this is only a change in our <em>working directory</em> and not in either of the two <em>repositories</em>.  Before we add the changes to the <em>local repository</em> we can use <code>git diff</code> to see what we actually changed. </p>
+<pre><code class="diff hljs"><span class="hljs-comment">diff --git a/README.md b/README.md</span>
+<span class="hljs-comment">index d9f0acb..9ac3846 100644</span>
+<span class="hljs-comment">--- a/README.md</span>
+<span class="hljs-comment">+++ b/README.md</span>
+<span class="hljs-meta">@@ -4,7 +4,7 @@</span>
+ 
+ | Name/UID    | File        |
+ | ----------- | ----------- |
+<span class="hljs-deletion">-| c102338  | |</span>
+<span class="hljs-addition">+| ID  | [my upload](python_ex1/ID.py)|</span>
+ | csad3581 | |
+ | csak1512 | |
+ | csak4299 | |</code></pre>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 09, 2022.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 13, 2022.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
