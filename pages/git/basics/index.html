@@ -132,8 +132,8 @@
 <p>Like the name suggests the <em>Local &#40;development&#41; environment</em> sits on your machine.  The <em>working directory</em> is your current version of the files contained in the repository and the <em>Local Repository</em> is the copy of the entire repository &#40;with all changes&#41; on your machine.  We will learn more about these parts as we go along. </p>
 <h2 id="let_us_start_with_getting_a_remote_repository"><a href="#let_us_start_with_getting_a_remote_repository" class="header-anchor">Let us start with getting a <em>Remote Repository</em></a></h2>
 <p>In order to allow a playfield for this class I created a repository that we are going to use.  In order to get it onto you local machine type the following commands in the Terminal:</p>
-<pre><code class="language-bash">#Navigate to a suitable directory
-git clone https://&#123;YOUR ID&#125;@git.uibk.ac.at/c102338/ulg22_playground.git</code></pre>
+<pre><code class="bash hljs"><span class="hljs-comment">#Navigate to a suitable directory</span>
+git <span class="hljs-built_in">clone</span> https://{YOUR ID}@git.uibk.ac.at/c102338/ulg22_playground.git</code></pre>
 <p>This will perform the following two actions:</p>
 <ol>
 <li><p><em>Checkout</em> the content of the <em>remote repository</em> into the <em>
@@ -153,24 +153,24 @@ git clone https://&#123;YOUR ID&#125;@git.uibk.ac.at/c102338/ulg22_playground.gi
 
 <h2 id="adding_content"><a href="#adding_content" class="header-anchor">Adding content</a></h2>
 <p>With the following snippet you can view the content of the repository &#40;the second line is the response&#41;:</p>
-<pre><code class="language-bash">&gt; ls ulg22_playground
+<pre><code class="bash hljs">&gt; <span class="hljs-built_in">ls</span> ulg22_playground
 python_ex1 README.md</code></pre>
 <p>As you can see there is currently only a <code>README.md</code> and the folder <code>python_ex1</code>. </p>
 <p>Now lets add our solutions of the exercises we did in Python to the repository. </p>
 <p>First we copy the file to exercise directory</p>
-<pre><code class="language-bash">cp PATH/TO/YOUR/FILE/solution_ex1.py python_ex1/&#123;YOUR ID&#125;.py</code></pre>
+<pre><code class="bash hljs"><span class="hljs-built_in">cp</span> PATH/TO/YOUR/FILE/solution_ex1.py python_ex1/{YOUR ID}.py</code></pre>
 <p>In my case the command reads like this:</p>
-<pre><code class="language-bash">&gt; cp ../Exercixes/reference_solution.py python_ex1/ID.py
-&#39;../Exercixes/reference_solution.py&#39; -&gt; &#39;python_ex1/ID.py&#39;</code></pre>
+<pre><code class="bash hljs">&gt; <span class="hljs-built_in">cp</span> ../Exercixes/reference_solution.py python_ex1/ID.py
+<span class="hljs-string">&#x27;../Exercixes/reference_solution.py&#x27;</span> -&gt; <span class="hljs-string">&#x27;python_ex1/ID.py&#x27;</span></code></pre>
 <p>This has we modified our <em>working directory</em>. In order to get an idea what Git thinks about this lets run <code>git status</code> in the working directory:</p>
-<pre><code class="language-git">On branch main
-Your branch is up to date with &#39;origin/main&#39;.
+<pre><code class="bash hljs">On branch main
+Your branch is up to <span class="hljs-built_in">date</span> with <span class="hljs-string">&#x27;origin/main&#x27;</span>.
 
 Untracked files:
-  &#40;use &quot;git add &lt;file&gt;...&quot; to include in what will be committed&#41;
+  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)
 	python_ex1/ID.py
 
-nothing added to commit but untracked files present &#40;use &quot;git add&quot; to track&#41;</code></pre>
+nothing added to commit but untracked files present (use <span class="hljs-string">&quot;git add&quot;</span> to track)</code></pre>
 <p>Lets break down the output of the command. First, Git tells you on what <em>branch</em> you are on &#40;we will hear more about that later&#41;, second, that <em>local repository</em> is different from the <em>remote repository</em> and it states that you have <em>tracked</em> and <em>untracked</em> files. </p>
 <p>Now, a <em>tracked</em> files is a file that is part of the repository and Git is keeping <em>track</em> of what is happening to it.  An <em>untracked</em> file on the other hand, is a file that is in the same directory but it is not managed by Git. </p>
 <p>Git tells you how to change the status of your <em>untracked</em> file into a <em>tracked</em> file. </p>
@@ -184,11 +184,11 @@ nothing added to commit but untracked files present &#40;use &quot;git add&quot;
 </figure>
 </p>
 <p>By rerunning <code>git status</code> we get</p>
-<pre><code class="language-git">On branch main
-Your branch is up to date with &#39;origin/main&#39;.
+<pre><code class="bash hljs">On branch main
+Your branch is up to <span class="hljs-built_in">date</span> with <span class="hljs-string">&#x27;origin/main&#x27;</span>.
 
 Changes to be committed:
-  &#40;use &quot;git restore --staged &lt;file&gt;...&quot; to unstage&#41;
+  (use <span class="hljs-string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)
 	new file:   python_ex1/ID.py</code></pre>
 <p>Now that we are satisfied that all our changes are in the <em>staging area</em> we are ready to <em>commit</em> the changes to the <em>local repository</em>.  This is done by running <code>git commit</code>.  A text editor will open and you are able to write a message telling everybody what you just did in the repository.  Usually you will also see the changes you are about to commit. The <em>commit message</em> is something really important and the message should be meaningful and readable as it will be later used by others to understand your action.  There are several ways to do this and it boils down to what you team wants but here are some links on good commit messages:</p>
 <ul>
@@ -198,9 +198,9 @@ Changes to be committed:
 </li>
 </ul>
 <p>The same can be achieved directly in the Terminal by writing</p>
-<pre><code class="language-bash">&gt; git commit -m &quot;feat: add my solution for python exercises 1&quot;
-&#91;main 578e48f&#93; feat: add my solution for python exercises 1
- 1 files changed, 85git insertions&#40;&#43;&#41;
+<pre><code class="bash hljs">&gt; git commit -m <span class="hljs-string">&quot;feat: add my solution for python exercises 1&quot;</span>
+[main 578e48f] feat: add my solution <span class="hljs-keyword">for</span> python exercises 1
+ 1 files changed, 85git insertions(+)
  create mode 100644 python_ex1/ID.py</code></pre>
 
 <figure style="text-align:center;">
@@ -212,12 +212,12 @@ Changes to be committed:
 <div class="important">Any changes done to a file after running <code>git add &lt;file&gt;</code> will not be part of a <em>commit</em>. If they should be included you need to rerun <code>git add &lt;file&gt;</code>.</div>
 <div class="important">My submitting an <em>empty</em> commit message you can about a commit.</div>
 <p>Now the changes are in the <em>local repository</em> and you can continue working.  In order to share your changes with others you need to get them to the <em>remote repository</em>.  This is done by <em>pushing</em> the changes.  We do this by calling <code>git push</code> witch gives us an output similar to:</p>
-<pre><code class="language-git">Enumerating objects: 6, done.
-Counting objects: 100&#37; &#40;6/6&#41;, done.
+<pre><code class="bash hljs">Enumerating objects: 6, <span class="hljs-keyword">done</span>.
+Counting objects: 100% (6/6), <span class="hljs-keyword">done</span>.
 Delta compression using up to 16 threads
-Compressing objects: 100&#37; &#40;4/4&#41;, done.
-Writing objects: 100&#37; &#40;4/4&#41;, 1.17 KiB | 1.17 MiB/s, done.
-Total 4 &#40;delta 0&#41;, reused 0 &#40;delta 0&#41;, pack-reused 0
+Compressing objects: 100% (4/4), <span class="hljs-keyword">done</span>.
+Writing objects: 100% (4/4), 1.17 KiB | 1.17 MiB/s, <span class="hljs-keyword">done</span>.
+Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
 To https://git.uibk.ac.at/c102338/ulg22_playground.git
    e8f13f4..0b8a494  main -&gt; main</code></pre>
 
@@ -228,13 +228,13 @@ To https://git.uibk.ac.at/c102338/ulg22_playground.git
 
 <p>Now, if you would do this on your own everything is working and your are happy.  Unfortunately, as we are doing this in a class and all at the same time we will run into some difficulties.  After all, this is a crash course for Git, eventually something hat to crash. </p>
 <p>Some of you might get the following message for <code>git push</code>:</p>
-<pre><code class="language-git">To https://git.uibk.ac.at/c102338/ulg22_playground.git
- &#33; &#91;rejected&#93;        main -&gt; main &#40;non-fast-forward&#41;
-error: failed to push some refs to &#39;https://git.uibk.ac.at/c102338/ulg22_playground.git&#39;
+<pre><code class="bash hljs">To https://git.uibk.ac.at/c102338/ulg22_playground.git
+ ! [rejected]        main -&gt; main (non-fast-forward)
+error: failed to push some refs to <span class="hljs-string">&#x27;https://git.uibk.ac.at/c102338/ulg22_playground.git&#x27;</span>
 hint: Updates were rejected because the tip of your current branch is behind
-hint: its remote counterpart. Integrate the remote changes &#40;e.g.
-hint: &#39;git pull ...&#39;&#41; before pushing again.
-hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.</code></pre>
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: <span class="hljs-string">&#x27;git pull ...&#x27;</span>) before pushing again.
+hint: See the <span class="hljs-string">&#x27;Note about fast-forwards&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;git push --help&#x27;</span> <span class="hljs-keyword">for</span> details.</code></pre>
 <p>This gives us the opportunity to talk about how to get changes from the <em>remote repository</em> to your <em>local repository</em> after the initial <em>clone</em>.  Unfortunately, in order to do this properly we need to talk about branches first. </p>
 <h1 id="branches"><a href="#branches" class="header-anchor">Branches</a></h1>
 <p>The word <em>branch</em> was mentioned several times before but not explained.  The main idea is rather simple. </p>
@@ -252,11 +252,11 @@ hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; fo
 <h1 id="integrating_remote_changes_into_your_local_environment"><a href="#integrating_remote_changes_into_your_local_environment" class="header-anchor">Integrating remote changes into your local environment</a></h1>
 <p>The above <em>error</em> message gives us already a hint on what to do but lets make it more structured. </p>
 <p>By running a </p>
-<pre><code class="language-git">&gt; git status
+<pre><code class="bash hljs">&gt; git status
 On branch main
-Your branch and &#39;origin/main&#39; have diverged,
+Your branch and <span class="hljs-string">&#x27;origin/main&#x27;</span> have diverged,
 and have 1 and 1 different commits each, respectively.
-  &#40;use &quot;git pull&quot; to merge the remote branch into yours&#41;
+  (use <span class="hljs-string">&quot;git pull&quot;</span> to merge the remote branch into yours)
 
 nothing to commit, working tree clean</code></pre>
 <p>we can see that the <em>remote</em> and the <em>local</em> repository have different commits. </p>
@@ -270,7 +270,7 @@ nothing to commit, working tree clean</code></pre>
 <h2 id="pulling"><a href="#pulling" class="header-anchor">Pulling</a></h2>
 <p>In order to affect the <em>working directory</em> and your <em>local branches</em>, we need to pull the changes in.  This is done with <code>git pull</code>. </p>
 <p>As we have some <em>conflicts</em> we need to define a strategy how to deal with them.  At the moment we only know one so let us use</p>
-<pre><code class="language-bash">&gt; git pull --rebase
+<pre><code class="bash hljs">&gt; git pull --rebase
 Successfully rebased and updated refs/heads/main.</code></pre>
 <p>This should have worked for everybody as all of you added different files to the repository and the Git tree looks something like this: 
 <figure style="text-align:center;">
@@ -282,75 +282,244 @@ Successfully rebased and updated refs/heads/main.</code></pre>
 <h1 id="modifying_content_in_a_repository"><a href="#modifying_content_in_a_repository" class="header-anchor">Modifying content in a repository</a></h1>
 <p>A good start to do this is to link our uploaded file form the <code>README</code> contained in the repository. </p>
 <p>With your favourite editor add the following content next to your <code>ID</code> &#40;btw. this is <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> syntax&#41;:</p>
-<pre><code class="language-markdown"># ulg22_playground
+<pre><code class="markdown hljs"><span class="hljs-section"># ulg22<span class="hljs-emphasis">_playground
 
 ## List of handin the python exercises 
 
 | Name/UID    | File        |
 | ----------- | ----------- |
-| ID     | &#91;my upload&#93;&#40;python_ex1/ID.py&#41; |</code></pre>
+| ID     | [<span class="hljs-string">my upload</span>](<span class="hljs-link">python_ex1/ID.py</span>) |</span></span></code></pre>
 <p>If we check with <code>git status</code> we can see that <code>README.md</code> is modified</p>
-<pre><code class="language-git">On branch main
-Your branch is ahead of &#39;origin/main&#39; by 1 commit.
-  &#40;use &quot;git push&quot; to publish your local commits&#41;
+<pre><code class="bash hljs">On branch main
+Your branch is ahead of <span class="hljs-string">&#x27;origin/main&#x27;</span> by 1 commit.
+  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)
 
-Changes not staged for commit:
-  &#40;use &quot;git add &lt;file&gt;...&quot; to update what will be committed&#41;
-  &#40;use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory&#41;
+Changes not staged <span class="hljs-keyword">for</span> commit:
+  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)
+  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)
 	modified:   README.md
 
-no changes added to commit &#40;use &quot;git add&quot; and/or &quot;git commit -a&quot;&#41;</code></pre>
+no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)</code></pre>
 <p>Of course this is only a change in our <em>working directory</em> and not in either of the two <em>repositories</em>.  Before we add the changes to the <em>local repository</em> we can use <code>git diff</code> to see what we actually changed. </p>
-<pre><code class="language-diff">diff --git a/README.md b/README.md
-index d9f0acb..9ac3846 100644
---- a/README.md
-&#43;&#43;&#43; b/README.md
-@@ -4,7 &#43;4,7 @@
+<pre><code class="diff hljs"><span class="hljs-comment">diff --git a/README.md b/README.md</span>
+<span class="hljs-comment">index d9f0acb..9ac3846 100644</span>
+<span class="hljs-comment">--- a/README.md</span>
+<span class="hljs-comment">+++ b/README.md</span>
+<span class="hljs-meta">@@ -4,7 +4,7 @@</span>
  
  | Name/UID    | File        |
  | ----------- | ----------- |
--| ID  | |
-&#43;| ID  | &#91;my upload&#93;&#40;python_ex1/ID.py&#41;|
+<span class="hljs-deletion">-| ID  | |</span>
+<span class="hljs-addition">+| ID  | [my upload](python_ex1/ID.py)|</span>
  | ID1 | |
  | ID2 | |
  | ID3 | |</code></pre>
 <p>We already know the next steps, <em>add</em>, <em>commit</em>, and <em>push</em>.</p>
 <p>So lets recall, with <code>git add README.md</code> we move the file into the staging area.  <strong>Note:</strong> If you run <code>git diff</code> now, the output is empty. This is because, <code>git diff</code> only works on the changes in your <em>working directory</em>. You can still get the diffs from your <em>staging area</em> with <code>git diff --staged</code> &#40;some editors will use this if you type up your <em>commit message</em>&#41;.</p>
 <p>Now, before we commit, we decide to modify <code>README.md</code> again. Maybe we made a typo or we just really want to nail this hand in so we change it, maybe we add</p>
-<pre><code class="language-markdown">| ID     | &#91;my upload&#93;&#40;python_ex1/ID.py&#41; run it by calling &#96;python3 python_ex1/ID.py&#96;|</code></pre>
+<pre><code class="markdown hljs">| ID     | [<span class="hljs-string">my upload</span>](<span class="hljs-link">python_ex1/ID.py</span>) run it by calling <span class="hljs-code">`python3 python_ex1/ID.py`</span>|</code></pre>
 <p>to make it clear we know what we are doing. </p>
 <p>If we run <code>git status</code> we see the following</p>
-<pre><code class="language-git">On branch main
-Your branch is ahead of &#39;origin/main&#39; by 1 commit.
-  &#40;use &quot;git push&quot; to publish your local commits&#41;
+<pre><code class="bash hljs">On branch main
+Your branch is ahead of <span class="hljs-string">&#x27;origin/main&#x27;</span> by 1 commit.
+  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)
 
 Changes to be committed:
-  &#40;use &quot;git restore --staged &lt;file&gt;...&quot; to unstage&#41;
+  (use <span class="hljs-string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)
 	modified:   README.md
 
-Changes not staged for commit:
-  &#40;use &quot;git add &lt;file&gt;...&quot; to update what will be committed&#41;
-  &#40;use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory&#41;
+Changes not staged <span class="hljs-keyword">for</span> commit:
+  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)
+  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)
 	modified:   README.md</code></pre>
 <p>which tells us that <code>README.md</code>is modified and staged. </p>
 <p>If we run a <code>git diff</code> again we get</p>
-<pre><code class="language-diff">diff --git a/README.md b/README.md
-index 9ac3846..28dba4b 100644
---- a/README.md
-&#43;&#43;&#43; b/README.md
-@@ -4,7 &#43;4,7 @@
+<pre><code class="diff hljs"><span class="hljs-comment">diff --git a/README.md b/README.md</span>
+<span class="hljs-comment">index 9ac3846..28dba4b 100644</span>
+<span class="hljs-comment">--- a/README.md</span>
+<span class="hljs-comment">+++ b/README.md</span>
+<span class="hljs-meta">@@ -4,7 +4,7 @@</span>
  
  | Name/UID    | File        |
  | ----------- | ----------- |
--| ID  | &#91;my upload&#93;&#40;python_ex1/ID.py&#41;|
-&#43;| ID  | &#91;my upload&#93;&#40;python_ex1/ID.py&#41; run it by calling &#96;python3 python_ex1/ID.py&#96;|
+<span class="hljs-deletion">-| ID  | [my upload](python_ex1/ID.py)|</span>
+<span class="hljs-addition">+| ID  | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|</span>
  | csad3581 | |
  | csak1512 | |
  | csak4299 | |</code></pre>
 <p>which show the changes to the <em>staging area</em>.  If we are satisfied with our changes, we can use <code>git add README.md</code> again to add the file to the <em>staging area</em> and finally commit it with <code>git commit</code>. Of course we do this <strong>with a meaningful commit message</strong>.</p>
-<p>Depending on your timing, you might have to <em>fetch</em> and <em>pull</em> in changes to your <em>local repository</em>.  By the way, you can directly call <code>git pull</code>, without first calling <code>git fetch</code>, the fetch is done implicitly.  </p>
+<p>Depending on your timing, you might have to <em>fetch</em> and <em>pull</em> in changes to your <em>local repository</em>.  By the way, you can directly call <code>git pull</code>, without first calling <code>git fetch</code>, the fetch is done implicitly.  But we should not get a conflict as everybody changed a different line. </p>
+<h1 id="conflicts_and_how_to_resolve_them"><a href="#conflicts_and_how_to_resolve_them" class="header-anchor">Conflicts and how to resolve them</a></h1>
+<p>It will not always be this smooth and conflicts occur.  For example when two commits with the same base make changes to a single line.  We simulate this by simply copying our <em>local repository</em> and <em>working directory</em> - either with a new <code>git clone</code> or by copying the directory.</p>
+<p>For this, we assume that in location <em>A</em> we changed <code>README.md</code> to </p>
+<pre><code class="markdown hljs">| Name/UID    | File        |
+| ----------- | ----------- |
+| ID     | [<span class="hljs-string">my upload</span>](<span class="hljs-link">python_ex1/ID.py</span>) |</code></pre>
+<p>and we <em>commit</em> and <em>push</em> this change to the <em>remote repository</em>.</p>
+<pre><code class="bash hljs">À&gt; git diff
+diff --git a/README.md b/README.md
+index d9f0acb..28dba4b 100644
+--- a/README.md
++++ b/README.md
+@@ -4,7 +4,7 @@
+ 
+ | Name/UID    | File        |
+ | ----------- | ----------- |
+-| ID  | |
++| ID  | [my upload](python_ex1/ID.py)|
+ | ID1 | |
+ | ID2 | |
+ | ID3 | |
+
+A&gt; git add README.md
+A&gt; git commit -m <span class="hljs-string">&quot;add my exercise sheet&quot;</span>
+[main a16b809] add my exercise sheet
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+A&gt; git push
+Enumerating objects: 8, <span class="hljs-keyword">done</span>.
+Counting objects: 100% (8/8), <span class="hljs-keyword">done</span>.
+Delta compression using up to 16 threads
+Compressing objects: 100% (6/6), <span class="hljs-keyword">done</span>.
+Writing objects: 100% (6/6), 769 bytes | 769.00 KiB/s, <span class="hljs-keyword">done</span>.
+Total 6 (delta 1), reused 0 (delta 0), pack-reused 0
+To https://git.uibk.ac.at/c102338/ulg22_playground.git
+   0b8a494..a16b809  main -&gt; main</code></pre>
+<p>Now in location <em>B</em> we do not get the changes from the <em>remote repository</em> but modify <code>README.md</code> to</p>
+<pre><code class="markdown hljs">| Name/UID    | File        |
+| ----------- | ----------- |
+| ID     | [<span class="hljs-string">my upload</span>](<span class="hljs-link">python_ex1/ID.py</span>) run it by calling <span class="hljs-code">`python3 python_ex1/ID.py`</span>|</code></pre>
+<p>and we try to do the same as before:</p>
+<pre><code class="bash hljs">B&gt; git diff
+diff --git a/README.md b/README.md
+index d9f0acb..28dba4b 100644
+--- a/README.md
++++ b/README.md
+@@ -4,7 +4,7 @@
+ 
+ | Name/UID    | File        |
+ | ----------- | ----------- |
+-| ID  | |
++| ID  | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|
+ | ID1 | |
+ | ID2 | |
+ | ID3 | |
+B&gt; git add README.md
+B&gt; git commit -m <span class="hljs-string">&quot;add my exercise sheet&quot;</span>
+[main d9ac598] add my exercise sheet
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+B&gt; git push
+To https://git.uibk.ac.at/c102338/ulg22_playground.git
+ ! [rejected]        main -&gt; main (fetch first)
+error: failed to push some refs to <span class="hljs-string">&#x27;https://git.uibk.ac.at/c102338/ulg22_playground.git&#x27;</span>
+hint: Updates were rejected because the remote contains work that you <span class="hljs-keyword">do</span>
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., <span class="hljs-string">&#x27;git pull ...&#x27;</span>) before pushing again.
+hint: See the <span class="hljs-string">&#x27;Note about fast-forwards&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;git push --help&#x27;</span> <span class="hljs-keyword">for</span> details.</code></pre>
+<p>This is to be expected so we <em>pull</em> in the changes from remote as we learned with <em>rebase</em>:</p>
+<pre><code class="bash hljs">B&gt; git pull --rebase
+Auto-merging README.md
+CONFLICT (content): Merge conflict <span class="hljs-keyword">in</span> README.md
+error: could not apply d9ac598... add my exercise sheet
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: <span class="hljs-string">&quot;git add/rm &lt;conflicted_files&gt;&quot;</span>, <span class="hljs-keyword">then</span> run <span class="hljs-string">&quot;git rebase --continue&quot;</span>.
+hint: You can instead skip this commit: run <span class="hljs-string">&quot;git rebase --skip&quot;</span>.
+hint: To abort and get back to the state before <span class="hljs-string">&quot;git rebase&quot;</span>, run <span class="hljs-string">&quot;git rebase --abort&quot;</span>.
+Could not apply d9ac598... add my exercise sheet</code></pre>
+<p>As per usual, Git is quite helpful and tells you what to do.  We have several options</p>
+<ol>
+<li><p>solve the <em>conflicts</em>, add the files and continue the rebase. </p>
+</li>
+<li><p>skip our our commit <code>d9ac598</code>, so do not apply these changes</p>
+</li>
+<li><p>abort the procedure</p>
+</li>
+</ol>
+<p>We opt for 1. and take a look with <code>git diff</code></p>
+<pre><code class="diff hljs">diff --cc README.md
+<span class="hljs-comment">index 12ee10e,28dba4b..0000000</span>
+<span class="hljs-comment">--- a/README.md</span>
+<span class="hljs-comment">+++ b/README.md</span>
+@@@ -4,7 -4,7 +4,11 @@@
+  
+  | Name/UID    | File        |
+  | ----------- | ----------- |
+<span class="hljs-addition">++&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+ +| ID  | [my upload](python_ex1/ID.py) |
+<span class="hljs-addition">++=======</span>
+<span class="hljs-addition">+ | ID  | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|</span>
+<span class="hljs-addition">++&gt;&gt;&gt;&gt;&gt;&gt;&gt; d9ac598 (add my exercise sheet)</span></code></pre>
+<p><code>HEAD</code> is the latest commit in the chain of commits on the current branch on the <em>remote repository</em>. So we see:</p>
+<ul>
+<li><p>what <code>HEAD</code> brings in <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code>, </p>
+</li>
+<li><p>the end of the changes is marked with <code>&#61;&#61;&#61;&#61;&#61;&#61;&#61;</code></p>
+</li>
+<li><p>and what we want to push out ended by a line <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; d9ac598</code> together with the commit message. </p>
+</li>
+</ul>
+<p>This will be repeated for every conflict in the file. </p>
+<p>If the conflicts are more elaborate and connected it is good to use a tool to sort it out.  Your favourite IDE will most likely come with some toll or you look at specific Git tools for conflict resolution. </p>
+<p>For us it is simple. We just want the file to look like </p>
+<pre><code class="markdown hljs">| ID  | [<span class="hljs-string">my upload</span>](<span class="hljs-link">python_ex1/ID.py</span>) run it by calling <span class="hljs-code">`python3 python_ex1/ID.py`</span>|</code></pre>
+<p>so we make these changes and call </p>
+<pre><code class="bash hljs">B&gt; git add README.md
+B&gt; git rebase --<span class="hljs-built_in">continue</span>
+[detached HEAD 3c6b1e6] add my exercise sheet, and make a conflict resolution
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Successfully rebased and updated refs/heads/main.</code></pre>
+<p>This will prompt us to write a <em>commit message</em>.  Lets use <code>add my exercise sheet, and make a conflict resolution</code>.</p>
+<h1 id="history"><a href="#history" class="header-anchor">History</a></h1>
+<p>The last thing we look into is the <em>history</em>.  Of course it is possible to look what happened in the repository.  With <code>git log</code> we can do this</p>
+<pre><code class="bash hljs">B&gt; git <span class="hljs-built_in">log</span>
+commit 3c6b1e63504e5f46d80d50d7188a4d5303a7aa86 (HEAD -&gt; main)
+Author: {Your Name} &lt;{Your email}&gt;
+Date:   Fri Oct 14 08:29:36 2022 +0200
+
+    add my exercise sheet, and make a conflict resolution
+
+commit a16b809ce95b319180373c6b0c00647f2a6539f4 (origin/main, origin/HEAD)
+Author: {Your Name} &lt;{Your email}&gt;
+Date:   Fri Oct 14 08:25:14 2022 +0200
+
+    add my exercise sheet
+
+commit 0b8a49431b40aed9903d1ec6b76c243c20613b92
+Author: {Your Name} &lt;{Your email}&gt;
+Date:   Sun Oct 9 15:59:42 2022 +0200
+
+    feat: add my solution <span class="hljs-keyword">for</span> python exercises 1</code></pre>
+<p><strong>Note:</strong> Most likely we will see way more commits here as our fellow students make some commits as well. </p>
+<p>So this is the <em>official</em> log of the <em>repository</em> but sometimes it is nice to see more, especially what happened when.  Maybe we messed up a <em>rebase</em> and our changes are missing or something similar.  As Git was build with fail safes in mind it has you covered there.  What we want to look at is <code>reflog</code></p>
+<pre><code class="bash hljs">B&gt; git reflog
+3c6b1e6 (HEAD -&gt; main) HEAD@{0}: rebase (<span class="hljs-built_in">continue</span>) (finish): returning to refs/heads/main
+3c6b1e6 (HEAD -&gt; main) HEAD@{1}: rebase (<span class="hljs-built_in">continue</span>): add my exercise sheet, and make a conflict resolution
+a16b809 (origin/main, origin/HEAD) HEAD@{2}: pull --rebase (start): checkout a16b809ce95b319180373c6b0c00647f2a6539f4
+d9ac598 HEAD@{3}: commit: add my exercise sheet
+5673f78 HEAD@{4}: commit: list of student ids
+0b8a494 HEAD@{5}: pull --rebase (finish): returning to refs/heads/main
+0b8a494 HEAD@{6}: pull --rebase (start): checkout 0b8a49431b40aed9903d1ec6b76c243c20613b92
+9a98eb2 HEAD@{7}: commit: feat: add my solution <span class="hljs-keyword">for</span> python exercises 1
+a0f8f01 HEAD@{8}: <span class="hljs-built_in">clone</span>: from https://git.uibk.ac.at/c102338/ulg22_playground.git</code></pre>
+<p>This command shows us what happened in our <em>local repository</em>. </p>
+<h1 id="further_stuff"><a href="#further_stuff" class="header-anchor">Further stuff</a></h1>
+<p>There is much more to see and do but this concludes the absolute basics. You will learn way more when you work with Git for some time some topics that you will come across are:</p>
+<ul>
+<li><p>More elaborate work with branches</p>
+</li>
+<li><p>Merging of branches</p>
+</li>
+<li><p>Cherry picking</p>
+</li>
+<li><p>Reverting commits</p>
+</li>
+<li><p><code>git blame</code> to find out where this line of code come from</p>
+</li>
+<li><p>and so much more</p>
+</li>
+</ul>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 13, 2022.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 14, 2022.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -359,8 +528,8 @@ index 9ac3846..28dba4b 100644
     </div> <!-- end of class page-wrap-->
     
     
-      <script src="/ws22-ulg-python-git-docker/libs/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+      
+
 
       <script>
     (function(){
