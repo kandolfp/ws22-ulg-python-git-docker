@@ -323,4 +323,201 @@ If we are satisfied with our changes, we can use `git add README.md` again to ad
 Of course we do this **with a meaningful commit message**.
 
 Depending on your timing, you might have to _fetch_ and _pull_ in changes to your _local repository_. 
-By the way, you can directly call `git pull`, without first calling `git fetch`, the fetch is done implicitly.  
+By the way, you can directly call `git pull`, without first calling `git fetch`, the fetch is done implicitly.  But we should not get a conflict as everybody changed a different line. 
+
+# Conflicts and how to resolve them
+
+It will not always be this smooth and conflicts occur. 
+For example when two commits with the same base make changes to a single line. 
+We simulate this by simply copying our _local repository_ and _working directory_ - either with a new `git clone` or by copying the directory.
+
+For this, we assume that in location _A_ we changed `README.md` to 
+```markdown
+| Name/UID    | File        |
+| ----------- | ----------- |
+| ID     | [my upload](python_ex1/ID.py) |
+```
+and we _commit_ and _push_ this change to the _remote repository_.
+
+```bash
+À> git diff
+diff --git a/README.md b/README.md
+index d9f0acb..28dba4b 100644
+--- a/README.md
++++ b/README.md
+@@ -4,7 +4,7 @@
+ 
+ | Name/UID    | File        |
+ | ----------- | ----------- |
+-| ID  | |
++| ID  | [my upload](python_ex1/ID.py)|
+ | ID1 | |
+ | ID2 | |
+ | ID3 | |
+
+A> git add README.md
+A> git commit -m "add my exercise sheet"
+[main a16b809] add my exercise sheet
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+A> git push
+Enumerating objects: 8, done.
+Counting objects: 100% (8/8), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 769 bytes | 769.00 KiB/s, done.
+Total 6 (delta 1), reused 0 (delta 0), pack-reused 0
+To https://git.uibk.ac.at/c102338/ulg22_playground.git
+   0b8a494..a16b809  main -> main
+```
+
+Now in location _B_ we do not get the changes from the _remote repository_ but modify `README.md` to
+```markdown
+| Name/UID    | File        |
+| ----------- | ----------- |
+| ID     | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|
+```
+and we try to do the same as before:
+```bash
+B> git diff
+diff --git a/README.md b/README.md
+index d9f0acb..28dba4b 100644
+--- a/README.md
++++ b/README.md
+@@ -4,7 +4,7 @@
+ 
+ | Name/UID    | File        |
+ | ----------- | ----------- |
+-| ID  | |
++| ID  | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|
+ | ID1 | |
+ | ID2 | |
+ | ID3 | |
+B> git add README.md
+B> git commit -m "add my exercise sheet"
+[main d9ac598] add my exercise sheet
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+B> git push
+To https://git.uibk.ac.at/c102338/ulg22_playground.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://git.uibk.ac.at/c102338/ulg22_playground.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+This is to be expected so we _pull_ in the changes from remote as we learned with _rebase_:
+```bash
+B> git pull --rebase
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+error: could not apply d9ac598... add my exercise sheet
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+Could not apply d9ac598... add my exercise sheet
+```
+As per usual, Git is quite helpful and tells you what to do. 
+We have several options
+1. solve the _conflicts_, add the files and continue the rebase. 
+1. skip our our commit `d9ac598`, so do not apply these changes
+1. abort the procedure
+
+We opt for 1. and take a look with `git diff`
+```diff
+diff --cc README.md
+index 12ee10e,28dba4b..0000000
+--- a/README.md
++++ b/README.md
+@@@ -4,7 -4,7 +4,11 @@@
+  
+  | Name/UID    | File        |
+  | ----------- | ----------- |
+++<<<<<<< HEAD
+ +| ID  | [my upload](python_ex1/ID.py) |
+++=======
++ | ID  | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|
+++>>>>>>> d9ac598 (add my exercise sheet)
+
+```
+`HEAD` is the latest commit in the chain of commits on the current branch on the _remote repository_. So we see:
+- what `HEAD` brings in `<<<<<<< HEAD`, 
+- the end of the changes is marked with `=======`
+- and what we want to push out ended by a line `>>>>>>> d9ac598` together with the commit message. 
+This will be repeated for every conflict in the file. 
+
+If the conflicts are more elaborate and connected it is good to use a tool to sort it out. 
+Your favourite IDE will most likely come with some toll or you look at specific Git tools for conflict resolution. 
+
+For us it is simple. We just want the file to look like 
+```markdown
+ | ID  | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|
+```
+so we make these changes and call 
+```bash
+B> git add README.md
+B> git rebase --continue
+[detached HEAD 3c6b1e6] add my exercise sheet, and make a conflict resolution
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Successfully rebased and updated refs/heads/main.
+
+```
+This will prompt us to write a _commit message_. 
+Lets use `add my exercise sheet, and make a conflict resolution`.
+
+# History
+
+The last thing we look into is the _history_. 
+Of course it is possible to look what happened in the repository. 
+With `git log` we can do this
+```bash
+B> git log
+commit 3c6b1e63504e5f46d80d50d7188a4d5303a7aa86 (HEAD -> main)
+Author: {Your Name} <{Your email}>
+Date:   Fri Oct 14 08:29:36 2022 +0200
+
+    add my exercise sheet, and make a conflict resolution
+
+commit a16b809ce95b319180373c6b0c00647f2a6539f4 (origin/main, origin/HEAD)
+Author: {Your Name} <{Your email}>
+Date:   Fri Oct 14 08:25:14 2022 +0200
+
+    add my exercise sheet
+
+commit 0b8a49431b40aed9903d1ec6b76c243c20613b92
+Author: {Your Name} <{Your email}>
+Date:   Sun Oct 9 15:59:42 2022 +0200
+
+    feat: add my solution for python exercises 1
+```
+**Note:** Most likely we will see way more commits here as our fellow students make some commits as well. 
+
+So this is the _official_ log of the _repository_ but sometimes it is nice to see more, especially what happened when. 
+Maybe we messed up a _rebase_ and our changes are missing or something similar. 
+As Git was build with fail safes in mind it has you covered there. 
+What we want to look at is `reflog`
+
+```bash
+B> git reflog
+3c6b1e6 (HEAD -> main) HEAD@{0}: rebase (continue) (finish): returning to refs/heads/main
+3c6b1e6 (HEAD -> main) HEAD@{1}: rebase (continue): add my exercise sheet, and make a conflict resolution
+a16b809 (origin/main, origin/HEAD) HEAD@{2}: pull --rebase (start): checkout a16b809ce95b319180373c6b0c00647f2a6539f4
+d9ac598 HEAD@{3}: commit: add my exercise sheet
+5673f78 HEAD@{4}: commit: list of student ids
+0b8a494 HEAD@{5}: pull --rebase (finish): returning to refs/heads/main
+0b8a494 HEAD@{6}: pull --rebase (start): checkout 0b8a49431b40aed9903d1ec6b76c243c20613b92
+9a98eb2 HEAD@{7}: commit: feat: add my solution for python exercises 1
+a0f8f01 HEAD@{8}: clone: from https://git.uibk.ac.at/c102338/ulg22_playground.git
+```
+This command shows us what happened in our _local repository_. 
+
+# Further stuff
+There is much more to see and do but this concludes the absolute basics.
+You will learn way more when you work with Git for some time some topics that you will come across are:
+- More elaborate work with branches
+- Merging of branches
+- Cherry picking
+- Reverting commits
+- `git blame` to find out where this line of code come from
+- and so much more
