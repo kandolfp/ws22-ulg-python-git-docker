@@ -435,7 +435,7 @@ index 12ee10e,28dba4b..0000000
   | Name/UID    | File        |
   | ----------- | ----------- |
 ++<<<<<<< HEAD
- +| ID  | [my upload](python_ex1/ID.py) |
++ | ID  | [my upload](python_ex1/ID.py) |
 ++=======
 + | ID  | [my upload](python_ex1/ID.py) run it by calling `python3 python_ex1/ID.py`|
 ++>>>>>>> d9ac598 (add my exercise sheet)
