@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/katex/katex.min.css">
-     
+  
    <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/highlight/github.min.css">
    
     <script src="/ws22-ulg-python-git-docker/libs/clipboard.min.js"></script>
@@ -52,7 +51,7 @@
   }
 </style>
 
-   <title>Package Manager</title>  
+   <title>python - numpy</title>  
 </head>
 <body>                      <!-- closed in foot.html -->
 <div class="page-wrap">   <!-- closed in foot.html -->
@@ -70,7 +69,7 @@
         <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/" class="menu-list-link ">Start</a>
         <li class="menu-list-item active"><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link active">Python</a>
           <ul class="menu-list-child-list ">
-            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/numpy/" class="menu-list-link ">Numpy</a>
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/numpy/" class="menu-list-link active">Numpy</a>
             <!--
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/package_manager/" class="menu-list-link {{ispage pages/python/package_manager/*}}active{{end}}">Package Manager</a>
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/matrix_vectors/" class="menu-list-link {{ispage pages/python/matrix_vectors/*}}active{{end}}">Matrix and Vector Operations</a>
@@ -121,68 +120,37 @@
 
 
 <!-- Content appended here (in class franklin-content) -->
-<div class="franklin-content"><h1 id="package_manager"><a href="#package_manager" class="header-anchor">Package manager</a></h1>
-<p>We have already seen the Julia <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/">package manager</a>. In the following, we will discuss this feature in more detail. We already know how to open the package manager: Simply press <code>&#93;</code>. Now, in order to, for example, add the <a href="https://juliaapproximation.github.io/FastGaussQuadrature.jl/stable/">FastGaussQuadrature</a> package type </p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> add FastGaussQuadrature</code></pre>
-<p>From now on, every time we open Julia, we can type</p>
-<pre><code class="julia-repl hljs"><span class="hljs-meta prompt_">julia&gt;</span><span class="language-julia"> <span class="hljs-keyword">using</span> FastGaussQuadrature</span></code></pre>
-<p>which in this case adds functionalities to numerically compute integrals to our session. Note that the specific details of this package are not important at this point and we will revisit this package in our work sheets. In case we wish to remove this package again we can open the package manager and type</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> rm FastGaussQuadrature</code></pre>
-<p>If we now want to install a specific version of a package we can add <code>@&lt;versionnumber&gt;</code> behind the package name. As an example, to install <code>FastGaussQuadrature</code> at version <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.4.8</mn></mrow><annotation encoding="application/x-tex">0.4.8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.4.8</span></span></span></span> we type</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> add FastGaussQuadrature@0.4.8</code></pre>
-<p>Moreover, we can update all packages that we have added by typing</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> update</code></pre>
-<p>or just a specific package &#40;for example FastGaussQuadrature&#41; by typing</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> update FastGaussQuadrature</code></pre>
-<p>To get a list of all installed packages we can type</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> status</code></pre>
-<p>It is good practice to add packages only for certain projects to prevent conflicting packages, see <a href="https://en.wikipedia.org/wiki/Dependency_hell">dependency hell</a>. This can be done by creating a new package environment. Here we create an environment called <code>example</code>:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> activate example</code></pre>
-<p>If we check this new environment with the <code>status</code> command we will see that we have a clean package environment. We can return to the default environment by typing <code>activate</code>. We type <code>activate .</code>, if we want to create an environment that is identified with the project folder we are currently working in. Whenever someone uses this project folder, this person can enter the same environment by typing <code>activate .</code> and install all needed packages with the used versions by typing <code>instantiate</code>. If we do not want to start the REPL we can still include the environment by simply typing</p>
-<pre><code class="shell hljs">julia --project=. main.jl</code></pre>
-<button type="button" class="collapsible" style="background-color:#b5ddff"> Exercise </button><div class="collapsiblecontent">  Let us practice the learned concepts a little bit.</p>
-<ol>
-<li><p>Create a new project called <code>SummerSchool</code>. To setup the project, create a new folder and navigate to it using the REPL. </p>
-</li>
-<li><p>Make sure you can use the <code>Plots</code> package in the new project environment by loading it with <code>using Plots</code>.</p>
-</li>
-<li><p>Now you can for example plot the connection between two points <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2,3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">)</span></span></span></span> by <code>plot&#40;&#91;1; 2&#93;, &#91;2; 3&#93;&#41;</code>.</p>
-</li>
-<li><p>Check if the <code>Plots</code> package is available in the standard environment.</p>
-</li>
-<li><p>Install the latest version of the <code>MultivariateStats</code> package in the standard environment and version <code>0.8.0</code> in your project environment.</p>
-</li>
-</ol>
-<p><div class="solution"> Solution </div><div class="solutioncollapsible">  </p>
-<pre><code class="julia-repl hljs"><span class=hljs-metas>shell&gt;</span> mkdir SummerSchool
+<div class="franklin-content"><h1 id="introduction_to_numpy"><a href="#introduction_to_numpy" class="header-anchor">Introduction to Numpy</a></h1>
+<p><a href="https://numpy.org/">Numpy</a> is a Python package for scientific computing with an open source licence &#40;<a href="https://github.com/numpy/numpy/blob/main/LICENSE.txt">BSD license</a>&#41;.  It provides a <em>multidemsional array</em> object and a large collection on high-level mathematical routines for fast operations on these arrays.  This includes logical operations, shape manipulation, sorting, selecting, basic linear algebra &#40;BLAS&#41;, basic statistical operations, random simulation and much more.  It is wildly used and the basis for many other packages. It was introduced to allow <strong>fast</strong> array computation in python and it is keeping its promises ever since. </p>
+<p>Numpy itself is build on other components such as <a href="https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms">Basic Linear Algebra Subroutines</a> written in Fortran, C, CUDA or whatever required for the specific task.  For this purpose it can be linked against Intel Math Kernel Library or OpenBLAS.   </p>
+<h1 id="first_steps"><a href="#first_steps" class="header-anchor">First steps</a></h1>
+<p>We load the package as per usual and by common convention we give it the name<code>np</code>. </p>
+<pre><code class="python hljs"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</code></pre>
+<p>We can create arrays with a multitude of function</p>
+<pre><code class="python hljs"><span class="hljs-comment"># 1D-array with 5 integers</span>
+X = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>])
 
-<span class=hljs-metas>shell&gt;</span> cd SummerSchool
-/home/jonas/Projects/SummerSchool
+<span class="hljs-comment"># 2x3 2D-array with floating point numbers</span>
+Y = np.array([[<span class="hljs-number">1.1</span>, <span class="hljs-number">2.1</span>, <span class="hljs-number">3.1</span>], [<span class="hljs-number">1.2</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">3.2</span>]])
 
-<span class=hljs-metap>(@v1.7) pkg&gt;</span> activate .
-  Activating new project at `~/Projects/SummerSchool`
+<span class="hljs-comment"># We can also create an array of zeros</span>
+Z = np.zeros((<span class="hljs-number">2</span>, <span class="hljs-number">3</span>))
 
-<span class=hljs-metap>(SummerSchool) pkg&gt;</span> add Plots
-
-<span class="hljs-meta prompt_">julia&gt;</span><span class="language-julia"> <span class="hljs-keyword">using</span> Plots
-</span>
-<span class="hljs-meta prompt_">julia&gt;</span><span class="language-julia"> plot([<span class="hljs-number">1</span>; <span class="hljs-number">2</span>],[<span class="hljs-number">2</span>; <span class="hljs-number">3</span>])
-</span>
-<span class=hljs-metap>(SummerSchool) pkg&gt;</span> activate
-  Activating project at `~/.julia/environments/v1.7`
-
-<span class="hljs-meta prompt_">julia&gt;</span><span class="language-julia"> <span class="hljs-keyword">using</span> Plots
-</span> │ Package Plots not found, but a package named Plots is available from a registry. 
- │ Install package?
- │   <span class=hljs-metap>(@v1.7) pkg&gt;</span> add Plots 
- └ (y/n) [y]: 
-
-<span class=hljs-metap>(@v1.7) pkg&gt;</span> add MultivariateStats
-
-<span class=hljs-metap>(@v1.7) pkg&gt;</span> activate .
-
-<span class=hljs-metap>(SummerSchool) pkg&gt;</span> add MultivariateStats@0.8.0</code></pre>
-<p></div> </div>
+<span class="hljs-comment"># Or an equally spaced array of 6 elements between 1 and 10</span>
+A = np.linspace(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">6</span>)</code></pre>
+<p>Now that we have our arrays we also need to talk about how to access the elements. </p>
+<div class="important">Python uses 0 based indexing&#33;</div>
+<pre><code class="python-repl hljs"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>])</span>
+<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X[<span class="hljs-number">2</span>]</span>
+3
+<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X[<span class="hljs-number">0</span>]</span>
+1
+<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X[-<span class="hljs-number">1</span>]</span>
+7
+<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X[<span class="hljs-number">6</span>]</span>
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+IndexError: index 6 is out of bounds for axis 0 with size 5</code></pre>
 <div class="page-foot">
     <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 16, 2022.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
@@ -191,11 +159,6 @@
     </div> <!-- end of class main-content -->
     </div> <!-- end of class main-content-wrap -->
     </div> <!-- end of class page-wrap-->
-    
-      
-
-
-
     
     
       
