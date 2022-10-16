@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+   <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/katex/katex.min.css">
+     
    <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/highlight/github.min.css">
    
     <script src="/ws22-ulg-python-git-docker/libs/clipboard.min.js"></script>
@@ -123,6 +124,7 @@
 <div class="franklin-content"><h1 id="introduction_to_numpy"><a href="#introduction_to_numpy" class="header-anchor">Introduction to Numpy</a></h1>
 <p><a href="https://numpy.org/">Numpy</a> is a Python package for scientific computing with an open source licence &#40;<a href="https://github.com/numpy/numpy/blob/main/LICENSE.txt">BSD license</a>&#41;.  It provides a <em>multidemsional array</em> object and a large collection on high-level mathematical routines for fast operations on these arrays.  This includes logical operations, shape manipulation, sorting, selecting, basic linear algebra &#40;BLAS&#41;, basic statistical operations, random simulation and much more.  It is wildly used and the basis for many other packages. It was introduced to allow <strong>fast</strong> array computation in python and it is keeping its promises ever since. </p>
 <p>Numpy itself is build on other components such as <a href="https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms">Basic Linear Algebra Subroutines</a> written in Fortran, C, CUDA or whatever required for the specific task.  For this purpose it can be linked against Intel Math Kernel Library or OpenBLAS.   </p>
+<p>These notes are havelly inspired by the notes of Gregor Ehresperger from previous years in this class.  </p>
 <h1 id="first_steps"><a href="#first_steps" class="header-anchor">First steps</a></h1>
 <p>We load the package as per usual and by common convention we give it the name<code>np</code>. </p>
 <pre><code class="python hljs"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</code></pre>
@@ -140,17 +142,110 @@ Z = np.zeros((<span class="hljs-number">2</span>, <span class="hljs-number">3</s
 A = np.linspace(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">6</span>)</code></pre>
 <p>Now that we have our arrays we also need to talk about how to access the elements. </p>
 <div class="important">Python uses 0 based indexing&#33;</div>
-<pre><code class="python-repl hljs"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>])</span>
-<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X[<span class="hljs-number">2</span>]</span>
-3
-<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X[<span class="hljs-number">0</span>]</span>
-1
-<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X[-<span class="hljs-number">1</span>]</span>
-7
-<span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">X[<span class="hljs-number">6</span>]</span>
+<p>We start of with one dimensional arrays:</p>
+<pre><code class="python hljs"><span class="hljs-meta">&gt;&gt;&gt; </span>X = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>])
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[<span class="hljs-number">2</span>]
+<span class="hljs-number">3</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[<span class="hljs-number">0</span>]
+<span class="hljs-number">1</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[-<span class="hljs-number">1</span>]
+<span class="hljs-number">7</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[<span class="hljs-number">6</span>]
 Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-IndexError: index 6 is out of bounds for axis 0 with size 5</code></pre>
+  File <span class="hljs-string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="hljs-number">1</span>, <span class="hljs-keyword">in</span> &lt;module&gt;
+IndexError: index <span class="hljs-number">6</span> <span class="hljs-keyword">is</span> out of bounds <span class="hljs-keyword">for</span> axis <span class="hljs-number">0</span> <span class="hljs-keyword">with</span> size <span class="hljs-number">5</span></code></pre>
+<p>and extend to two dimensional arrays as:</p>
+<pre><code class="python hljs"><span class="hljs-meta">&gt;&gt;&gt; </span>Y = np.array([[<span class="hljs-number">1.1</span>, <span class="hljs-number">2.1</span>, <span class="hljs-number">3.1</span>], [<span class="hljs-number">1.2</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">3.2</span>]])
+<span class="hljs-comment"># element at row and column 0</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>Y[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>]
+<span class="hljs-number">1.1</span>
+
+<span class="hljs-comment"># element at row 0 and column 2</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>Y[<span class="hljs-number">0</span>, <span class="hljs-number">2</span>]
+<span class="hljs-number">3.1</span>
+
+<span class="hljs-comment"># element at row 1 and second to last column</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[<span class="hljs-number">1</span>, -<span class="hljs-number">2</span>]
+<span class="hljs-number">2.2</span></code></pre>
+<p>Of course we can also use <a href="https://en.wikipedia.org/wiki/Array_slicing">slicing</a>, i.e. accessing subarrays, with the following rules &#40;per dimension&#41; <code>x&#91;start:stop:step&#93;</code></p>
+<ul>
+<li><p><em>start</em> is by default 0</p>
+</li>
+<li><p><em>stop</em> is by default the length of the dimension</p>
+</li>
+<li><p><em>step</em> is by default 1</p>
+</li>
+</ul>
+<p>This allows us to do do the following.</p>
+<pre><code class="python hljs"><span class="hljs-meta">&gt;&gt;&gt; </span>X = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>])
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>:<span class="hljs-number">1</span>]
+array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[:<span class="hljs-number">3</span>]
+array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[<span class="hljs-number">3</span>:]
+array([<span class="hljs-number">5</span>, <span class="hljs-number">7</span>])
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>X[::<span class="hljs-number">2</span>]
+array([<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>])
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>Y = np.array([[<span class="hljs-number">1.1</span>, <span class="hljs-number">2.1</span>, <span class="hljs-number">3.1</span>], [<span class="hljs-number">1.2</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">3.2</span>]])
+<span class="hljs-comment"># first row</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>Y[<span class="hljs-number">0</span>, :]
+array([<span class="hljs-number">1.1</span>, <span class="hljs-number">2.1</span>, <span class="hljs-number">3.1</span>])
+
+<span class="hljs-comment"># last row</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>Y[-<span class="hljs-number">1</span>, :]
+array([<span class="hljs-number">1.2</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">3.2</span>])
+
+<span class="hljs-comment"># every second column</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>Y[:, ::<span class="hljs-number">2</span>]
+array([[<span class="hljs-number">1.1</span>, <span class="hljs-number">3.1</span>],
+       [<span class="hljs-number">1.2</span>, <span class="hljs-number">3.2</span>]])</code></pre>
+<button type="button" class="collapsible" style="background-color:#b5ddff"> Exercise </button><div class="collapsiblecontent">  Please solve the following exercises:</p>
+<ol>
+<li><p>Create the following matrix as an <em>numpy array</em></p>
+</li>
+</ol>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo fence="true">(</mo><mtable rowspacing="0.16em" columnalign="center center center center center" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>0</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>2</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>3</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>4</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>5</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>6</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>7</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>8</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>9</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>10</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>11</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>12</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>13</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>14</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>15</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>16</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>17</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>18</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>19</mn></mstyle></mtd></mtr></mtable><mo fence="true">)</mo></mrow><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">
+ A = \begin{pmatrix}
+     0 &amp;  1 &amp;  2 &amp;  3 &amp;  4\\
+     5 &amp;  6 &amp;  7 &amp;  8 &amp;  9\\
+    10 &amp; 11 &amp; 12 &amp; 13 &amp; 14\\
+    15 &amp; 16 &amp; 17 &amp; 18 &amp; 19\\
+    \end{pmatrix}.
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:4.8001em;vertical-align:-2.15em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-1.711em;"><span class="pstrut" style="height:3.216em;"></span><span class="delimsizinginner delim-size4"><span>⎝</span></span></span><span style="top:-2.858em;"><span class="pstrut" style="height:3.216em;"></span><span style="height:1.216em;width:0.875em;"><svg xmlns="http://www.w3.org/2000/svg" width='0.875em' height='1.216em' style='width:0.875em' viewBox='0 0 875 1216' preserveAspectRatio='xMinYMin'><path d='M291 0 H417 V1216 H291z M291 0 H417 V1216 H291z'/></svg></span></span><span style="top:-4.7111em;"><span class="pstrut" style="height:3.216em;"></span><span class="delimsizinginner delim-size4"><span>⎛</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">10</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">15</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">11</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">16</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">7</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">12</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">17</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">8</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">13</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">18</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">9</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">14</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">19</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span></span></span><span class="mclose"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-1.711em;"><span class="pstrut" style="height:3.216em;"></span><span class="delimsizinginner delim-size4"><span>⎠</span></span></span><span style="top:-2.858em;"><span class="pstrut" style="height:3.216em;"></span><span style="height:1.216em;width:0.875em;"><svg xmlns="http://www.w3.org/2000/svg" width='0.875em' height='1.216em' style='width:0.875em' viewBox='0 0 875 1216' preserveAspectRatio='xMinYMin'><path d='M457 0 H583 V1216 H457z M457 0 H583 V1216 H457z'/></svg></span></span><span style="top:-4.7111em;"><span class="pstrut" style="height:3.216em;"></span><span class="delimsizinginner delim-size4"><span>⎞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">.</span></span></span></span></span>
+<p><strong>Hint</strong> look into the numpy functions <code>arange</code> and <code>reshape</code>.</p>
+<ol>
+<li><p>How do you access the element <code>7</code>?</p>
+</li>
+<li><p>How do you access the entire third column?</p>
+</li>
+<li><p>Return an array with only the odd rows and even columns:</p>
+</li>
+</ol>
+<p><div class="solution"> Solution </div><div class="solutioncollapsible">  </p>
+<pre><code class="python hljs"><span class="hljs-meta">&gt;&gt;&gt; </span>A  = np.reshape(np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">20</span>), (<span class="hljs-number">4</span>, <span class="hljs-number">5</span>))
+array([[ <span class="hljs-number">0</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">4</span>],
+       [ <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>,  <span class="hljs-number">9</span>],
+       [<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>],
+       [<span class="hljs-number">15</span>, <span class="hljs-number">16</span>, <span class="hljs-number">17</span>, <span class="hljs-number">18</span>, <span class="hljs-number">19</span>]])
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>A[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>]
+<span class="hljs-number">7</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>A[<span class="hljs-number">2</span>, :]
+array([<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>])
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>A[<span class="hljs-number">1</span>::<span class="hljs-number">2</span>, ::<span class="hljs-number">2</span>]
+array([[ <span class="hljs-number">5</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">9</span>],
+       [<span class="hljs-number">15</span>, <span class="hljs-number">17</span>, <span class="hljs-number">19</span>]])</code></pre>
+<p></div> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext> </mtext></mrow><annotation encoding="application/x-tex">\,</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;"></span><span class="mspace" style="margin-right:0.1667em;"></span></span></span></span> </div>
 <div class="page-foot">
     <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 16, 2022.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
@@ -159,6 +254,11 @@ IndexError: index 6 is out of bounds for axis 0 with size 5</code></pre>
     </div> <!-- end of class main-content -->
     </div> <!-- end of class main-content-wrap -->
     </div> <!-- end of class page-wrap-->
+    
+      
+
+
+
     
     
       
