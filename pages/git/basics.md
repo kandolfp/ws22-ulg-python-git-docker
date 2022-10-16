@@ -515,6 +515,7 @@ This command shows us what happened in our _local repository_.
 # Further stuff
 There is much more to see and do but this concludes the absolute basics.
 You will learn way more when you work with Git for some time some topics that you will come across are:
+- The `.gitignore` file
 - More elaborate work with branches
 - Merging of branches
 - Cherry picking
