@@ -88,3 +88,4 @@ Obviously not everybody learns the same way and the concepts of Git can make you
 - [Git cheat sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 - [Pro Git](https://git-scm.com/book/en/v2) a book on git
 - [A Visual Git Reference](https://marklodato.github.io/visual-git-guide/index-en.html)
+- [Building Git](https://shop.jcoglan.com/building-git/) a book that tells you how to build Git on your own
