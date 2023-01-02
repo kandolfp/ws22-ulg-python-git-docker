@@ -125,6 +125,7 @@
 <!-- Content appended here (in class franklin-content) -->
 <div class="franklin-content"><h1 id="basics_-_why_and_how"><a href="#basics_-_why_and_how" class="header-anchor">Basics - why and how?</a></h1>
 <p>In this section we are going to talk about <em>containerisation</em> but before we can do that let us discuss some common issues in &#40;scientific&#41; computing</p>
+<p>Table of content: <div class="franklin-toc"><ol><li><a href="#you_need_a_different_softwarelibrary_than_installed">You need a different software/library than installed</a></li><li><a href="#you_need_to_assure_reproducibility_iereproducible_science">You need to assure reproducibility &#40;i.e.~reproducible science&#41;</a></li><li><a href="#i_need_specific_software_dependencies_dependency_hell">I need specific software dependencies &#40;dependency hell&#41;</a></li><li><a href="#you_need_to_run_software_compiled_for_x_but_run_y">You need to run software compiled for X but run Y</a></li><li><a href="#you_need_to_test_your_software_for_x_but_you_run_y">You need to test your software for X but you run Y</a></li><li><a href="#you_have_no_rights_to_install_software_but_you_can_run_jobs_high_performance_computing">You have no rights to install software but you can run jobs &#40;High Performance Computing&#41;</a></li><li><a href="#you_need_to_share_your_software_but_how">You need to share your software but how?</a></li><li><a href="#you_need_to_archive_a_working_version_limited">You need to archive a working version &#40;limited&#41;</a></li><li><a href="#legacy_code_on_old_os">Legacy code on old OS</a></li><li><a href="#virtualisation">Virtualisation</a></li><li><a href="#containerisation">Containerisation</a></li></ol></div> </p>
 <h2 id="you_need_a_different_softwarelibrary_than_installed"><a href="#you_need_a_different_softwarelibrary_than_installed" class="header-anchor">You need a different software/library than installed</a></h2>
 <p>Quite often the software that is installed on a machine that you have access to or are allowed to work with does not have the specific library, software, software version that you need to work with.  Even more often you do not have the rights to install software at your own freedom on the machine and the admin takes quite long to install what you need. </p>
 <h2 id="you_need_to_assure_reproducibility_iereproducible_science"><a href="#you_need_to_assure_reproducibility_iereproducible_science" class="header-anchor">You need to assure reproducibility &#40;i.e.~reproducible science&#41;</a></h2>
@@ -199,18 +200,14 @@
 <p>The containerisation started with <a href="https://docs.docker.com/">Docker</a>.  Nowadays, there are a different solutions available with a different focus and different set of functionalities:</p>
 <ol>
 <li><p><a href="https://opencontainers.org/">Open Container Initiative</a> for example <a href="https://podman.io/">Podman</a></p>
-</li>
-</ol>
 <ul>
 <li><p>open industry standards for container format &amp; runtime</p>
 </li>
 <li><p>Allows for a daemon-less container engine for running OCI containers &#40;root or rootless&#41;</p>
 </li>
 </ul>
-<ol start="2">
-<li><p><a href="https://apptainer.org/">AppTainer</a> - formally know as Singularity.</p>
 </li>
-</ol>
+<li><p><a href="https://apptainer.org/">AppTainer</a> - formally know as Singularity.</p>
 <ul>
 <li><p>designed for HPC</p>
 </li>
@@ -223,10 +220,8 @@
 <li><p>runs in the user namespace</p>
 </li>
 </ul>
-<ol start="3">
-<li><p><a href="https://docs.docker.com/">Docker</a></p>
 </li>
-</ol>
+<li><p><a href="https://docs.docker.com/">Docker</a></p>
 <ul>
 <li><p>based on Linux namespaces and resource limitations</p>
 </li>
@@ -237,6 +232,8 @@
 <li><p>very popular with a huge collection on dockerhub</p>
 </li>
 </ul>
+</li>
+</ol>
 <p>Our focus will be on Docker. </p>
 <div class="page-foot">
     <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: January 02, 2023.
