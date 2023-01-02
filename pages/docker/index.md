@@ -7,6 +7,9 @@
 
 In this section we are going to talk about _containerisation_ but before we can do that let us discuss some common issues in (scientific) computing
 
+Table of content:
+\toc 
+
 ## You need a different software/library than installed
 
 Quite often the software that is installed on a machine that you have access to or are allowed to work with does not have the specific library, software, software version that you need to work with. 
@@ -117,18 +120,18 @@ Other than with a virtualisation the _host kernel_ is used and also the _host ha
 The containerisation started with [Docker](https://docs.docker.com/). 
 Nowadays, there are a different solutions available with a different focus and different set of functionalities:
 1. [Open Container Initiative](https://opencontainers.org/) for example [Podman](https://podman.io/)
-- open industry standards for container format & runtime
-- Allows for a daemon-less container engine for running OCI containers (root or rootless)
-2. [AppTainer](https://apptainer.org/) - formally know as Singularity.
-- designed for HPC
-- uses Linux namespaces but leaves resource limitations to the batch system
-- feels like running a program
-- allows access to _all_ host resources
-- runs in the user namespace
-3. [Docker](https://docs.docker.com/)
-- based on Linux namespaces and resource limitations
-- client server model (_dockerd_)
-- typical _microservices_ (see [docker-compose](https://docs.docker.com/compose/) for a swarm)
-- very popular with a huge collection on dockerhub
+   - open industry standards for container format & runtime
+   - Allows for a daemon-less container engine for running OCI containers (root or rootless)
+1. [AppTainer](https://apptainer.org/) - formally know as Singularity.
+   - designed for HPC
+   - uses Linux namespaces but leaves resource limitations to the batch system
+   - feels like running a program
+   - allows access to _all_ host resources
+   - runs in the user namespace
+1. [Docker](https://docs.docker.com/)
+   - based on Linux namespaces and resource limitations
+   - client server model (_dockerd_)
+   - typical _microservices_ (see [docker-compose](https://docs.docker.com/compose/) for a swarm)
+   - very popular with a huge collection on dockerhub
 
 Our focus will be on Docker. 
