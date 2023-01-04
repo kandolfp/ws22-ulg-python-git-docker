@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/katex/katex.min.css">
-     
+  
    <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/highlight/github.min.css">
    
     <script src="/ws22-ulg-python-git-docker/libs/clipboard.min.js"></script>
@@ -52,7 +51,7 @@
   }
 </style>
 
-   <title>Package Manager</title>  
+   <title>Docker</title>  
 </head>
 <body>                      <!-- closed in foot.html -->
 <div class="page-wrap">   <!-- closed in foot.html -->
@@ -68,7 +67,7 @@
     <div class="menu" id="side-menu">
       <ul class="menu-list">
         <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/" class="menu-list-link ">Start</a>
-        <li class="menu-list-item active"><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link active">Python</a>
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link ">Python</a>
           <ul class="menu-list-child-list ">
             <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/numpy/" class="menu-list-link ">Numpy</a>
               <ul class="menu-list-child-list ">
@@ -97,9 +96,9 @@
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/worksheet_3/" class="menu-list-link {{ispage pages/git/worksheet_3/*}}active{{end}}">Worksheet 3</a>
               -->
           </ul>
-        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link ">Docker</a>
+        <li class="menu-list-item active"><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link active">Docker</a>
           <ul class="menu-list-child-list ">
-            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/basics/" class="menu-list-link ">Basics</a>
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/basics/" class="menu-list-link active">Basics</a>
             <!--
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/saving_data/" class="menu-list-link {{ispage pages/docker/saving_data/*}}active{{end}}">Saving data</a>
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/exploratory_da/" class="menu-list-link {{ispage pages/docker/exploratory_da/*}}active{{end}}">Exploratory Data Analysis</a>
@@ -125,68 +124,135 @@
 
 
 <!-- Content appended here (in class franklin-content) -->
-<div class="franklin-content"><h1 id="package_manager"><a href="#package_manager" class="header-anchor">Package manager</a></h1>
-<p>We have already seen the Julia <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/">package manager</a>. In the following, we will discuss this feature in more detail. We already know how to open the package manager: Simply press <code>&#93;</code>. Now, in order to, for example, add the <a href="https://juliaapproximation.github.io/FastGaussQuadrature.jl/stable/">FastGaussQuadrature</a> package type </p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> add FastGaussQuadrature</code></pre>
-<p>From now on, every time we open Julia, we can type</p>
-<pre><code class="julia-repl hljs"><span class="hljs-meta prompt_">julia&gt;</span><span class="language-julia"> <span class="hljs-keyword">using</span> FastGaussQuadrature</span></code></pre>
-<p>which in this case adds functionalities to numerically compute integrals to our session. Note that the specific details of this package are not important at this point and we will revisit this package in our work sheets. In case we wish to remove this package again we can open the package manager and type</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> rm FastGaussQuadrature</code></pre>
-<p>If we now want to install a specific version of a package we can add <code>@&lt;versionnumber&gt;</code> behind the package name. As an example, to install <code>FastGaussQuadrature</code> at version <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.4.8</mn></mrow><annotation encoding="application/x-tex">0.4.8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.4.8</span></span></span></span> we type</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> add FastGaussQuadrature@0.4.8</code></pre>
-<p>Moreover, we can update all packages that we have added by typing</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> update</code></pre>
-<p>or just a specific package &#40;for example FastGaussQuadrature&#41; by typing</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> update FastGaussQuadrature</code></pre>
-<p>To get a list of all installed packages we can type</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> status</code></pre>
-<p>It is good practice to add packages only for certain projects to prevent conflicting packages, see <a href="https://en.wikipedia.org/wiki/Dependency_hell">dependency hell</a>. This can be done by creating a new package environment. Here we create an environment called <code>example</code>:</p>
-<pre><code class="julia-repl hljs"><span class=hljs-metap>(@v1.7) pkg&gt;</span> activate example</code></pre>
-<p>If we check this new environment with the <code>status</code> command we will see that we have a clean package environment. We can return to the default environment by typing <code>activate</code>. We type <code>activate .</code>, if we want to create an environment that is identified with the project folder we are currently working in. Whenever someone uses this project folder, this person can enter the same environment by typing <code>activate .</code> and install all needed packages with the used versions by typing <code>instantiate</code>. If we do not want to start the REPL we can still include the environment by simply typing</p>
-<pre><code class="shell hljs">julia --project=. main.jl</code></pre>
-<button type="button" class="collapsible" style="background-color:#b5ddff"> Exercise </button><div class="collapsiblecontent">  Let us practice the learned concepts a little bit.</p>
-<ol>
-<li><p>Create a new project called <code>SummerSchool</code>. To setup the project, create a new folder and navigate to it using the REPL. </p>
+<div class="franklin-content"><h1 id="disclaimer"><a href="#disclaimer" class="header-anchor">Disclaimer</a></h1>
+<p>These notes are a mix of different sources: </p>
+<ul>
+<li><p><a href="https://docs.docker.com/get-started/overview/">Docker docs</a></p>
 </li>
-<li><p>Make sure you can use the <code>Plots</code> package in the new project environment by loading it with <code>using Plots</code>.</p>
-</li>
-<li><p>Now you can for example plot the connection between two points <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2,3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">)</span></span></span></span> by <code>plot&#40;&#91;1; 2&#93;, &#91;2; 3&#93;&#41;</code>.</p>
-</li>
-<li><p>Check if the <code>Plots</code> package is available in the standard environment.</p>
-</li>
-<li><p>Install the latest version of the <code>MultivariateStats</code> package in the standard environment and version <code>0.8.0</code> in your project environment.</p>
-</li>
-</ol>
-<p><div class="solution"> Solution </div><div class="solutioncollapsible">  </p>
-<pre><code class="julia-repl hljs"><span class=hljs-metas>shell&gt;</span> mkdir SummerSchool
+</ul>
+<h1 id="basics_of_docker"><a href="#basics_of_docker" class="header-anchor">Basics of Docker</a></h1>
+<p>Docker understands itself as an <em>open platform for developing, shipping, and running applications</em>.  By separating the application form the infrastructure it allows you to develop independent of the platform the <em>container</em> is running on later. </p>
+<p>The <em>docker platform</em> allows you to run many applications in isolated environments in so called <em>containers</em>.  This allows you to split up your application into different containers, for example the database is separate from your application and so forth.  This allows you to update different parts independently from each other and revert changes if required.  This approach is often summed up under the term <em>micro services</em>.</p>
+<p>Docker uses a specific architecture to achieve this: 
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/docker/docker_architecture.svg" style="padding:0; " alt=" The docker architecture."/>
+<figcaption> The docker architecture.</figcaption>
+</figure>
+</p>
+<p>Mainly docker consists of a client <code>docker</code> and server <code>dockerd</code> &#40;docker daemon&#41; approach. </p>
+<h2 id="the_docker_daemon"><a href="#the_docker_daemon" class="header-anchor">The Docker daemon</a></h2>
+<p>The Docker daemon is in charge of all the Docker objects such as images, containers, networks, volumes and listens for API calls.  Furthermore, it is able to communicate with other daemons.</p>
+<h2 id="the_docker_client"><a href="#the_docker_client" class="header-anchor">The Docker client</a></h2>
+<p>The docker client is your way to interact with Docker.  Instructions like <code>docker pull</code> are sent as an API call to <code>dockerd</code> and executed there.  The daemon that you communicate with does not necessarily be on the local machine nor does it always have to be the same.</p>
+<h2 id="the_docker_registries"><a href="#the_docker_registries" class="header-anchor">The Docker registries</a></h2>
+<p>The Docker registries are separate and strictly speaking not necessary for your to use Docker.  There purpose is to store Docker images.  This can be public like <a href="https://hub.docker.com/">Docker Hub</a> and <a href="https://autamus.io/registry/">Autamus</a><sup id="fnref:1"><a href="#fndef:1" class="fnref">[1]</a></sup> or private for your organisation and tools like GitLab provide registries as well.</p>
+<p><table class="fndef" id="fndef:1">
+    <tr>
+        <td class="fndef-backref"><a href="#fnref:1">[1]</a></td>
+        <td class="fndef-content">A Semi-Autonomous Build System for Scientific Containers</td>
+    </tr>
+</table>
+ When you use a command like <code>docker pull</code> you pull an image from a registry and with <code>docker push</code> you push it to a registry, the same as with Git. </p>
+<p>Again, the client can talk to multiple registries. </p>
+<p>The various docker objects in the above image are</p>
+<h2 id="images"><a href="#images" class="header-anchor">Images</a></h2>
+<blockquote>
+<p>An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization. For example, you may build an image which is based on the ubuntu image, but installs the Apache web server and your application, as well as the configuration details needed to make your application run.</p>
+</blockquote>
+<p>In order to build you own image you need a so called <code>Dockerfile</code> which uses a specific syntax to allow the Docker daemon to build an image from it.  Each step in this image is called a layer and whenever you build an image only the layers that change need to be rebuild. </p>
+<h2 id="container"><a href="#container" class="header-anchor">Container</a></h2>
+<blockquote>
+<p>A container is a runnable instance of an image. You can create, start, stop, move, or delete a container using the Docker API or CLI. You can connect a container to one or more networks, attach storage to it, or even create a new image based on its current state.</p>
+</blockquote>
+<p>The container is isolated from the host machine due to the use of <em>namespaces</em> but you can allow interaction with the host machine like opening a network port or <em>mounting</em> a directory into the image. </p>
+<blockquote>
+<p>A container is defined by its image as well as any configuration options you provide to it when you create or start it. When a container is removed, any changes to its state that are not stored in persistent storage disappear.</p>
+</blockquote>
+<h2 id="docker_commands"><a href="#docker_commands" class="header-anchor">Docker commands</a></h2>
+<button type="button" class="collapsible" style="background-color:#caffa5"> Example </button><div class="collapsiblecontent">  The <code>docker</code> client or CLI provides you with a multitude of commands:</p>
+<pre><code class="bash hljs">$ docker --<span class="hljs-built_in">help</span>
 
-<span class=hljs-metas>shell&gt;</span> cd SummerSchool
-/home/jonas/Projects/SummerSchool
+Usage:  docker [OPTIONS] COMMAND
 
-<span class=hljs-metap>(@v1.7) pkg&gt;</span> activate .
-  Activating new project at `~/Projects/SummerSchool`
+A self-sufficient runtime <span class="hljs-keyword">for</span> containers
 
-<span class=hljs-metap>(SummerSchool) pkg&gt;</span> add Plots
+Options:
+      --config string      Location of client config files (default <span class="hljs-string">&quot;/home/c102338/.docker&quot;</span>)
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST <span class="hljs-built_in">env</span> var and default context <span class="hljs-built_in">set</span> with <span class="hljs-string">&quot;docker context use&quot;</span>)
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level (<span class="hljs-string">&quot;debug&quot;</span>|<span class="hljs-string">&quot;info&quot;</span>|<span class="hljs-string">&quot;warn&quot;</span>|<span class="hljs-string">&quot;error&quot;</span>|<span class="hljs-string">&quot;fatal&quot;</span>) (default <span class="hljs-string">&quot;info&quot;</span>)
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default <span class="hljs-string">&quot;/home/c102338/.docker/ca.pem&quot;</span>)
+      --tlscert string     Path to TLS certificate file (default <span class="hljs-string">&quot;/home/c102338/.docker/cert.pem&quot;</span>)
+      --tlskey string      Path to TLS key file (default <span class="hljs-string">&quot;/home/c102338/.docker/key.pem&quot;</span>)
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
 
-<span class="hljs-meta prompt_">julia&gt;</span><span class="language-julia"> <span class="hljs-keyword">using</span> Plots
-</span>
-<span class="hljs-meta prompt_">julia&gt;</span><span class="language-julia"> plot([<span class="hljs-number">1</span>; <span class="hljs-number">2</span>],[<span class="hljs-number">2</span>; <span class="hljs-number">3</span>])
-</span>
-<span class=hljs-metap>(SummerSchool) pkg&gt;</span> activate
-  Activating project at `~/.julia/environments/v1.7`
+Management Commands:
+  builder     Manage builds
+  buildx*     Docker Buildx (Docker Inc., v0.9.1)
+  compose*    Docker Compose (Docker Inc., v2.11.1)
+  config      Manage Docker configs
+  container   Manage containers
+  context     Manage contexts
+  image       Manage images
+  manifest    Manage Docker image manifests and manifest lists
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
 
-<span class="hljs-meta prompt_">julia&gt;</span><span class="language-julia"> <span class="hljs-keyword">using</span> Plots
-</span> │ Package Plots not found, but a package named Plots is available from a registry. 
- │ Install package?
- │   <span class=hljs-metap>(@v1.7) pkg&gt;</span> add Plots 
- └ (y/n) [y]: 
+Commands:
+  attach      Attach <span class="hljs-built_in">local</span> standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container<span class="hljs-string">&#x27;s changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container&#x27;</span>s filesystem
+  events      Get real time events from the server
+  <span class="hljs-built_in">exec</span>        Run a <span class="hljs-built_in">command</span> <span class="hljs-keyword">in</span> a running container
+  <span class="hljs-built_in">export</span>      Export a container<span class="hljs-string">&#x27;s filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
 
-<span class=hljs-metap>(@v1.7) pkg&gt;</span> add MultivariateStats
-
-<span class=hljs-metap>(@v1.7) pkg&gt;</span> activate .
-
-<span class=hljs-metap>(SummerSchool) pkg&gt;</span> add MultivariateStats@0.8.0</code></pre>
-<p></div> </div>
+Run &#x27;</span>docker COMMAND --<span class="hljs-built_in">help</span><span class="hljs-string">&#x27; for more information on a command.</span></code></pre>
+<p>To get more help with docker, check out our guides at https://docs.docker.com/go/guides/ </div>
 <div class="page-foot">
     <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: January 04, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
@@ -195,11 +261,6 @@
     </div> <!-- end of class main-content -->
     </div> <!-- end of class main-content-wrap -->
     </div> <!-- end of class page-wrap-->
-    
-      
-
-
-
     
     
       
