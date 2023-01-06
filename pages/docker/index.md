@@ -134,4 +134,9 @@ Nowadays, there are a different solutions available with a different focus and d
    - typical _microservices_ (see [docker-compose](https://docs.docker.com/compose/) for a swarm)
    - very popular with a huge collection on dockerhub
 
+If you want to fully understand what a container actually is it is very instructive to have a look at this video by [Liz Rice](https://www.lizrice.com/) _Learn how to code a container using Go code_
+~~~
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8fi7uSYlOdc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+~~~
+
 Our focus will be on Docker. 
