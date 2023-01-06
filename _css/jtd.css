@@ -648,6 +648,7 @@ body { counter-reset: eqnum; }
   line-height: 1.35em;
   border-radius: 10px;
   padding: 1em;
+  max-height: 27em;
 }
 
 .hljs-meta,
