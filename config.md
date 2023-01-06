@@ -28,17 +28,45 @@ Add here global latex commands to use throughout your pages.
 \newcommand{\R}{\mathbb R}
 \newcommand{\scal}[1]{\langle #1 \rangle}
 \newcommand{\note}[1]{@@note @@title ⚠ Note@@ @@content #1 @@ @@}
+<!--
+\newcommand{\question}[2]{
+@@warning 
+	@@title #1 @@ 
+	@@content #2 @@
+@@
+}
+-->
+\newcommand{\question}[2]{
+~~~
+<button type="button" class="collapsible" style="background-color:#caffa5">~~~ #1 ~~~</button>
+<div class="collapsiblecontent">~~~ #2 ~~~</div>
+~~~
+}
 \newcommand{\example}[1]{
-~~~<button type="button" class="collapsible" style="background-color:#caffa5">~~~ Example ~~~</button><div class="collapsiblecontent">~~~ #1 ~~~</div>~~~
+~~~
+<button type="button" class="collapsible" style="background-color:#caffa5">~~~ Example ~~~</button>
+<div class="collapsiblecontent">~~~ #1 ~~~</div>
+~~~
 }
 \newcommand{\exercise}[1]{
-~~~<button type="button" class="collapsible" style="background-color:#b5ddff">~~~ Exercise ~~~</button><div class="collapsiblecontent">~~~ #1 ~~~</div>~~~
+~~~
+<button type="button" class="collapsible" style="background-color:#b5ddff">~~~ Exercise ~~~</button>
+<div class="collapsiblecontent">~~~ #1 ~~~</div>
+~~~
 }
 \newcommand{\collapssol}[1]{
-~~~<button type="button" class="collapsible" style="background-color:#fffca5">~~~ Solution ~~~</button><div class="collapsiblecontent">~~~ #1 ~~~</div>~~~
+~~~
+<button type="button" class="collapsible" style="background-color:#fffca5">~~~ Solution ~~~</button>
+<div class="collapsiblecontent">~~~ #1 ~~~</div>
+~~~
 }
 
-\newcommand{\solution}[1]{~~~<div class="solution">~~~ Solution ~~~</div><div class="solutioncollapsible">~~~ #1 ~~~</div>~~~}
+\newcommand{\solution}[1]{
+~~~
+<div class="solution">~~~ Solution ~~~</div>
+<div class="solutioncollapsible">~~~ #1 ~~~</div>
+~~~
+}
 
 \newcommand{\figenv}[3]{
 ~~~
