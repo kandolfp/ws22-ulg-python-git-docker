@@ -477,3 +477,60 @@ As a consequence, files that have not these access rights will not be shown and 
 If your _host user_ is different you can change the user inside the container by adding the option
 `--user <uid>:<gid>` to the run command.
 }
+
+# Dockerfile
+
+Now that you have all this in order you run your examples but are greeted with the response that `numpy` is not available. 
+Of course you can install it in the terminal - via pip - or directly via Python but next time you start the image you need to do it again. 
+
+So we decide to create a new image and use that instead. 
+A new image is created with a `Dockerfile`, see[Dockerfile reference](https://docs.docker.com/engine/reference/builder/) for full details. 
+
+So we create a the file `Dockerfile` with the following content, see [Documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/recipes.html#add-a-custom-conda-environment-and-jupyter-kernel)
+
+```Dockerfile
+# Start from a core stack version
+FROM jupyter/minimal-notebook:latest
+# Install in the default python3 environment
+RUN pip install --quiet --no-cache-dir 'numpy' && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+```
+1. This file first specifies that it starts working `FROM` the `jupyter/minimal-notebook:latest` image.
+1. Second `pip` is used to install `numpy` and to fix some permissions that are required due to the fact that `root` is not used in this image.
+
+You can build you own image by calling:
+```bash
+> docker build -t ulg22:latest .
+Sending build context to Docker daemon  114.2kB
+Step 1/2 : FROM jupyter/minimal-notebook:latest
+ ---> f0246d6dd87f
+Step 2/2 : RUN pip install --quiet --no-cache-dir 'numpy' &&     fix-permissions "${CONDA_DIR}" &&     fix-permissions "/home/${NB_USER}"
+ ---> Running in 18628a817de6
+Removing intermediate container 18628a817de6
+ ---> 2265b09a0add
+Successfully built 2265b09a0add
+Successfully tagged ulg22:latest
+```
+and run it with
+```bash
+> docker run -it -p 8888:8888 ulg22
+```
+Now lets do something more fancy.
+
+# Add a second kernel to the notebook
+
+The second language uses in the class is R so why not include it into the container. 
+Checking the documentation of R reveals that we need the [`IRkernel` package](https://irkernel.github.io/installation/) and the installation instructions translate to 
+```Dockerfile
+# Start from a core stack version
+FROM jupyter/minimal-notebook:latest
+
+RUN mamba install --quiet --yes R && \
+    mamba clean --all -f -y
+RUN Rscript -e "install.packages(c(\"IRkernel\"), repos = c(\"http://cran.rstudio.com\"))" && \
+    Rscript -e "IRkernel::installspec()" && \
+    jupyter labextension install @techrah/text-shortcuts
+```
+
+# Get files into the notebook
