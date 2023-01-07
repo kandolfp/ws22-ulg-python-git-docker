@@ -505,8 +505,49 @@ CONTAINER ID   IMAGE                      COMMAND                  CREATED      
 <pre><code class="bash hljs">(base) jovyan@82a302b74f60:~/work$ <span class="hljs-built_in">id</span>
 uid=1000(jovyan) gid=100(<span class="hljs-built_in">users</span>) <span class="hljs-built_in">groups</span>=100(<span class="hljs-built_in">users</span>)</code></pre>
 <p>As a consequence, files that have not these access rights will not be shown and if you save a file it will belong to user <code>1000</code> on the <em>host machine</em>, whoever that is.  If your <em>host user</em> is different you can change the user inside the container by adding the option <code>--user &lt;uid&gt;:&lt;gid&gt;</code> to the run command.</p></div></div>
+<h1 id="dockerfile"><a href="#dockerfile" class="header-anchor">Dockerfile</a></h1>
+<p>Now that you have all this in order you run your examples but are greeted with the response that <code>numpy</code> is not available.  Of course you can install it in the terminal - via pip - or directly via Python but next time you start the image you need to do it again. </p>
+<p>So we decide to create a new image and use that instead.  A new image is created with a <code>Dockerfile</code>, see<a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a> for full details. </p>
+<p>So we create a the file <code>Dockerfile</code> with the following content, see <a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/using/recipes.html#add-a-custom-conda-environment-and-jupyter-kernel">Documentation</a></p>
+<pre><code class="Dockerfile hljs"><span class="hljs-comment"># Start from a core stack version</span>
+<span class="hljs-keyword">FROM</span> jupyter/minimal-notebook:latest
+<span class="hljs-comment"># Install in the default python3 environment</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> pip install --quiet --no-cache-dir <span class="hljs-string">&#x27;numpy&#x27;</span> &amp;&amp; \
+    fix-permissions <span class="hljs-string">&quot;<span class="hljs-variable">${CONDA_DIR}</span>&quot;</span> &amp;&amp; \
+    fix-permissions <span class="hljs-string">&quot;/home/<span class="hljs-variable">${NB_USER}</span>&quot;</span></span></code></pre>
+<ol>
+<li><p>This file first specifies that it starts working <code>FROM</code> the <code>jupyter/minimal-notebook:latest</code> image.</p>
+</li>
+<li><p>Second <code>pip</code> is used to install <code>numpy</code> and to fix some permissions that are required due to the fact that <code>root</code> is not used in this image.</p>
+</li>
+</ol>
+<p>You can build you own image by calling:</p>
+<pre><code class="bash hljs">&gt; docker build -t ulg22:latest .
+Sending build context to Docker daemon  114.2kB
+Step 1/2 : FROM jupyter/minimal-notebook:latest
+ ---&gt; f0246d6dd87f
+Step 2/2 : RUN pip install --quiet --no-cache-dir <span class="hljs-string">&#x27;numpy&#x27;</span> &amp;&amp;     fix-permissions <span class="hljs-string">&quot;<span class="hljs-variable">${CONDA_DIR}</span>&quot;</span> &amp;&amp;     fix-permissions <span class="hljs-string">&quot;/home/<span class="hljs-variable">${NB_USER}</span>&quot;</span>
+ ---&gt; Running <span class="hljs-keyword">in</span> 18628a817de6
+Removing intermediate container 18628a817de6
+ ---&gt; 2265b09a0add
+Successfully built 2265b09a0add
+Successfully tagged ulg22:latest</code></pre>
+<p>and run it with</p>
+<pre><code class="bash hljs">&gt; docker run -it -p 8888:8888 ulg22</code></pre>
+<p>Now lets do something more fancy.</p>
+<h1 id="add_a_second_kernel_to_the_notebook"><a href="#add_a_second_kernel_to_the_notebook" class="header-anchor">Add a second kernel to the notebook</a></h1>
+<p>The second language uses in the class is R so why not include it into the container.  Checking the documentation of R reveals that we need the <a href="https://irkernel.github.io/installation/"><code>IRkernel</code> package</a> and the installation instructions translate to </p>
+<pre><code class="Dockerfile hljs"><span class="hljs-comment"># Start from a core stack version</span>
+<span class="hljs-keyword">FROM</span> jupyter/minimal-notebook:latest
+
+<span class="hljs-keyword">RUN</span><span class="language-bash"> mamba install --quiet --<span class="hljs-built_in">yes</span> R &amp;&amp; \
+    mamba clean --all -f -y</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> Rscript -e <span class="hljs-string">&quot;install.packages(c(\&quot;IRkernel\&quot;), repos = c(\&quot;http://cran.rstudio.com\&quot;))&quot;</span> &amp;&amp; \
+    Rscript -e <span class="hljs-string">&quot;IRkernel::installspec()&quot;</span> &amp;&amp; \
+    jupyter labextension install @techrah/text-shortcuts</span></code></pre>
+<h1 id="get_files_into_the_notebook"><a href="#get_files_into_the_notebook" class="header-anchor">Get files into the notebook</a></h1>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: January 06, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: January 07, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
