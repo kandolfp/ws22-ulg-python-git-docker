@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/highlight/github.min.css">
+   
+    <script src="/ws22-ulg-python-git-docker/libs/clipboard.min.js"></script>
+  
+  
+  <script src="/ws22-ulg-python-git-docker/libs/plotly-1_58_5.min.js"></script> 
+  <script>
+    // This function is used when calling `\fig{...}` See # Using \fig{...} below
+    const PlotlyJS_json = async (div, url) => {
+      response = await fetch(url); // get file
+      fig = await response.json(); // convert it to json
+      // Make the plot fit the screen responsively. See the documentation of plotly.js. https://plotly.com/javascript/responsive-fluid-layout/
+      if (typeof fig.config === 'undefined') { fig["config"]={} }
+      delete fig.layout.width
+      delete fig.layout.height
+      fig["layout"]["autosize"] = true
+      fig["config"]["autosizable"] = true
+      fig["config"]["responsive"] = true
+
+      // make it easier to scroll throught the website rather than being blocked by a figure.
+      fig.config["scrollZoom"] = false
+
+      // PlotlyJS.savefig by default add the some more attribute to make a static plot.
+      // Disable them to make the website fancier.
+      delete fig.config.staticPlot
+      delete fig.config.displayModeBar
+      delete fig.config.doubleClick
+      delete fig.config.showTips
+
+      Plotly.newPlot(div, fig);
+    };
+  </script>
+  
+  <link rel="stylesheet" href="/ws22-ulg-python-git-docker/css/jtd.css">
+<link rel="stylesheet" href="/ws22-ulg-python-git-docker/css/extras.css">
+<link rel="icon" href="/ws22-ulg-python-git-docker/assets/favicon.ico">
+
+<style>
+  /* #148 wrap long header */
+  .franklin-content a.header-anchor,
+  .franklin-toc li a
+   {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+</style>
+
+   <title>python - numpy</title>  
+</head>
+<body>                      <!-- closed in foot.html -->
+<div class="page-wrap">   <!-- closed in foot.html -->
+  <!-- SIDE BAR -->
+  <div class="side-bar">
+    <div class="header">
+      <a href="/ws22-ulg-python-git-docker/" class="title">
+        ULG Software VU 2
+      </a>
+    </div>
+    <label for="show-menu" class="show-menu">MENU</label>
+    <input type="checkbox" id="show-menu" role="button">
+    <div class="menu" id="side-menu">
+      <ul class="menu-list">
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/" class="menu-list-link ">Start</a>
+        <li class="menu-list-item active"><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link active">Python</a>
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/numpy/" class="menu-list-link ">Numpy</a>
+              <ul class="menu-list-child-list ">
+                <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/notebooks/html/Session1" class="menu-list-link ">Session Notes</a>
+              </ul>
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/pandas/" class="menu-list-link active">pandas</a>
+            <!--
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/matrix_vectors/" class="menu-list-link {{ispage pages/python/matrix_vectors/*}}active{{end}}">Matrix and Vector Operations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/conditional_evaluations/" class="menu-list-link {{ispage pages/python/conditional_evaluations/*}}active{{end}}">Conditional evaluations</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/loops/" class="menu-list-link {{ispage pages/python/loops/*}}active{{end}}">Loops</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/functions/" class="menu-list-link {{ispage pages/python/functions/*}}active{{end}}">Functions</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/macros/" class="menu-list-link {{ispage pages/python/macros/*}}active{{end}}">Macros</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/worksheet_1/" class="menu-list-link {{ispage pages/python/worksheet_1/*}}active{{end}}">Worksheet 1</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/worksheet_2/" class="menu-list-link {{ispage pages/python/worksheet_2/*}}active{{end}}">Worksheet 2</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/pluto/" class="menu-list-link {{ispage pages/python/pluto/*}}active{{end}}">Pluto Notebook</a>
+            -->
+          </ul>
+           <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/" class="menu-list-link ">Git</a>
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/basics" class="menu-list-link ">Basics</a>
+          <!--  <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/simd/" class="menu-list-link {{ispage pages/git/simd/*}}active{{end}}">Single Instruction Multiple Data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/pi/" class="menu-list-link {{ispage pages/git/pi/*}}active{{end}}">&pi; example</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/multithreading/" class="menu-list-link {{ispage pages/git/multithreading/*}}active{{end}}">Multithreading</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/distributed/" class="menu-list-link {{ispage pages/git/distributed/*}}active{{end}}">Distributed computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/gpu/" class="menu-list-link {{ispage pages/git/gpu/*}}active{{end}}">GPU computing</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/git/worksheet_3/" class="menu-list-link {{ispage pages/git/worksheet_3/*}}active{{end}}">Worksheet 3</a>
+              -->
+          </ul>
+        <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link ">Docker</a>
+          <ul class="menu-list-child-list ">
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/basics/" class="menu-list-link ">Basics</a>
+            <!--
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/saving_data/" class="menu-list-link {{ispage pages/docker/saving_data/*}}active{{end}}">Saving data</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/exploratory_da/" class="menu-list-link {{ispage pages/docker/exploratory_da/*}}active{{end}}">Exploratory Data Analysis</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/datasets/" class="menu-list-link {{ispage pages/docker/datasets/*}}active{{end}}">Data Sets</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/unsupervised_learning/" class="menu-list-link {{ispage pages/docker/unsupervised_learning/*}}active{{end}}">Unsupervised Learning</a>
+            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/docker/supervised_learning/" class="menu-list-link {{ispage pages/docker/supervised_learning/*}}active{{end}}">Supervised Learning</a>
+            -->
+          </ul>
+          
+      </ul>
+    </div>
+    <div class="footer">
+      This is <em>Just the docs</em>, adapted from the <a href="https://github.com/pmarsceill/just-the-docs" target="_blank">Jekyll theme</a>.
+    </div>
+  </div>
+  <!-- CONTENT -->
+  <div class="main-content-wrap"> <!-- closed in foot.html -->
+    <div class="main-content">    <!-- closed in foot.html -->
+      <div class="main-header">
+        ULG 971001 - Software (VU 2) - python, git, docker
+      </div>
+
+
+
+<!-- Content appended here (in class franklin-content) -->
+<div class="franklin-content"><h1 id="introduction_to_pandas"><a href="#introduction_to_pandas" class="header-anchor">Introduction to Pandas</a></h1>
+<p><a href="https://pandas.pydata.org/">Pandas</a> is a Python package for data analysis and manipulation tool with an open source licence &#40;<a href="https://github.com/pandas-dev/pandas/blob/main/LICENSE">BSD license</a>&#41;.  It provides a data structure called <em>DataFrame</em> - essentially a multidimensional array with row and column labels - that is high-performant, easy-to-use and flexible. Pandas is build on top of NumPy, so it gains all the optimisations and functions that are associated with this package. </p>
+<p>These notes are heavily inspired by the notes of Gregor Ehresperger from previous years in this class.  </p>
+<h1 id="first_steps"><a href="#first_steps" class="header-anchor">First steps</a></h1>
+<p>We load the package as per usual and by common convention we give it the name<code>np</code>. </p>
+<pre><code class="python hljs"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd</code></pre>
+<p>A Pandas Series is a 1D array of indexed data</p>
+<pre><code class="python hljs"><span class="hljs-meta">&gt;&gt;&gt; </span>data = pd.Series([<span class="hljs-number">0.25</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.75</span>, <span class="hljs-number">1.0</span>])
+<span class="hljs-comment"># show the entire Series</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data
+<span class="hljs-number">0</span>    <span class="hljs-number">0.25</span>
+<span class="hljs-number">1</span>    <span class="hljs-number">0.50</span>
+<span class="hljs-number">2</span>    <span class="hljs-number">0.75</span>
+<span class="hljs-number">3</span>    <span class="hljs-number">1.00</span>
+dtype: float64
+
+<span class="hljs-comment"># just show the values of the series</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data.values
+array([<span class="hljs-number">0.25</span>, <span class="hljs-number">0.5</span> , <span class="hljs-number">0.75</span>, <span class="hljs-number">1.</span>  ])
+
+<span class="hljs-comment"># just show the index of the series</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data.index
+RangeIndex(start=<span class="hljs-number">0</span>, stop=<span class="hljs-number">4</span>, step=<span class="hljs-number">1</span>)
+
+<span class="hljs-comment"># accessing elements works just like in numpy</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data[<span class="hljs-number">2</span>]
+<span class="hljs-number">0.75</span>
+
+<span class="hljs-comment"># slicing is also available</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]
+<span class="hljs-number">1</span>    <span class="hljs-number">0.50</span>
+<span class="hljs-number">2</span>    <span class="hljs-number">0.75</span>
+dtype: float64</code></pre>
+<p>So far we are essentially using NumPy functionality, the essential difference is that the Pandas Series &#40;implicitly&#41; defines an index.</p>
+<pre><code class="python hljs"><span class="hljs-comment"># explicitly define an index</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data = pd. Series ([<span class="hljs-number">0.25</span> , <span class="hljs-number">0.5</span> , <span class="hljs-number">0.75</span> , <span class="hljs-number">1.0</span>] ,
+                  index =[<span class="hljs-string">&quot;a&quot;</span>,  <span class="hljs-string">&quot;b&quot;</span>,   <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>])
+
+<span class="hljs-comment"># have a look</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data
+a    <span class="hljs-number">0.25</span>
+b    <span class="hljs-number">0.50</span>
+c    <span class="hljs-number">0.75</span>
+d    <span class="hljs-number">1.00</span>
+dtype: float64
+
+<span class="hljs-comment"># display the index used</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data.index
+Index([<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>], dtype=<span class="hljs-string">&#x27;object&#x27;</span>)
+
+<span class="hljs-comment"># you can still use the _implicit_ numerical index</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]
+b    <span class="hljs-number">0.50</span>
+c    <span class="hljs-number">0.75</span>
+dtype: float64
+
+<span class="hljs-comment"># or directly the new index</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data[<span class="hljs-string">&quot;b&quot;</span>]
+<span class="hljs-number">0.5</span>
+
+<span class="hljs-comment"># with all the variants available</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data[[<span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>]]
+b    <span class="hljs-number">0.50</span>
+c    <span class="hljs-number">0.75</span>
+dtype: float64</code></pre>
+<p>Of course we can also use a dictionary as the start of our series</p>
+<pre><code class="python hljs"><span class="hljs-comment"># define the dictionary with first and last name</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>users_dict = {<span class="hljs-string">&quot;Alice &quot;</span>: <span class="hljs-string">&quot;Lidell &quot;</span>,
+                  <span class="hljs-string">&quot;Bob&quot;</span>: <span class="hljs-string">&quot;Ross&quot;</span>,
+                  <span class="hljs-string">&quot;Charlie&quot;</span>: <span class="hljs-string">&quot;Chaplin&quot;</span>}
+
+<span class="hljs-comment"># create a Pandas Series out of the dictionary</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data = pd.Series(users_dict)
+
+<span class="hljs-comment"># display the series</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data
+Alice      Lidell 
+Bob           Ross
+Charlie    Chaplin
+dtype: <span class="hljs-built_in">object</span>
+
+<span class="hljs-comment"># show the indeces</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data.index
+Index([<span class="hljs-string">&#x27;Alice &#x27;</span>, <span class="hljs-string">&#x27;Bob&#x27;</span>, <span class="hljs-string">&#x27;Charlie&#x27;</span>], dtype=<span class="hljs-string">&#x27;object&#x27;</span>)
+
+<span class="hljs-comment"># show the data values</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data.values
+array([<span class="hljs-string">&#x27;Lidell &#x27;</span>, <span class="hljs-string">&#x27;Ross&#x27;</span>, <span class="hljs-string">&#x27;Chaplin&#x27;</span>], dtype=<span class="hljs-built_in">object</span>)
+
+<span class="hljs-comment"># have a look what pandas tells us about the series</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>data.describe()
+count           <span class="hljs-number">3</span>
+unique          <span class="hljs-number">3</span>
+top       Lidell 
+freq            <span class="hljs-number">1</span>
+dtype: <span class="hljs-built_in">object</span></code></pre>
+<p>If you go to the already mentioned <code>DataFrame</code> you get a 2D array with flexible row and column names/indices.</p>
+<p>First we define two series with the area and the population of the states in Austria</p>
+<pre><code class="python hljs"><span class="hljs-meta">&gt;&gt;&gt; </span>area_dict = {<span class="hljs-string">&quot;Vienna&quot;</span>: <span class="hljs-number">415</span>,   <span class="hljs-string">&quot;Lower Austria&quot;</span>: <span class="hljs-number">19178</span>,
+                 <span class="hljs-string">&quot;Styria&quot;</span>: <span class="hljs-number">16401</span>, <span class="hljs-string">&quot;Upper Austria&quot;</span>: <span class="hljs-number">11982</span>,
+                 <span class="hljs-string">&quot;Tyrol&quot;</span>: <span class="hljs-number">12648</span>,  <span class="hljs-string">&quot;Carinthia&quot;</span>: <span class="hljs-number">9536</span>,
+                 <span class="hljs-string">&quot;Salzburg&quot;</span>: <span class="hljs-number">7154</span>,<span class="hljs-string">&quot;Vorarlberg&quot;</span>: <span class="hljs-number">2601</span>,
+                 <span class="hljs-string">&quot;Burgenland&quot;</span>: <span class="hljs-number">3965</span>}
+<span class="hljs-meta">&gt;&gt;&gt; </span>pop_dict = {<span class="hljs-string">&quot;Vienna&quot;</span>: <span class="hljs-number">1794770</span>, <span class="hljs-string">&quot;Lower Austria&quot;</span>: <span class="hljs-number">1636287</span>,
+                <span class="hljs-string">&quot;Styria&quot;</span>: <span class="hljs-number">1221014</span>, <span class="hljs-string">&quot;Upper Austria&quot;</span>: <span class="hljs-number">1436791</span>,
+                <span class="hljs-string">&quot;Tyrol&quot;</span>: <span class="hljs-number">728537</span>,   <span class="hljs-string">&quot;Carinthia&quot;</span>: <span class="hljs-number">557371</span>,
+                <span class="hljs-string">&quot;Salzburg&quot;</span>: <span class="hljs-number">538258</span>,<span class="hljs-string">&quot;Vorarlberg&quot;</span>: <span class="hljs-number">378490</span>,
+                <span class="hljs-string">&quot;Burgenland&quot;</span>: <span class="hljs-number">288229</span>}
+<span class="hljs-meta">&gt;&gt;&gt; </span>area = pd.Series(area_dict)
+<span class="hljs-meta">&gt;&gt;&gt; </span>pop = pd.Series(pop_dict)</code></pre>
+<p>and combine them to a <code>DataFrame</code></p>
+<pre><code class="python hljs"><span class="hljs-meta">&gt;&gt;&gt; </span>states = pd.DataFrame({<span class="hljs-string">&quot;area&quot;</span>: area, <span class="hljs-string">&quot;population&quot;</span>: pop})
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>states
+                area  population
+Vienna           <span class="hljs-number">415</span>     <span class="hljs-number">1794770</span>
+Lower Austria  <span class="hljs-number">19178</span>     <span class="hljs-number">1636287</span>
+Styria         <span class="hljs-number">16401</span>     <span class="hljs-number">1221014</span>
+Upper Austria  <span class="hljs-number">11982</span>     <span class="hljs-number">1436791</span>
+Tyrol          <span class="hljs-number">12648</span>      <span class="hljs-number">728537</span>
+Carinthia       <span class="hljs-number">9536</span>      <span class="hljs-number">557371</span>
+Salzburg        <span class="hljs-number">7154</span>      <span class="hljs-number">538258</span>
+Vorarlberg      <span class="hljs-number">2601</span>      <span class="hljs-number">378490</span>
+Burgenland      <span class="hljs-number">3965</span>      <span class="hljs-number">288229</span>
+
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>states .loc [[<span class="hljs-string">&quot;Vienna&quot;</span>, <span class="hljs-string">&quot;Lower Austria&quot;</span>], <span class="hljs-string">&quot;population&quot;</span>]
+Vienna           <span class="hljs-number">1794770</span>
+Lower Austria    <span class="hljs-number">1636287</span>
+Name: population, dtype: int64</code></pre>
+<p>Of course you can have higher functions working on the <code>DataFrame</code></p>
+<pre><code class="python hljs"><span class="hljs-comment"># Show us some standard statistics </span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>states.describe()
+               area    population
+count      <span class="hljs-number">9.000000</span>  <span class="hljs-number">9.000000e+00</span>
+mean    <span class="hljs-number">9320.000000</span>  <span class="hljs-number">9.533052e+05</span>
+std     <span class="hljs-number">6357.483543</span>  <span class="hljs-number">5.736115e+05</span>
+<span class="hljs-built_in">min</span>      <span class="hljs-number">415.000000</span>  <span class="hljs-number">2.882290e+05</span>
+<span class="hljs-number">25</span>%     <span class="hljs-number">3965.000000</span>  <span class="hljs-number">5.382580e+05</span>
+<span class="hljs-number">50</span>%     <span class="hljs-number">9536.000000</span>  <span class="hljs-number">7.285370e+05</span>
+<span class="hljs-number">75</span>%    <span class="hljs-number">12648.000000</span>  <span class="hljs-number">1.436791e+06</span>
+<span class="hljs-built_in">max</span>    <span class="hljs-number">19178.000000</span>  <span class="hljs-number">1.794770e+06</span>
+
+<span class="hljs-comment">#which states have less than one million inhabitants?</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>states[<span class="hljs-string">&quot;population&quot;</span>] &lt; <span class="hljs-number">1e6</span>
+Vienna           <span class="hljs-literal">False</span>
+Lower Austria    <span class="hljs-literal">False</span>
+Styria           <span class="hljs-literal">False</span>
+Upper Austria    <span class="hljs-literal">False</span>
+Tyrol             <span class="hljs-literal">True</span>
+Carinthia         <span class="hljs-literal">True</span>
+Salzburg          <span class="hljs-literal">True</span>
+Vorarlberg        <span class="hljs-literal">True</span>
+Burgenland        <span class="hljs-literal">True</span>
+Name: population, dtype: <span class="hljs-built_in">bool</span></code></pre>
+<p>You can also add new or derived values to the <code>DataFrame</code></p>
+<pre><code class="python hljs"><span class="hljs-comment"># get the population density</span>
+states[<span class="hljs-string">&quot;density&quot;</span>] = states[<span class="hljs-string">&quot;population&quot;</span>]/states[<span class="hljs-string">&quot;area&quot;</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>states
+                area  population      density
+Vienna           <span class="hljs-number">415</span>     <span class="hljs-number">1794770</span>  <span class="hljs-number">4324.746988</span>
+Lower Austria  <span class="hljs-number">19178</span>     <span class="hljs-number">1636287</span>    <span class="hljs-number">85.321045</span>
+Styria         <span class="hljs-number">16401</span>     <span class="hljs-number">1221014</span>    <span class="hljs-number">74.447534</span>
+Upper Austria  <span class="hljs-number">11982</span>     <span class="hljs-number">1436791</span>   <span class="hljs-number">119.912452</span>
+Tyrol          <span class="hljs-number">12648</span>      <span class="hljs-number">728537</span>    <span class="hljs-number">57.600965</span>
+Carinthia       <span class="hljs-number">9536</span>      <span class="hljs-number">557371</span>    <span class="hljs-number">58.449140</span>
+Salzburg        <span class="hljs-number">7154</span>      <span class="hljs-number">538258</span>    <span class="hljs-number">75.238748</span>
+Vorarlberg      <span class="hljs-number">2601</span>      <span class="hljs-number">378490</span>   <span class="hljs-number">145.517109</span>
+Burgenland      <span class="hljs-number">3965</span>      <span class="hljs-number">288229</span>    <span class="hljs-number">72.693317</span></code></pre>
+<p>You can also sort according to a column</p>
+<pre><code class="python hljs"><span class="hljs-meta">&gt;&gt;&gt; </span>states.sort_values(by=[<span class="hljs-string">&quot;density&quot;</span>])
+                area  population      density
+Tyrol          <span class="hljs-number">12648</span>      <span class="hljs-number">728537</span>    <span class="hljs-number">57.600965</span>
+Carinthia       <span class="hljs-number">9536</span>      <span class="hljs-number">557371</span>    <span class="hljs-number">58.449140</span>
+Burgenland      <span class="hljs-number">3965</span>      <span class="hljs-number">288229</span>    <span class="hljs-number">72.693317</span>
+Styria         <span class="hljs-number">16401</span>     <span class="hljs-number">1221014</span>    <span class="hljs-number">74.447534</span>
+Salzburg        <span class="hljs-number">7154</span>      <span class="hljs-number">538258</span>    <span class="hljs-number">75.238748</span>
+Lower Austria  <span class="hljs-number">19178</span>     <span class="hljs-number">1636287</span>    <span class="hljs-number">85.321045</span>
+Upper Austria  <span class="hljs-number">11982</span>     <span class="hljs-number">1436791</span>   <span class="hljs-number">119.912452</span>
+Vorarlberg      <span class="hljs-number">2601</span>      <span class="hljs-number">378490</span>   <span class="hljs-number">145.517109</span>
+Vienna           <span class="hljs-number">415</span>     <span class="hljs-number">1794770</span>  <span class="hljs-number">4324.746988</span></code></pre>
+<h1 id="link_to_the_session_notes"><a href="#link_to_the_session_notes" class="header-anchor">Link to the session notes</a></h1>
+<p><a href="/ws22-ulg-python-git-docker/assets/pages/python/Session1.html">Session Notes</a></p>
+<div class="page-foot">
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: January 08, 2023.
+    Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    </div> <!-- end of class main-content -->
+    </div> <!-- end of class main-content-wrap -->
+    </div> <!-- end of class page-wrap-->
+    
+    
+      
+
+
+      <script>
+    (function(){
+    
+      // Get the elements.
+      // - the 'pre' element.
+      // - the 'div' with the 'paste-content' id.
+    
+      var pre = document.getElementsByTagName('pre');
+    
+      // Add a copy button in the 'pre' element.
+      // which only has the className of 'language-'.
+    
+      for (var i = 0; i < pre.length; i++) {
+        var isLanguage = pre[i].children[0].tagName == 'CODE';
+    
+        if ( isLanguage ) {
+          var button           = document.createElement('button');
+              button.className = 'copy-button';
+              button.textContent = 'Copy';
+    
+              pre[i].appendChild(button);
+        }
+      };
+    
+      // Run Clipboard
+    
+      var copyCode = new Clipboard('.copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+    
+      // On success:
+      // - Change the "Copy" text to "Copied".
+      // - Swap it to "Copy" in 2s.
+      // - Lead user to the "contenteditable" area with Velocity scroll.
+    
+      copyCode.on('success', function(event) {
+        event.clearSelection();
+        event.trigger.textContent = 'Copied';
+        window.setTimeout(function() {
+          event.trigger.textContent = 'Copy';
+        }, 2000);
+    
+      });
+    
+      // On error (Safari):
+      // - Change the  "Press Ctrl+C to copy"
+      // - Swap it to "Copy" in 2s.
+    
+      copyCode.on('error', function(event) {
+        event.trigger.textContent = 'Press "Ctrl + C" to copy';
+        window.setTimeout(function() {
+          event.trigger.textContent = 'Copy';
+        }, 5000);
+      });
+    
+    })();
+</script>
+    
+  </body>
+</html>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
+
+<script>
+  var coll = document.getElementsByClassName("solutioncollapsible");
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const myVar = urlParams.get('solution')
+  if ( myVar == 'true') {
+    for (i = 0; i < coll.length; i++) {
+      coll[i].style.display = "block";
+    }
+  }
+</script>

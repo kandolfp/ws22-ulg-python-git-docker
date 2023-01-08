@@ -73,8 +73,8 @@
               <ul class="menu-list-child-list ">
                 <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/notebooks/html/Session1" class="menu-list-link ">Session Notes</a>
               </ul>
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/pandas/" class="menu-list-link ">pandas</a>
             <!--
-            <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/package_manager/" class="menu-list-link {{ispage pages/python/package_manager/*}}active{{end}}">Package Manager</a>
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/matrix_vectors/" class="menu-list-link {{ispage pages/python/matrix_vectors/*}}active{{end}}">Matrix and Vector Operations</a>
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/conditional_evaluations/" class="menu-list-link {{ispage pages/python/conditional_evaluations/*}}active{{end}}">Conditional evaluations</a>
             <li class="menu-list-item {{ispage index}}active{{end}}"><a href="/ws22-ulg-python-git-docker/pages/python/loops/" class="menu-list-link {{ispage pages/python/loops/*}}active{{end}}">Loops</a>
@@ -505,7 +505,7 @@ CONTAINER ID   IMAGE                      COMMAND                  CREATED      
 <pre><code class="bash hljs">(base) jovyan@82a302b74f60:~/work$ <span class="hljs-built_in">id</span>
 uid=1000(jovyan) gid=100(<span class="hljs-built_in">users</span>) <span class="hljs-built_in">groups</span>=100(<span class="hljs-built_in">users</span>)</code></pre>
 <p>As a consequence, files that have not these access rights will not be shown and if you save a file it will belong to user <code>1000</code> on the <em>host machine</em>, whoever that is.  If your <em>host user</em> is different you can change the user inside the container by adding the option <code>--user &lt;uid&gt;:&lt;gid&gt;</code> to the run command.</p></div></div>
-<h1 id="dockerfile"><a href="#dockerfile" class="header-anchor">Dockerfile</a></h1>
+<h2 id="dockerfile"><a href="#dockerfile" class="header-anchor">Dockerfile</a></h2>
 <p>Now that you have all this in order you run your examples but are greeted with the response that <code>numpy</code> is not available.  Of course you can install it in the terminal - via pip - or directly via Python but next time you start the image you need to do it again. </p>
 <p>So we decide to create a new image and use that instead.  A new image is created with a <code>Dockerfile</code>, see<a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a> for full details. </p>
 <p>So we create a the file <code>Dockerfile</code> with the following content, see <a href="https://jupyter-docker-stacks.readthedocs.io/en/latest/using/recipes.html#add-a-custom-conda-environment-and-jupyter-kernel">Documentation</a></p>
@@ -535,7 +535,7 @@ Successfully tagged ulg22:latest</code></pre>
 <p>and run it with</p>
 <pre><code class="bash hljs">&gt; docker run -it -p 8888:8888 ulg22</code></pre>
 <p>Now lets do something more fancy.</p>
-<h1 id="add_a_second_kernel_to_the_notebook"><a href="#add_a_second_kernel_to_the_notebook" class="header-anchor">Add a second kernel to the notebook</a></h1>
+<h2 id="add_a_second_kernel_to_the_notebook"><a href="#add_a_second_kernel_to_the_notebook" class="header-anchor">Add a second kernel to the notebook</a></h2>
 <p>The second language uses in the class is R so why not include it into the container.  Checking the documentation of R reveals that we need the <a href="https://irkernel.github.io/installation/"><code>IRkernel</code> package</a> and the installation instructions translate to </p>
 <pre><code class="Dockerfile hljs"><span class="hljs-comment"># Start from a core stack version</span>
 <span class="hljs-keyword">FROM</span> jupyter/minimal-notebook:latest
@@ -545,9 +545,22 @@ Successfully tagged ulg22:latest</code></pre>
 <span class="hljs-keyword">RUN</span><span class="language-bash"> Rscript -e <span class="hljs-string">&quot;install.packages(c(\&quot;IRkernel\&quot;), repos = c(\&quot;http://cran.rstudio.com\&quot;))&quot;</span> &amp;&amp; \
     Rscript -e <span class="hljs-string">&quot;IRkernel::installspec()&quot;</span> &amp;&amp; \
     jupyter labextension install @techrah/text-shortcuts</span></code></pre>
-<h1 id="get_files_into_the_notebook"><a href="#get_files_into_the_notebook" class="header-anchor">Get files into the notebook</a></h1>
+<h2 id="additional_notes_on_dockerfiles"><a href="#additional_notes_on_dockerfiles" class="header-anchor">Additional notes on Dockerfiles </a></h2>
+<p>There are several more commands that can be used in the <a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a>:</p>
+<p>As seen above the <code>#</code> symbol can used for comments in a Dockerfile.</p>
+<pre><code class="Dockerfile hljs"><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /path/to/workdir</span></code></pre>
+<p>to set the working directory for most of the next instruction inside the image/container, </p>
+<pre><code class="Dockerfile hljs"><span class="hljs-keyword">COPY</span><span class="language-bash"> [--<span class="hljs-built_in">chown</span>=&lt;user&gt;:&lt;group&gt;] &lt;src&gt;... &lt;dest&gt;</span></code></pre>
+<p>to copy files from the host file system &#40;relative path to the context of the build&#41; to the image/container file system &#40;relative path to <code>WORKDIR</code>&#41;,</p>
+<pre><code class="Dockerfile hljs"><span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;executable&quot;</span>, <span class="hljs-string">&quot;param1&quot;</span>, <span class="hljs-string">&quot;param2&quot;</span>]</span></code></pre>
+<p>to allow you to configure a container that will run as an <em>executable</em>, in our case the <code>ENTRYPOINT</code> is defined such that <em>Jupyter Lab</em> starts automatically.  Only the last specified <code>ENTRYPOINT</code> is used.</p>
+<pre><code class="Dockerfile hljs"><span class="hljs-keyword">USER</span> &lt;<span class="hljs-keyword">user</span>&gt;[:&lt;group&gt;]</code></pre>
+<p>or</p>
+<pre><code class="Dockerfile hljs"><span class="hljs-keyword">USER</span> &lt;UID&gt;[:&lt;GID&gt;]</code></pre>
+<p>to specify the user &#40;and group&#41; to use for the remainder of the current stage.  It is therefore used for the instructions <code>RUN</code>, <code>ENTRYPOINT</code>, etc.</p>
+<p>Similar to the <code>.gitignore</code> there is also the possibility to specify a <code>.dockerignore</code> file.  Before the Docker CLI sends the context of the build to the docker daemon &#40;remote or local&#41; it excludes the files and paths that are specified in this file.  This can be used to exclude sensitive or large files from being send to the daemon.</p>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: January 07, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: January 08, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
