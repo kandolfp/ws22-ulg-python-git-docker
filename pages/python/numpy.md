@@ -4,15 +4,15 @@
 @def tags = ["python, numpy"]
 
 
-# Introduction to Numpy
+# Introduction to NumPy
 
-[Numpy](https://numpy.org/) is a Python package for scientific computing with an open source licence ([BSD license](https://github.com/numpy/numpy/blob/main/LICENSE.txt)). 
+[NumPy](https://numpy.org/) is a Python package for scientific computing with an open source licence ([BSD license](https://github.com/numpy/numpy/blob/main/LICENSE.txt)). 
 It provides a _multidemsional array_ object and a large collection on high-level mathematical routines for fast operations on these arrays. 
 This includes logical operations, shape manipulation, sorting, selecting, basic linear algebra (BLAS), basic statistical operations, random simulation and much more. 
 It is wildly used and the basis for many other packages.
 It was introduced to allow **fast** array computation in python and it is keeping its promises ever since. 
 
-Numpy itself is build on other components such as [Basic Linear Algebra Subroutines](https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms) written in Fortran, C, CUDA or whatever required for the specific task. 
+NumPy itself is build on other components such as [Basic Linear Algebra Subroutines](https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms) written in Fortran, C, CUDA or whatever required for the specific task. 
 For this purpose it can be linked against Intel Math Kernel Library or OpenBLAS.   
 
 These notes are heavily inspired by the notes of Gregor Ehresperger from previous years in this class.  
@@ -122,7 +122,7 @@ $$
     15 & 16 & 17 & 18 & 19\\
     \end{pmatrix}.
 $$
-**Hint** look into the numpy functions `arange` and `reshape`.
+**Hint** look into the NumPy functions `arange` and `reshape`.
 1. How do you access the element `7`?
 1. How do you access the entire third column?
 1. Return an array with only the odd rows and even columns:
