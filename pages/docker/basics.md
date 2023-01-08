@@ -536,6 +536,9 @@ RUN Rscript -e "install.packages(c(\"IRkernel\"), repos = c(\"http://cran.rstudi
 ## Additional notes on Dockerfiles 
 
 There are several more commands that can be used in the [Dockerfile](https://docs.docker.com/engine/reference/builder/):
+
+As seen above the `#` symbol can used for comments in a Dockerfile.
+
 ```Dockerfile
 WORKDIR /path/to/workdir
 ```
