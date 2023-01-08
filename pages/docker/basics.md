@@ -478,7 +478,7 @@ If your _host user_ is different you can change the user inside the container by
 `--user <uid>:<gid>` to the run command.
 }
 
-# Dockerfile
+## Dockerfile
 
 Now that you have all this in order you run your examples but are greeted with the response that `numpy` is not available. 
 Of course you can install it in the terminal - via pip - or directly via Python but next time you start the image you need to do it again. 
@@ -518,7 +518,7 @@ and run it with
 ```
 Now lets do something more fancy.
 
-# Add a second kernel to the notebook
+## Add a second kernel to the notebook
 
 The second language uses in the class is R so why not include it into the container. 
 Checking the documentation of R reveals that we need the [`IRkernel` package](https://irkernel.github.io/installation/) and the installation instructions translate to 
@@ -533,4 +533,32 @@ RUN Rscript -e "install.packages(c(\"IRkernel\"), repos = c(\"http://cran.rstudi
     jupyter labextension install @techrah/text-shortcuts
 ```
 
-# Get files into the notebook
+## Additional notes on Dockerfiles 
+
+There are several more commands that can be used in the [Dockerfile](https://docs.docker.com/engine/reference/builder/):
+```Dockerfile
+WORKDIR /path/to/workdir
+```
+to set the working directory for most of the next instruction inside the image/container, 
+```Dockerfile
+COPY [--chown=<user>:<group>] <src>... <dest>
+```
+to copy files from the host file system (relative path to the context of the build) to the image/container file system (relative path to `WORKDIR`),
+```Dockerfile
+ENTRYPOINT ["executable", "param1", "param2"]
+```
+to allow you to configure a container that will run as an _executable_, in our case the `ENTRYPOINT` is defined such that _Jupyter Lab_ starts automatically. 
+Only the last specified `ENTRYPOINT` is used.
+```Dockerfile
+USER <user>[:<group>]
+```
+or
+```Dockerfile
+USER <UID>[:<GID>]
+```
+to specify the user (and group) to use for the remainder of the current stage. 
+It is therefore used for the instructions `RUN`, `ENTRYPOINT`, etc.
+
+Similar to the `.gitignore` there is also the possibility to specify a `.dockerignore` file. 
+Before the Docker CLI sends the context of the build to the docker daemon (remote or local) it excludes the files and paths that are specified in this file. 
+This can be used to exclude sensitive or large files from being send to the daemon.
