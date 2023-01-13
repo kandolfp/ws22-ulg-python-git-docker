@@ -59,7 +59,7 @@ image: python:3.11
 variables:
   VAR1: "true"
   
-build:
+run_test:
   stage: test
   before_script:
     - pip install pytest
@@ -67,3 +67,15 @@ build:
     - pytest test.py
 ```
 That simply executes some tests on the file `test.py` with the [pytest](https://docs.pytest.org/en/7.2.x/index.html) framework. 
+
+What is actually happening in that little yml file is the as follows:
+
+1. Definition of the stages to run, here only one called `test`
+1. Definition of the default Docker image to use for the stages
+1. Definition of some variables, only dummies in this case
+1. the actual stage called `run_test` with
+   - before script to install the `pytest` package and all other requirements
+   - the actual test run
+
+The entire job is executed on a so called `runner`. In the case of the used GitLab in we have a public runner to handle the jobs. 
+You can also just spin up a Docker container on your laptop as a runner, attach it and use it for the pipeline. 
