@@ -77,5 +77,7 @@ What is actually happening in that little yml file is the as follows:
    - before script to install the `pytest` package and all other requirements
    - the actual test run
 
-The entire job is executed on a so called `runner`. In the case of the used GitLab in we have a public runner to handle the jobs. 
+The entire job is executed on a so called [runner](https://docs.gitlab.com/runner/). In the case of the used GitLab you have a public runner available to handle the jobs. 
 You can also just spin up a Docker container on your laptop as a runner, attach it and use it for the pipeline. 
+As no _triggers_ are specified the pipeline is executed on every push to the remote repository. 
+In the GitLab UI you can find the CI/CD section.
