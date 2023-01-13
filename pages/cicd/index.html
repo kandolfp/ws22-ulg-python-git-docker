@@ -147,13 +147,31 @@
 <span class="hljs-attr">variables:</span>
   <span class="hljs-attr">VAR1:</span> <span class="hljs-string">&quot;true&quot;</span>
   
-<span class="hljs-attr">build:</span>
+<span class="hljs-attr">run_test:</span>
   <span class="hljs-attr">stage:</span> <span class="hljs-string">test</span>
   <span class="hljs-attr">before_script:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-string">pip</span> <span class="hljs-string">install</span> <span class="hljs-string">pytest</span>
   <span class="hljs-attr">script:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-string">pytest</span> <span class="hljs-string">test.py</span></code></pre>
 <p>That simply executes some tests on the file <code>test.py</code> with the <a href="https://docs.pytest.org/en/7.2.x/index.html">pytest</a> framework. </p>
+<p>What is actually happening in that little yml file is the as follows:</p>
+<ol>
+<li><p>Definition of the stages to run, here only one called <code>test</code></p>
+</li>
+<li><p>Definition of the default Docker image to use for the stages</p>
+</li>
+<li><p>Definition of some variables, only dummies in this case</p>
+</li>
+<li><p>the actual stage called <code>run_test</code> with</p>
+<ul>
+<li><p>before script to install the <code>pytest</code> package and all other requirements</p>
+</li>
+<li><p>the actual test run</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>The entire job is executed on a so called <code>runner</code>. In the case of the used GitLab in we have a public runner to handle the jobs.  You can also just spin up a Docker container on your laptop as a runner, attach it and use it for the pipeline. </p>
 <div class="page-foot">
     <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: January 13, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
