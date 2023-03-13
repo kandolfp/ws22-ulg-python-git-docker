@@ -86,22 +86,20 @@ In the GitLab UI you can find the CI/CD section.
 
 This description is mainly based on [GitLab docs](https://docs.gitlab.com/runner/install/docker.html) and we focus on a Linux installation. 
 
-We are going to illustrate how to setup a GitLab runner in Docker for the `ulg22_playground` repository that we used before. 
-
-First we need to make sure that we have `docker` installed on the machine we want to run the GitLab runner on, see [Docker](../docker/index) for basic information about Docker. 
+First we need to make sure that we have `docker` installed on the machine we want to run the GitLab runner on, see the [Docker](../docker/index) section for some basic information. 
 As the runner is using docker itself for executing our CI/CD pipeline we will need to make sure that we have access to the Docker socket inside the `gitlab-runner` container. 
-We can do this by mapping `/var/run/docker.sock` to the container. 
+We can do this by mapping `/var/run/docker.sock` to the container, note the `-v` option later on. 
 
-Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory but sometimes it is good to have to runner configuration in this directory. 
-For this purpose we create the directory `./gitlab-runner/config/`.
+The runner requires a configuration and it should be not inside the container as this would not make it permanent. Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory but sometimes it is good to have to runner configuration in this directory, and create the directory `./gitlab-runner/config/`.
 
 GitLab provides a runner on Docker-Hub and we can simple use it, it is called `gitlab/gitlab-runner`. 
 As the runners should be forward and backward compatible with various GitLab versions we work with the `latest` tag.
 
-In order to do the configuration you need to talk to the gitlab-runner it application inside the container. 
+In order to do the configuration you need to talk to the gitlab-runner application inside the container. 
 This looks like:
 ```bash
 docker run --rm -t -i gitlab/gitlab-runner --help
+
 NAME:
    gitlab-runner - a GitLab Runner
 
@@ -147,12 +145,14 @@ GLOBAL OPTIONS:
    --version, -v                print the version
 ```
 
-What we will need is the `register` command and make sure that the command is available for the container afterwards so map the directory we created inside the container. 
-Note that you can get the required URL and token form GitLab by going to the Settings->CI/CD->Runners and Specific Runners.
+What we will need is the `register` command and make sure that the _result_ is available for the container afterwards, so map the directory we created inside the container. 
+Note that we can get the required URL and token form GitLab by going to the _Settings->CI/CD->Runners_ and _Specific Runners_. 
+Furthermore, for _executor_ select _docker_.
 
 ```bash
 docker run -rm -t -i -v ./gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
-Runtime platform                                    arch=amd64 os=linux pid=7 revision=d540b510 version=15.9.1
+
+Runtime platform            arch=amd64 os=linux pid=7 revision=d540b510 version=15.9.1
 Running in system-mode.                            
                                                    
 Enter the GitLab instance URL (for example, https://gitlab.com/):
@@ -165,18 +165,23 @@ Enter tags for the runner (comma-separated):
 ulg
 Enter optional maintenance note for the runner:
 
-WARNING: Support for registration tokens and runner parameters in the 'register' command has been deprecated in GitLab Runner 15.6 and will be replaced with support for authentication tokens. For more information, see https://gitlab.com/gitlab-org/gitlab/-/issues/380872 
-Registering runner... succeeded                     runner=ImNotTellingYouMyToken
-Enter an executor: parallels, ssh, kubernetes, instance, custom, docker, docker-ssh, shell, virtualbox, docker+machine, docker-ssh+machine:
+WARNING: Support for registration tokens and runner parameters in 
+the 'register' command has been deprecated in GitLab Runner 15.6 and 
+will be replaced with support for authentication tokens. 
+For more information, see https://gitlab.com/gitlab-org/gitlab/-/issues/380872 
+Registering runner... succeeded       runner=ImNotTellingYouMyToken
+Enter an executor: parallels, ssh, kubernetes, instance, custom, docker, 
+docker-ssh, shell, virtualbox, docker+machine, docker-ssh+machine:
 docker
 Enter the default Docker image (for example, ruby:2.7):
 python:3.11
-Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+Runner registered successfully. Feel free to start it, but if it's running already 
+the config should be automatically reloaded!
  
 Configuration (with the authentication token) was saved in "/etc/gitlab-runner/config.toml" 
 ```
-Not that your config is written we can take a look:
-```yml
+Let us have a look at the config file:
+```toml
 concurrent = 1
 check_interval = 0
 shutdown_timeout = 0
@@ -205,9 +210,9 @@ shutdown_timeout = 0
     shm_size = 0
 ```
 Now if you want to have a `dind` (Docker in Docker) image running inside your container you need to make sure that docker is available, inside the docker image that is executed in the gitlab-runner docker image. 
-Again we simply need to forward the docker from the host machine and this can be done via the config. 
+Again we _simply_ need to forward the docker from the host machine and this can be done via the `config.toml` with the `volume` key.
 
-```yml
+```toml
   [runners.docker]
     tls_verify = false
     image = "python:3.11"
@@ -221,7 +226,7 @@ Again we simply need to forward the docker from the host machine and this can be
 ```
 If you also add the `pull-policy = "if-not-resent"` you will be able to use an image build with a `dind` in one stage as the base of a second stage. 
 
-We can finally put all together and start the runner in a deamon mode that will always restart:
+We can finally put all together and start the runner in a daemon mode that will always restart:
 ```bash
 mkdir -p /gitlab-runner/config
 docker run -d --name gitlab-runner --restart always \
@@ -231,5 +236,7 @@ docker run -d --name gitlab-runner --restart always \
 ```
 
 To make the runner accept jobs without a tag you need to specifically allow this. 
-In the GitLab project, Settings->CI/CD->Runners and Specific Runners you will find the runner and a little edit possibility.
+In the GitLab project, _Settings->CI/CD->Runners_ and _Specific Runners_ you will find the runner and a little edit possibility.
 Simply check the _Run untagged jobs_  box. 
+
+Note that the runner will use the resources of the infrastructure you installed it on. As a side effect you will see all the docker images used pop up on this machine. 
