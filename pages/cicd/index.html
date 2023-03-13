@@ -174,12 +174,12 @@
 <p>The entire job is executed on a so called <a href="https://docs.gitlab.com/runner/">runner</a>. In the case of the used GitLab you have a public runner available to handle the jobs.  You can also just spin up a Docker container on your laptop as a runner, attach it and use it for the pipeline.  As no <em>triggers</em> are specified the pipeline is executed on every push to the remote repository.  In the GitLab UI you can find the CI/CD section.</p>
 <h2 id="set_up_your_own_gitlab_runner_within_docker"><a href="#set_up_your_own_gitlab_runner_within_docker" class="header-anchor">Set up your own GitLab runner within Docker</a></h2>
 <p>This description is mainly based on <a href="https://docs.gitlab.com/runner/install/docker.html">GitLab docs</a> and we focus on a Linux installation. </p>
-<p>We are going to illustrate how to setup a GitLab runner in Docker for the <code>ulg22_playground</code> repository that we used before. </p>
-<p>First we need to make sure that we have <code>docker</code> installed on the machine we want to run the GitLab runner on, see <a href="../docker/index">Docker</a> for basic information about Docker.  As the runner is using docker itself for executing our CI/CD pipeline we will need to make sure that we have access to the Docker socket inside the <code>gitlab-runner</code> container.  We can do this by mapping <code>/var/run/docker.sock</code> to the container. </p>
-<p>Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory but sometimes it is good to have to runner configuration in this directory.  For this purpose we create the directory <code>./gitlab-runner/config/</code>.</p>
+<p>First we need to make sure that we have <code>docker</code> installed on the machine we want to run the GitLab runner on, see the <a href="../docker/index">Docker</a> section for some basic information.  As the runner is using docker itself for executing our CI/CD pipeline we will need to make sure that we have access to the Docker socket inside the <code>gitlab-runner</code> container.  We can do this by mapping <code>/var/run/docker.sock</code> to the container, note the <code>-v</code> option later on. </p>
+<p>The runner requires a configuration and it should be not inside the container as this would not make it permanent. Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory but sometimes it is good to have to runner configuration in this directory, and create the directory <code>./gitlab-runner/config/</code>.</p>
 <p>GitLab provides a runner on Docker-Hub and we can simple use it, it is called <code>gitlab/gitlab-runner</code>.  As the runners should be forward and backward compatible with various GitLab versions we work with the <code>latest</code> tag.</p>
-<p>In order to do the configuration you need to talk to the gitlab-runner it application inside the container.  This looks like:</p>
+<p>In order to do the configuration you need to talk to the gitlab-runner application inside the container.  This looks like:</p>
 <pre><code class="bash hljs">docker run --<span class="hljs-built_in">rm</span> -t -i gitlab/gitlab-runner --<span class="hljs-built_in">help</span>
+
 NAME:
    gitlab-runner - a GitLab Runner
 
@@ -223,9 +223,10 @@ GLOBAL OPTIONS:
    --log-level value, -l value  Log level (options: debug, info, warn, error, fatal, panic) [$LOG_LEVEL]
    --help, -h                   show help
    --version, -v                print the version</span></code></pre>
-<p>What we will need is the <code>register</code> command and make sure that the command is available for the container afterwards so map the directory we created inside the container.  Note that you can get the required URL and token form GitLab by going to the Settings-&gt;CI/CD-&gt;Runners and Specific Runners.</p>
+<p>What we will need is the <code>register</code> command and make sure that the <em>result</em> is available for the container afterwards, so map the directory we created inside the container.  Note that we can get the required URL and token form GitLab by going to the <em>Settings-&gt;CI/CD-&gt;Runners</em> and <em>Specific Runners</em>.  Furthermore, for <em>executor</em> select <em>docker</em>.</p>
 <pre><code class="bash hljs">docker run -<span class="hljs-built_in">rm</span> -t -i -v ./gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
-Runtime platform                                    <span class="hljs-built_in">arch</span>=amd64 os=linux pid=7 revision=d540b510 version=15.9.1
+
+Runtime platform            <span class="hljs-built_in">arch</span>=amd64 os=linux pid=7 revision=d540b510 version=15.9.1
 Running <span class="hljs-keyword">in</span> system-mode.                            
                                                    
 Enter the GitLab instance URL (<span class="hljs-keyword">for</span> example, https://gitlab.com/):
@@ -238,61 +239,67 @@ Enter tags <span class="hljs-keyword">for</span> the runner (comma-separated):
 ulg
 Enter optional maintenance note <span class="hljs-keyword">for</span> the runner:
 
-WARNING: Support <span class="hljs-keyword">for</span> registration tokens and runner parameters <span class="hljs-keyword">in</span> the <span class="hljs-string">&#x27;register&#x27;</span> <span class="hljs-built_in">command</span> has been deprecated <span class="hljs-keyword">in</span> GitLab Runner 15.6 and will be replaced with support <span class="hljs-keyword">for</span> authentication tokens. For more information, see https://gitlab.com/gitlab-org/gitlab/-/issues/380872 
-Registering runner... succeeded                     runner=ImNotTellingYouMyToken
-Enter an executor: parallels, ssh, kubernetes, instance, custom, docker, docker-ssh, shell, virtualbox, docker+machine, docker-ssh+machine:
+WARNING: Support <span class="hljs-keyword">for</span> registration tokens and runner parameters <span class="hljs-keyword">in</span> 
+the <span class="hljs-string">&#x27;register&#x27;</span> <span class="hljs-built_in">command</span> has been deprecated <span class="hljs-keyword">in</span> GitLab Runner 15.6 and 
+will be replaced with support <span class="hljs-keyword">for</span> authentication tokens. 
+For more information, see https://gitlab.com/gitlab-org/gitlab/-/issues/380872 
+Registering runner... succeeded       runner=ImNotTellingYouMyToken
+Enter an executor: parallels, ssh, kubernetes, instance, custom, docker, 
+docker-ssh, shell, virtualbox, docker+machine, docker-ssh+machine:
 docker
 Enter the default Docker image (<span class="hljs-keyword">for</span> example, ruby:2.7):
 python:3.11
-Runner registered successfully. Feel free to start it, but <span class="hljs-keyword">if</span> it<span class="hljs-string">&#x27;s running already the config should be automatically reloaded!
+Runner registered successfully. Feel free to start it, but <span class="hljs-keyword">if</span> it<span class="hljs-string">&#x27;s running already 
+the config should be automatically reloaded!
  
 Configuration (with the authentication token) was saved in &quot;/etc/gitlab-runner/config.toml&quot;</span></code></pre>
-<p>Not that your config is written we can take a look:</p>
-<pre><code class="yml hljs"><span class="hljs-string">concurrent</span> <span class="hljs-string">=</span> <span class="hljs-number">1</span>
-<span class="hljs-string">check_interval</span> <span class="hljs-string">=</span> <span class="hljs-number">0</span>
-<span class="hljs-string">shutdown_timeout</span> <span class="hljs-string">=</span> <span class="hljs-number">0</span>
+<p>Let us have a look at the config file:</p>
+<pre><code class="toml hljs"><span class="hljs-attr">concurrent</span> = <span class="hljs-number">1</span>
+<span class="hljs-attr">check_interval</span> = <span class="hljs-number">0</span>
+<span class="hljs-attr">shutdown_timeout</span> = <span class="hljs-number">0</span>
 
-[<span class="hljs-string">session_server</span>]
-  <span class="hljs-string">session_timeout</span> <span class="hljs-string">=</span> <span class="hljs-number">1800</span>
+<span class="hljs-section">[session_server]</span>
+  <span class="hljs-attr">session_timeout</span> = <span class="hljs-number">1800</span>
 
-[[<span class="hljs-string">runners</span>]]
-  <span class="hljs-string">name</span> <span class="hljs-string">=</span> <span class="hljs-string">&quot;ULG&quot;</span>
-  <span class="hljs-string">url</span> <span class="hljs-string">=</span> <span class="hljs-string">&quot;https://git.uibk.ac.at/&quot;</span>
-  <span class="hljs-string">id</span> <span class="hljs-string">=</span> <span class="hljs-number">304</span>
-  <span class="hljs-string">token</span> <span class="hljs-string">=</span> <span class="hljs-string">&quot;ImNotTellingYouMyToken&quot;</span>
-  <span class="hljs-string">token_obtained_at</span> <span class="hljs-string">=</span> <span class="hljs-number">2023-03-13T17:20:31Z</span>
-  <span class="hljs-string">token_expires_at</span> <span class="hljs-string">=</span> <span class="hljs-number">0001-01-01T00:00:00Z</span>
-  <span class="hljs-string">executor</span> <span class="hljs-string">=</span> <span class="hljs-string">&quot;docker&quot;</span>
-  [<span class="hljs-string">runners.cache</span>]
-    <span class="hljs-string">MaxUploadedArchiveSize</span> <span class="hljs-string">=</span> <span class="hljs-number">0</span>
-  [<span class="hljs-string">runners.docker</span>]
-    <span class="hljs-string">tls_verify</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">image</span> <span class="hljs-string">=</span> <span class="hljs-string">&quot;python:3.11&quot;</span>
-    <span class="hljs-string">privileged</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">disable_entrypoint_overwrite</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">oom_kill_disable</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">disable_cache</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">volumes</span> <span class="hljs-string">=</span> [<span class="hljs-string">&quot;/cache&quot;</span>]
-    <span class="hljs-string">shm_size</span> <span class="hljs-string">=</span> <span class="hljs-number">0</span></code></pre>
-<p>Now if you want to have a <code>dind</code> &#40;Docker in Docker&#41; image running inside your container you need to make sure that docker is available, inside the docker image that is executed in the gitlab-runner docker image.  Again we simply need to forward the docker from the host machine and this can be done via the config. </p>
-<pre><code class="yml hljs">[<span class="hljs-string">runners.docker</span>]
-    <span class="hljs-string">tls_verify</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">image</span> <span class="hljs-string">=</span> <span class="hljs-string">&quot;python:3.11&quot;</span>
-    <span class="hljs-string">privileged</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">disable_entrypoint_overwrite</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">oom_kill_disable</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">disable_cache</span> <span class="hljs-string">=</span> <span class="hljs-literal">false</span>
-    <span class="hljs-string">volumes</span> <span class="hljs-string">=</span> [<span class="hljs-string">&quot;/cache&quot;</span>, <span class="hljs-string">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>]
-    <span class="hljs-string">shm_size</span> <span class="hljs-string">=</span> <span class="hljs-number">0</span>
-    <span class="hljs-string">pull_policy</span> <span class="hljs-string">=</span> <span class="hljs-string">&quot;if-not-present&quot;</span></code></pre>
+<span class="hljs-section">[[runners]]</span>
+  <span class="hljs-attr">name</span> = <span class="hljs-string">&quot;ULG&quot;</span>
+  <span class="hljs-attr">url</span> = <span class="hljs-string">&quot;https://git.uibk.ac.at/&quot;</span>
+  <span class="hljs-attr">id</span> = <span class="hljs-number">304</span>
+  <span class="hljs-attr">token</span> = <span class="hljs-string">&quot;ImNotTellingYouMyToken&quot;</span>
+  <span class="hljs-attr">token_obtained_at</span> = <span class="hljs-number">2023</span>-<span class="hljs-number">03</span>-<span class="hljs-number">13</span>T17:<span class="hljs-number">20</span>:<span class="hljs-number">31</span>Z
+  <span class="hljs-attr">token_expires_at</span> = <span class="hljs-number">0001</span>-<span class="hljs-number">01</span>-<span class="hljs-number">01</span>T00:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>Z
+  <span class="hljs-attr">executor</span> = <span class="hljs-string">&quot;docker&quot;</span>
+  <span class="hljs-section">[runners.cache]</span>
+    <span class="hljs-attr">MaxUploadedArchiveSize</span> = <span class="hljs-number">0</span>
+  <span class="hljs-section">[runners.docker]</span>
+    <span class="hljs-attr">tls_verify</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">image</span> = <span class="hljs-string">&quot;python:3.11&quot;</span>
+    <span class="hljs-attr">privileged</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">disable_entrypoint_overwrite</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">oom_kill_disable</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">disable_cache</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">volumes</span> = [<span class="hljs-string">&quot;/cache&quot;</span>]
+    <span class="hljs-attr">shm_size</span> = <span class="hljs-number">0</span></code></pre>
+<p>Now if you want to have a <code>dind</code> &#40;Docker in Docker&#41; image running inside your container you need to make sure that docker is available, inside the docker image that is executed in the gitlab-runner docker image.  Again we <em>simply</em> need to forward the docker from the host machine and this can be done via the <code>config.toml</code> with the <code>volume</code> key.</p>
+<pre><code class="toml hljs"><span class="hljs-section">[runners.docker]</span>
+    <span class="hljs-attr">tls_verify</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">image</span> = <span class="hljs-string">&quot;python:3.11&quot;</span>
+    <span class="hljs-attr">privileged</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">disable_entrypoint_overwrite</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">oom_kill_disable</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">disable_cache</span> = <span class="hljs-literal">false</span>
+    <span class="hljs-attr">volumes</span> = [<span class="hljs-string">&quot;/cache&quot;</span>, <span class="hljs-string">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>]
+    <span class="hljs-attr">shm_size</span> = <span class="hljs-number">0</span>
+    <span class="hljs-attr">pull_policy</span> = <span class="hljs-string">&quot;if-not-present&quot;</span></code></pre>
 <p>If you also add the <code>pull-policy &#61; &quot;if-not-resent&quot;</code> you will be able to use an image build with a <code>dind</code> in one stage as the base of a second stage. </p>
-<p>We can finally put all together and start the runner in a deamon mode that will always restart:</p>
+<p>We can finally put all together and start the runner in a daemon mode that will always restart:</p>
 <pre><code class="bash hljs"><span class="hljs-built_in">mkdir</span> -p /gitlab-runner/config
 docker run -d --name gitlab-runner --restart always \
   -v ./gitlab-runner/config:/etc/gitlab-runner \
   -v /var/run/docker.sock:/var/run/docker.sock \
   gitlab/gitlab-runner:latest</code></pre>
-<p>To make the runner accept jobs without a tag you need to specifically allow this.  In the GitLab project, Settings-&gt;CI/CD-&gt;Runners and Specific Runners you will find the runner and a little edit possibility. Simply check the <em>Run untagged jobs</em>  box. </p>
+<p>To make the runner accept jobs without a tag you need to specifically allow this.  In the GitLab project, <em>Settings-&gt;CI/CD-&gt;Runners</em> and <em>Specific Runners</em> you will find the runner and a little edit possibility. Simply check the <em>Run untagged jobs</em>  box. </p>
+<p>Note that the runner will use the resources of the infrastructure you installed it on. As a side effect you will see all the docker images used pop up on this machine. </p>
 <div class="page-foot">
     <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: March 13, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
