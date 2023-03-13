@@ -1,7 +1,7 @@
-@def title = "python - numpy"
+@def title = "python - pandas"
 @def hascode = true
 
-@def tags = ["python, numpy"]
+@def tags = ["python, pandas"]
 
 # Introduction to Pandas
 
@@ -155,7 +155,7 @@ Vorarlberg      2601      378490
 Burgenland      3965      288229
 
 
->>> states .loc [["Vienna", "Lower Austria"], "population"]
+>>> states.loc[["Vienna", "Lower Austria"], "population"]
 Vienna           1794770
 Lower Austria    1636287
 Name: population, dtype: int64
@@ -192,7 +192,7 @@ Name: population, dtype: bool
 You can also add new or derived values to the `DataFrame`
 ```python
 # get the population density
-states["density"] = states["population"]/states["area"]
+>>> states["density"] = states["population"]/states["area"]
 >>> states
                 area  population      density
 Vienna           415     1794770  4324.746988
