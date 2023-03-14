@@ -236,8 +236,7 @@ docker run -d --name gitlab-runner --restart always \
 ```
 
 \note{
-1. To make the runner accept jobs without a tag you need to specifically allow this. In the GitLab project, _Settings->CI/CD->Runners_ and _Specific Runners_ you will find the runner and a little edit possibility.
-Simply check the _Run untagged jobs_  box
+1. To make the runner accept jobs without a tag you need to specifically allow this. In the GitLab project, _Settings->CI/CD->Runners_ and _Specific Runners_ you will find the runner and a little edit possibility. Simply check the _Run untagged jobs_  box
 1. It might be that the _Shared Runner_ is preferred for a none tagged job, you can deactivate it in  _Settings->CI/CD->Runners_ and _Shared Runners_
 1. The runner will use the resources of the infrastructure you installed it on. As a side effect you will see all the docker images used pop up on this machine. 
 1. If you want to shut the runner down again use: `docker rm gitlab-runner`, if you just use `kill` it will automatically restart.
