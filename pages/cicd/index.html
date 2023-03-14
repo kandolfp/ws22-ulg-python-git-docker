@@ -342,9 +342,9 @@ docker run -d --name gitlab-runner --restart always \
 <p>In the second part <code>run_test</code> we use the build image as the base for the job. As this image is automatically starting a jupyter notebook we need to override the entrypoint, see <a href="../docker/basics#additional_notes_on_dockerfiles">Docker</a>.  We just tell the image to do nothing, that way the <code>script</code> section will take place, where we simply check the version of <code>R</code>.</p>
 <div class="note"><div class="title">⚠ Note</div>
 <div class="content"><ol>
-<li><p>The additional <code>rule</code> is there to make sure that this part is only run for a successful build before</p>
+<li><p>The additional <code>rule</code> is there to make sure that this part is only run for a successful build before.</p>
 </li>
-<li><p>The <code>tags</code> make sure that the desired runner is used</p>
+<li><p>The <code>tags</code> make sure that the desired runner is used.</p>
 </li>
 <li><p>The runner is configured with the additional setup described above.</p>
 </li>
