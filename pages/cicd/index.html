@@ -291,17 +291,69 @@ Configuration (with the authentication token) was saved in &quot;/etc/gitlab-run
     <span class="hljs-attr">volumes</span> = [<span class="hljs-string">&quot;/cache&quot;</span>, <span class="hljs-string">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>]
     <span class="hljs-attr">shm_size</span> = <span class="hljs-number">0</span>
     <span class="hljs-attr">pull_policy</span> = <span class="hljs-string">&quot;if-not-present&quot;</span></code></pre>
-<p>If you also add the <code>pull-policy &#61; &quot;if-not-resent&quot;</code> you will be able to use an image build with a <code>dind</code> in one stage as the base of a second stage. </p>
+<p>If you also add the <code>pull-policy &#61; &quot;if-not-present&quot;</code> you will be able to use an image build with a <code>dind</code> in one stage as the base of a second stage. </p>
 <p>We can finally put all together and start the runner in a daemon mode that will always restart:</p>
 <pre><code class="bash hljs"><span class="hljs-built_in">mkdir</span> -p /gitlab-runner/config
 docker run -d --name gitlab-runner --restart always \
   -v ./gitlab-runner/config:/etc/gitlab-runner \
   -v /var/run/docker.sock:/var/run/docker.sock \
   gitlab/gitlab-runner:latest</code></pre>
-<p>To make the runner accept jobs without a tag you need to specifically allow this.  In the GitLab project, <em>Settings-&gt;CI/CD-&gt;Runners</em> and <em>Specific Runners</em> you will find the runner and a little edit possibility. Simply check the <em>Run untagged jobs</em>  box. </p>
-<p>Note that the runner will use the resources of the infrastructure you installed it on. As a side effect you will see all the docker images used pop up on this machine. </p>
+<div class="note"><div class="title">⚠ Note</div>
+<div class="content"><ol>
+<li><p>To make the runner accept jobs without a tag you need to specifically allow this. In the GitLab project, <em>Settings-&gt;CI/CD-&gt;Runners</em> and <em>Specific Runners</em> you will find the runner and a little edit possibility.</p>
+</li>
+</ol>
+<p>Simply check the <em>Run untagged jobs</em>  box</p>
+<ol>
+<li><p>It might be that the <em>Shared Runner</em> is preferred for a none tagged job, you can deactivate it in  <em>Settings-&gt;CI/CD-&gt;Runners</em> and <em>Shared Runners</em></p>
+</li>
+<li><p>The runner will use the resources of the infrastructure you installed it on. As a side effect you will see all the docker images used pop up on this machine. </p>
+</li>
+<li><p>If you want to shut the runner down again use: <code>docker rm gitlab-runner</code>, if you just use <code>kill</code> it will automatically restart.</p>
+</li>
+</ol></div></div>
+<p>Let us consider the following example:</p>
+<pre><code class="yaml hljs"><span class="hljs-attr">stages:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-string">build</span>
+  
+<span class="hljs-attr">variables:</span>
+  <span class="hljs-attr">docker_image:</span> <span class="hljs-string">&quot;ulg:latest&quot;</span>
+ 
+<span class="hljs-attr">run_build:</span>
+  <span class="hljs-attr">stage:</span> <span class="hljs-string">build</span>
+  <span class="hljs-attr">tags:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">ulg</span>
+  <span class="hljs-attr">image:</span> <span class="hljs-string">docker:dind</span>
+  <span class="hljs-attr">before_script:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">docker</span> <span class="hljs-string">images</span>
+  <span class="hljs-attr">script:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">docker</span> <span class="hljs-string">build</span> <span class="hljs-string">-t</span> <span class="hljs-string">&quot;$docker_image&quot;</span> <span class="hljs-string">.</span>
+
+<span class="hljs-attr">run_test:</span>
+  <span class="hljs-attr">stage:</span> <span class="hljs-string">build</span>
+  <span class="hljs-attr">tags:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">ulg</span>
+  <span class="hljs-attr">image:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">$docker_image</span>
+    <span class="hljs-attr">entrypoint:</span> [<span class="hljs-string">&quot;&quot;</span>]
+  <span class="hljs-attr">script:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">R</span> <span class="hljs-string">--version</span>
+  <span class="hljs-attr">rules:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">when:</span> <span class="hljs-string">on_success</span></code></pre>
+<p>The main idea of this pipeline is to build a docker image and than test it in the next step.  For the test we use a an image that specified in the <code>Dockerfile</code> in <a href="../docker/basics#add_a_second_kernel_to_the_notebook">Add a second kernel to the notebook</a>. We have a single stage that runs two jobs &#40;<code>build</code> and <code>test</code>&#41;, this makes sure that they run in sequence. The <em>global</em> variable <code>docker_image</code> is used to define the image name that should be build and tested. </p>
+<p>In the first part <code>run_build</code> we use the <em>Docker in Docker</em> <code>docker:dind</code> image to actually build the image, see the variable <code>image</code>.  The script to do the actual build is than simple. </p>
+<p>In the second part <code>run_test</code> we use the build image as the base for the job. As this image is automatically starting a jupyter notebook we need to override the entrypoint, see <a href="../docker/basics#additional_notes_on_dockerfiles">Docker</a>.  We just tell the image to do nothing, that way the <code>script</code> section will take place, where we simply check the version of <code>R</code>.</p>
+<div class="note"><div class="title">⚠ Note</div>
+<div class="content"><ol>
+<li><p>The additional <code>rule</code> is there to make sure that this part is only run for a successful build before</p>
+</li>
+<li><p>The <code>tags</code> make sure that the desired runner is used</p>
+</li>
+<li><p>The runner is configured with the additional setup described above.</p>
+</li>
+</ol></div></div>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: March 13, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: March 14, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
