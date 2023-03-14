@@ -224,7 +224,7 @@ Again we _simply_ need to forward the docker from the host machine and this can 
     shm_size = 0
     pull_policy = "if-not-present"
 ```
-If you also add the `pull-policy = "if-not-resent"` you will be able to use an image build with a `dind` in one stage as the base of a second stage. 
+If you also add the `pull-policy = "if-not-present"` you will be able to use an image build with a `dind` in one stage as the base of a second stage. 
 
 We can finally put all together and start the runner in a daemon mode that will always restart:
 ```bash
@@ -235,8 +235,60 @@ docker run -d --name gitlab-runner --restart always \
   gitlab/gitlab-runner:latest
 ```
 
-To make the runner accept jobs without a tag you need to specifically allow this. 
-In the GitLab project, _Settings->CI/CD->Runners_ and _Specific Runners_ you will find the runner and a little edit possibility.
-Simply check the _Run untagged jobs_  box. 
+\note{
+1. To make the runner accept jobs without a tag you need to specifically allow this. In the GitLab project, _Settings->CI/CD->Runners_ and _Specific Runners_ you will find the runner and a little edit possibility.
+Simply check the _Run untagged jobs_  box
+1. It might be that the _Shared Runner_ is preferred for a none tagged job, you can deactivate it in  _Settings->CI/CD->Runners_ and _Shared Runners_
+1. The runner will use the resources of the infrastructure you installed it on. As a side effect you will see all the docker images used pop up on this machine. 
+1. If you want to shut the runner down again use: `docker rm gitlab-runner`, if you just use `kill` it will automatically restart.
+}
 
-Note that the runner will use the resources of the infrastructure you installed it on. As a side effect you will see all the docker images used pop up on this machine. 
+Let us consider the following example:
+```yaml
+stages:
+  - build
+  
+variables:
+  docker_image: "ulg:latest"
+ 
+run_build:
+  stage: build
+  tags:
+    - ulg
+  image: docker:dind
+  before_script:
+    - docker images
+  script:
+    - docker build -t "$docker_image" .
+
+run_test:
+  stage: build
+  tags:
+    - ulg
+  image:
+    name: $docker_image
+    entrypoint: [""]
+  script:
+    - R --version
+  rules:
+    - when: on_success
+
+```
+
+The main idea of this pipeline is to build a docker image and than test it in the next step. 
+For the test we use a an image that specified in the `Dockerfile` in [Add a second kernel to the notebook](../docker/basics#add_a_second_kernel_to_the_notebook).
+We have a single stage that runs two jobs (`build` and `test`), this makes sure that they run in sequence.
+The _global_ variable `docker_image` is used to define the image name that should be build and tested. 
+
+In the first part `run_build` we use the _Docker in Docker_ `docker:dind` image to actually build the image, see the variable `image`. 
+The script to do the actual build is than simple. 
+
+In the second part `run_test` we use the build image as the base for the job.
+As this image is automatically starting a jupyter notebook we need to override the entrypoint, see [Docker](../docker/basics#additional_notes_on_dockerfiles). 
+We just tell the image to do nothing, that way the `script` section will take place, where we simply check the version of `R`.
+
+\note{
+1. The additional `rule` is there to make sure that this part is only run for a successful build before
+1. The `tags` make sure that the desired runner is used
+1. The runner is configured with the additional setup described above. 
+}
