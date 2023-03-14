@@ -287,7 +287,7 @@ As this image is automatically starting a jupyter notebook we need to override t
 We just tell the image to do nothing, that way the `script` section will take place, where we simply check the version of `R`.
 
 \note{
-1. The additional `rule` is there to make sure that this part is only run for a successful build before
-1. The `tags` make sure that the desired runner is used
+1. The additional `rule` is there to make sure that this part is only run for a successful build before.
+1. The `tags` make sure that the desired runner is used.
 1. The runner is configured with the additional setup described above. 
 }
