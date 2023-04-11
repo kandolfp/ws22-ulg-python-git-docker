@@ -520,5 +520,5 @@ You will learn way more when you work with Git for some time some topics that yo
 - Merging of branches
 - Cherry picking
 - Reverting commits
-- `git blame` to find out where this line of code come from
+- `git blame` to find out where this line of code comes from
 - and so much more
