@@ -291,3 +291,11 @@ We just tell the image to do nothing, that way the `script` section will take pl
 1. The `tags` make sure that the desired runner is used.
 1. The runner is configured with the additional setup described above. 
 }
+
+# Further stuff
+Like always, there is much more to say or discuss about CI/CD and of course also outside of Gitlab.
+Anyway, some useful links:
+- [Modify GitLab Repositories from the CI Pipeline](https://parsiya.net/blog/2021-10-11-modify-gitlab-repositories-from-the-ci-pipeline/)
+- [Make it possible to edit Wiki through CI](https://gitlab.com/gitlab-org/gitlab/-/issues/16261#note_458447881)
+- [Want a more effective CI/CD pipeline? Try our pro tips](https://about.gitlab.com/blog/2020/07/29/effective-ci-cd-pipelines/)
+- [Top ten GitLab hacks for all stages of the DevOps Platform](https://about.gitlab.com/blog/2021/10/19/top-10-gitlab-hacks/)

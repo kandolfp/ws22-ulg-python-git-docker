@@ -19,7 +19,8 @@ This notes are under construction!
 
 We want to thank the open source community for providing excellent tutorial and guides for Python, Git, and Docker on the web. Individual sources are cited at the appropriate spot. 
 We also want to thank Elias Tappeiner from the Department of _Biomedizinische Bildanalyse
-UMIT, Hall in Tirol, Österreich_ for his slides on Git.
+UMIT, Hall in Tirol, Österreich_ for his slides on Git and
+Mirjam Ziselsberger for trying, checking, suggestions and additional materia in the CI/CD section.
 
 
 ## Some general words on the organization of this workshop
