@@ -9,7 +9,7 @@
 
 # Preface
 
-These notes are under construction!
+The lecture is over, the notes are sporadically updated.
  
 
 # Getting started 
