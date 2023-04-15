@@ -452,6 +452,90 @@ B&gt; git rebase --<span class="hljs-built_in">continue</span>
  1 file changed, 1 insertion(+), 1 deletion(-)
 Successfully rebased and updated refs/heads/main.</code></pre>
 <p>This will prompt us to write a <em>commit message</em>.  Lets use <code>add my exercise sheet, and make a conflict resolution</code>.</p>
+<h1 id="stashing"><a href="#stashing" class="header-anchor">Stashing</a></h1>
+<p>There is one more case we need to have a look at.  What if we made some changes to a file, are not ready to make a commit yet, but need to pull in some changes coming from the remote? Another scenario would be that something in the repository needs urgent fixing so we need to switch back to a clean copy without loosing our current work.  Git gives us the possibility to deal with these situations with yet another area and the <code>git stash</code>command.</p>
+<pre><code class="bash hljs">&gt; git status
+On branch main
+Your branch is behind <span class="hljs-string">&#x27;origin/main&#x27;</span> by 1 commits (non-fast-forward).
+  (use <span class="hljs-string">&quot;git pull&quot;</span> to update your <span class="hljs-built_in">local</span> branch)
+
+Changes not staged <span class="hljs-keyword">for</span> commit:
+  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)
+  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)
+	modified:   python_ex1/ID.py
+
+no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)
+
+&gt; git diff
+diff --git a/python_ex1/ID.py b/python_ex1/ID.py
+index f5b74fc..22038a5 100644
+--- a/python_ex1/ID.py
++++ b/python_ex1/ID.py
+@@ -61,6 +61,11 @@ <span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;Accuracy of pi with N =    100:   {get_accuracy(   100):8.5f}&quot;</span>)
+ <span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;Accuracy of pi with N =   1000:   {get_accuracy(  1000):8.5f}&quot;</span>)
+ <span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;Accuracy of pi with N = 100000:   {get_accuracy(100000):8.5f}&quot;</span>)
+ 
++<span class="hljs-comment"># ----------------------------------------------</span>
++<span class="hljs-comment"># Alternative Implementation for (2)</span>
++<span class="hljs-comment"># ----------------------------------------------</span>
++points = np.random.uniform(0, 1, [2, N])
++
+ 
+ <span class="hljs-comment"># ----------------------------------------------</span>
+ <span class="hljs-comment"># (3) Gaussian density</span></code></pre>
+<p>We have a dirty working directory as we just started to work on an alternative implementation for &#40;2&#41; but we are 1 commit behind the remote.  With <code>git stash push</code> we can tell git to put all the changes aside for us and keep them safe &#40;an optional message can be added&#41;.  After pulling the remote changes back in we can finally reapply our stashed work by calling <code>git stash pop</code> &#40;this will apply the lates stash, in case we have several&#41;. </p>
+<p>Here it is as image and in the bash. 
+<figure style="text-align:center;">
+<img src="/ws22-ulg-python-git-docker/assets/pages/git/stash.svg" style="padding:0; " alt=" Stashing changes and pulling in from remote, see numbers for order"/>
+<figcaption> Stashing changes and pulling in from remote, see numbers for order</figcaption>
+</figure>
+</p>
+<pre><code class="bash hljs">&gt; git stash push
+Saved working directory and index state WIP on main: 4e76603 update list of participants
+
+&gt; git status
+On branch main
+Your branch is behind <span class="hljs-string">&#x27;origin/main&#x27;</span> by 1 commits, and can be fast-forwarded.
+  (use <span class="hljs-string">&quot;git pull&quot;</span> to update your <span class="hljs-built_in">local</span> branch)
+
+nothing to commit, working tree clean
+
+&gt; git pull --rebase
+Successfully rebased and updated refs/heads/main.
+
+&gt; git stash list
+stash@{0}: WIP on main: 4e76603 update list of participants
+
+&gt; git stash pop
+On branch main
+Your branch is up to <span class="hljs-built_in">date</span> with <span class="hljs-string">&#x27;origin/main&#x27;</span>.
+
+Changes not staged <span class="hljs-keyword">for</span> commit:
+  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)
+  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)
+	modified:   python_ex1/ID.py
+
+no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)
+Dropped refs/stash@{0} (d31654c50cfffd2b3f4b931ccf07b5c8362d365a)
+
+&gt; git diff
+diff --git a/python_ex1/ID.py b/python_ex1/ID.py
+index f5b74fc..22038a5 100644
+--- a/python_ex1/ID.py
++++ b/python_ex1/ID.py
+@@ -61,6 +61,11 @@ <span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;Accuracy of pi with N =    100:   {get_accuracy(   100):8.5f}&quot;</span>)
+ <span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;Accuracy of pi with N =   1000:   {get_accuracy(  1000):8.5f}&quot;</span>)
+ <span class="hljs-built_in">print</span>(f<span class="hljs-string">&quot;Accuracy of pi with N = 100000:   {get_accuracy(100000):8.5f}&quot;</span>)
+ 
++<span class="hljs-comment"># ----------------------------------------------</span>
++<span class="hljs-comment"># Alternative Implementation for (2)</span>
++<span class="hljs-comment"># ----------------------------------------------</span>
++points = np.random.uniform(0, 1, [2, N])
++
+ 
+ <span class="hljs-comment"># ----------------------------------------------</span>
+ <span class="hljs-comment"># (3) Gaussian density</span></code></pre>
+<p>With <code>git stash list</code> we can view different stashes. </p>
 <h1 id="history"><a href="#history" class="header-anchor">History</a></h1>
 <p>The last thing we look into is the <em>history</em>.  Of course it is possible to look what happened in the repository.  With <code>git log</code> we can do this</p>
 <pre><code class="bash hljs">B&gt; git <span class="hljs-built_in">log</span>
