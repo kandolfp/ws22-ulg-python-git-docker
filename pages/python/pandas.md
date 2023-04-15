@@ -13,7 +13,7 @@ These notes are heavily inspired by the notes of Gregor Ehresperger from previou
 
 # First steps
 
-We load the package as per usual and by common convention we give it the name`np`. 
+We load the package as per usual and by common convention we give it the name`pd`. 
 
 ```python
 import pandas as pd
