@@ -15,7 +15,7 @@ It was introduced to allow **fast** array computation in python and it is keepin
 NumPy itself is build on other components such as [Basic Linear Algebra Subroutines](https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms) written in Fortran, C, CUDA or whatever required for the specific task. 
 For this purpose it can be linked against Intel Math Kernel Library or OpenBLAS.   
 
-These notes are heavily inspired by the notes of Gregor Ehresperger from previous years in this class.  
+These notes are heavily inspired by the notes of Gregor Ehrensperger from previous years in this class.  
 # First steps
 
 We load the package as per usual and by common convention we give it the name`np`. 
