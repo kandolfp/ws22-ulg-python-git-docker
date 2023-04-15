@@ -6,7 +6,7 @@
 # Basics - why and how?
 
 The term _CI/CD_ is most commonly attributed to _continuous integration, continuous delivery, and continuous deployment_. 
-By introducing automation and continuous monitoring of the code lifecycle - from integration and testing to delivering and deploying - it helps keeping the codebase working and our _product_ up and running. 
+By introducing automation and continuous monitoring of the code lifecycle - from integration and testing to delivering and deploying - it helps keep the codebase working and our _product_ up and running. 
 
 The concept is often used in DevOps, MLOps or similar approaches. 
 
