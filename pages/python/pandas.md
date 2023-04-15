@@ -9,7 +9,7 @@
 It provides a data structure called _DataFrame_ - essentially a multidimensional array with row and column labels - that is high-performant, easy-to-use and flexible.
 Pandas is build on top of NumPy, so it gains all the optimisations and functions that are associated with this package. 
 
-These notes are heavily inspired by the notes of Gregor Ehresperger from previous years in this class.  
+These notes are heavily inspired by the notes of Gregor Ehrensperger from previous years in this class.  
 
 # First steps
 
