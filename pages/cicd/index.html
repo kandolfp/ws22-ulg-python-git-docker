@@ -104,10 +104,10 @@
 
 <!-- Content appended here (in class franklin-content) -->
 <div class="franklin-content"><h1 id="basics_-_why_and_how"><a href="#basics_-_why_and_how" class="header-anchor">Basics - why and how?</a></h1>
-<p>The term <em>CI/CD</em> is most commonly attributed to <em>continuous integration, continuous delivery, and continuous deployment</em>.  By introducing automation and continuous monitoring of the code lifecycle - from integration and testing to delivering and deploying - it helps keep the you codebase working and our <em>product</em> up and running. </p>
+<p>The term <em>CI/CD</em> is most commonly attributed to <em>continuous integration, continuous delivery, and continuous deployment</em>.  By introducing automation and continuous monitoring of the code lifecycle - from integration and testing to delivering and deploying - it helps keep the codebase working and our <em>product</em> up and running. </p>
 <p>The concept is often used in DevOps, MLOps or similar approaches. </p>
 <h2 id="continuous_integration"><a href="#continuous_integration" class="header-anchor">Continuous integration</a></h2>
-<p>The main idea of <em>continuous integration</em> is to automate building and testing such that your merge to a shared branch or repository is known to work.  The idea is that multiple people can work on the same code base and conflicts get recognized early and not after two months of developing.  Typically the CI <em>pipeline</em> does unit and integration tests that make sure that the chances have not broken the code.  This allows for regular, hopefully daily, merge pushes to the shared repository. </p>
+<p>The main idea of <em>continuous integration</em> is to automate building and testing such that your merge to a shared branch or repository is known to work.  The idea is that multiple people can work on the same code base and conflicts get recognized early and not after two months of developing.  Typically, the CI <em>pipeline</em> does unit and integration tests that make sure that the chances have not broken the code.  This allows for regular, hopefully daily, merge pushes to the shared repository. </p>
 <p>In Git therms this would be a common <em>remote repository</em> for the developers. </p>
 <h2 id="continuous_delivery"><a href="#continuous_delivery" class="header-anchor">Continuous delivery</a></h2>
 <p>Now that you know that the code is automatically build and unit as well as integration tested the automated delivery to a shared repository is the next step.</p>
@@ -119,7 +119,7 @@
 <ol>
 <li><p>The authors write some new material about e.g. CI/CD stuff. This might take some time until the pictures are ready, the text has the correct format and code blocks are tested and developed.</p>
 </li>
-<li><p>In the next step the new section is <em>commited</em> to the local repository. This goes on for a couple of commits and separate for each author. </p>
+<li><p>In the next step the new section is <em>committed</em> to the local repository. This goes on for a couple of commits and separate for each author. </p>
 </li>
 <li><p>After the author is happy with the local changes it pushes the commits to the <em>remote repository</em>. </p>
 </li>
@@ -176,10 +176,10 @@
 </ol>
 <p>The entire job is executed on a so called <a href="https://docs.gitlab.com/runner/">runner</a>. In the case of the used GitLab you have a public runner available to handle the jobs.  You can also just spin up a Docker container on your laptop as a runner, attach it and use it for the pipeline.  As no <em>triggers</em> are specified the pipeline is executed on every push to the remote repository.  In the GitLab UI you can find the CI/CD section.</p>
 <h2 id="set_up_your_own_gitlab_runner_within_docker"><a href="#set_up_your_own_gitlab_runner_within_docker" class="header-anchor">Set up your own GitLab runner within Docker</a></h2>
-<p>This description is mainly based on <a href="https://docs.gitlab.com/runner/install/docker.html">GitLab docs</a> and we focus on a Linux installation. </p>
+<p>This description is mainly based on <a href="https://docs.gitlab.com/runner/install/docker.html">GitLab docs</a>, and we focus on a Linux installation. </p>
 <p>First we need to make sure that we have <code>docker</code> installed on the machine we want to run the GitLab runner on, see the <a href="../docker/index">Docker</a> section for some basic information.  As the runner is using docker itself for executing our CI/CD pipeline we will need to make sure that we have access to the Docker socket inside the <code>gitlab-runner</code> container.  We can do this by mapping <code>/var/run/docker.sock</code> to the container, note the <code>-v</code> option later on. </p>
-<p>The runner requires a configuration and it should be not inside the container as this would not make it permanent. Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory but sometimes it is good to have to runner configuration in this directory, and create the directory <code>./gitlab-runner/config/</code>.</p>
-<p>GitLab provides a runner on Docker-Hub and we can simple use it, it is called <code>gitlab/gitlab-runner</code>.  As the runners should be forward and backward compatible with various GitLab versions we work with the <code>latest</code> tag.</p>
+<p>The runner requires a configuration, and it should be not inside the container as this would not make it permanent. Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory, but sometimes it is good to have to runner configuration in this directory, and create the directory <code>./gitlab-runner/config/</code>.</p>
+<p>GitLab provides a runner on Docker-Hub, and we can simply use it, it is called <code>gitlab/gitlab-runner</code>.  As the runners should be forward and backward compatible with various GitLab versions we work with the <code>latest</code> tag.</p>
 <p>In order to do the configuration you need to talk to the gitlab-runner application inside the container.  This looks like:</p>
 <pre><code class="bash hljs">docker run --<span class="hljs-built_in">rm</span> -t -i gitlab/gitlab-runner --<span class="hljs-built_in">help</span>
 
@@ -340,7 +340,7 @@ docker run -d --name gitlab-runner --restart always \
     <span class="hljs-bullet">-</span> <span class="hljs-string">R</span> <span class="hljs-string">--version</span>
   <span class="hljs-attr">rules:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">when:</span> <span class="hljs-string">on_success</span></code></pre>
-<p>The main idea of this pipeline is to build a docker image and than test it in the next step.  For the test we use a an image that specified in the <code>Dockerfile</code> in <a href="../docker/basics#add_a_second_kernel_to_the_notebook">Add a second kernel to the notebook</a>. We have a single stage that runs two jobs &#40;<code>build</code> and <code>test</code>&#41;, this makes sure that they run in sequence. The <em>global</em> variable <code>docker_image</code> is used to define the image name that should be build and tested. </p>
+<p>The main idea of this pipeline is to build a docker image and then test it in the next step.  For the test we use an image that is specified in the <code>Dockerfile</code> in <a href="../docker/basics#add_a_second_kernel_to_the_notebook">Add a second kernel to the notebook</a>. We have a single stage that runs two jobs &#40;<code>build</code> and <code>test</code>&#41;, this makes sure that they run in sequence. The <em>global</em> variable <code>docker_image</code> is used to define the image name that should be build and tested. </p>
 <p>In the first part <code>run_build</code> we use the <em>Docker in Docker</em> <code>docker:dind</code> image to actually build the image, see the variable <code>image</code>.  The script to do the actual build is than simple. </p>
 <p>In the second part <code>run_test</code> we use the build image as the base for the job. As this image is automatically starting a jupyter notebook we need to override the entrypoint, see <a href="../docker/basics#additional_notes_on_dockerfiles">Docker</a>.  We just tell the image to do nothing, that way the <code>script</code> section will take place, where we simply check the version of <code>R</code>.</p>
 <div class="note"><div class="title">⚠ Note</div>
@@ -365,7 +365,7 @@ docker run -d --name gitlab-runner --restart always \
 </li>
 </ul>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: April 11, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: April 15, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
