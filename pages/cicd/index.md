@@ -6,7 +6,7 @@
 # Basics - why and how?
 
 The term _CI/CD_ is most commonly attributed to _continuous integration, continuous delivery, and continuous deployment_. 
-By introducing automation and continuous monitoring of the code lifecycle - from integration and testing to delivering and deploying - it helps keep the you codebase working and our _product_ up and running. 
+By introducing automation and continuous monitoring of the code lifecycle - from integration and testing to delivering and deploying - it helps keeping the codebase working and our _product_ up and running. 
 
 The concept is often used in DevOps, MLOps or similar approaches. 
 
@@ -14,7 +14,7 @@ The concept is often used in DevOps, MLOps or similar approaches.
 
 The main idea of _continuous integration_ is to automate building and testing such that your merge to a shared branch or repository is known to work. 
 The idea is that multiple people can work on the same code base and conflicts get recognized early and not after two months of developing. 
-Typically the CI _pipeline_ does unit and integration tests that make sure that the chances have not broken the code. 
+Typically, the CI _pipeline_ does unit and integration tests that make sure that the chances have not broken the code. 
 This allows for regular, hopefully daily, merge pushes to the shared repository. 
 
 In Git therms this would be a common _remote repository_ for the developers. 
@@ -33,7 +33,7 @@ The last step in this automation pipeline is the automatic deployment of the cod
 Let us use these notes as example to illustrate this process:
 
 1. The authors write some new material about e.g. CI/CD stuff. This might take some time until the pictures are ready, the text has the correct format and code blocks are tested and developed.
-1. In the next step the new section is _commited_ to the local repository. This goes on for a couple of commits and separate for each author. 
+1. In the next step the new section is _committed_ to the local repository. This goes on for a couple of commits and separate for each author. 
 1. After the author is happy with the local changes it pushes the commits to the _remote repository_. 
 1. The repository living on [github](https://github.com/kandolfp/ws22-ulg-python-git-docker) uses [github workflows](https://docs.github.com/en/actions/using-workflows) to 
    - Checkout the repository
@@ -84,15 +84,15 @@ In the GitLab UI you can find the CI/CD section.
 
 ## Set up your own GitLab runner within Docker
 
-This description is mainly based on [GitLab docs](https://docs.gitlab.com/runner/install/docker.html) and we focus on a Linux installation. 
+This description is mainly based on [GitLab docs](https://docs.gitlab.com/runner/install/docker.html), and we focus on a Linux installation. 
 
 First we need to make sure that we have `docker` installed on the machine we want to run the GitLab runner on, see the [Docker](../docker/index) section for some basic information. 
 As the runner is using docker itself for executing our CI/CD pipeline we will need to make sure that we have access to the Docker socket inside the `gitlab-runner` container. 
 We can do this by mapping `/var/run/docker.sock` to the container, note the `-v` option later on. 
 
-The runner requires a configuration and it should be not inside the container as this would not make it permanent. Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory but sometimes it is good to have to runner configuration in this directory, and create the directory `./gitlab-runner/config/`.
+The runner requires a configuration, and it should be not inside the container as this would not make it permanent. Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory, but sometimes it is good to have to runner configuration in this directory, and create the directory `./gitlab-runner/config/`.
 
-GitLab provides a runner on Docker-Hub and we can simple use it, it is called `gitlab/gitlab-runner`. 
+GitLab provides a runner on Docker-Hub, and we can simply use it, it is called `gitlab/gitlab-runner`. 
 As the runners should be forward and backward compatible with various GitLab versions we work with the `latest` tag.
 
 In order to do the configuration you need to talk to the gitlab-runner application inside the container. 
@@ -274,8 +274,8 @@ run_test:
 
 ```
 
-The main idea of this pipeline is to build a docker image and than test it in the next step. 
-For the test we use a an image that specified in the `Dockerfile` in [Add a second kernel to the notebook](../docker/basics#add_a_second_kernel_to_the_notebook).
+The main idea of this pipeline is to build a docker image and then test it in the next step. 
+For the test we use an image that is specified in the `Dockerfile` in [Add a second kernel to the notebook](../docker/basics#add_a_second_kernel_to_the_notebook).
 We have a single stage that runs two jobs (`build` and `test`), this makes sure that they run in sequence.
 The _global_ variable `docker_image` is used to define the image name that should be build and tested. 
 
