@@ -466,6 +466,101 @@ Successfully rebased and updated refs/heads/main.
 This will prompt us to write a _commit message_. 
 Lets use `add my exercise sheet, and make a conflict resolution`.
 
+# Stashing
+
+There is one more case we need to have a look at. 
+What if we made some changes to a file, are not ready to make a commit yet, but need to pull in some changes coming from the remote?
+Another scenario would be that something in the repository needs urgent fixing so we need to switch back to a clean copy without loosing our current work. 
+Git gives us the possibility to deal with these situations with yet another area and the `git stash`command.
+
+```bash
+> git status
+On branch main
+Your branch is behind 'origin/main' by 1 commits (non-fast-forward).
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   python_ex1/ID.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+> git diff
+diff --git a/python_ex1/ID.py b/python_ex1/ID.py
+index f5b74fc..22038a5 100644
+--- a/python_ex1/ID.py
++++ b/python_ex1/ID.py
+@@ -61,6 +61,11 @@ print(f"Accuracy of pi with N =    100:   {get_accuracy(   100):8.5f}")
+ print(f"Accuracy of pi with N =   1000:   {get_accuracy(  1000):8.5f}")
+ print(f"Accuracy of pi with N = 100000:   {get_accuracy(100000):8.5f}")
+ 
++# ----------------------------------------------
++# Alternative Implementation for (2)
++# ----------------------------------------------
++points = np.random.uniform(0, 1, [2, N])
++
+ 
+ # ----------------------------------------------
+ # (3) Gaussian density
+```
+We have a dirty working directory as we just started to work on an alternative implementation for (2) but we are 1 commit behind the remote. 
+With `git stash push` we can tell git to put all the changes aside for us and keep them safe (an optional message can be added). 
+After pulling the remote changes back in we can finally reapply our stashed work by calling `git stash pop` (this will apply the lates stash, in case we have several). 
+
+Here it is as image and in the bash. 
+\figenv{Stashing changes and pulling in from remote, see numbers for order}{/assets/pages/git/stash.svg}{}
+
+```bash
+> git stash push
+Saved working directory and index state WIP on main: 4e76603 update list of participants
+
+> git status
+On branch main
+Your branch is behind 'origin/main' by 1 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+nothing to commit, working tree clean
+
+> git pull --rebase
+Successfully rebased and updated refs/heads/main.
+
+> git stash list
+stash@{0}: WIP on main: 4e76603 update list of participants
+
+> git stash pop
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   python_ex1/ID.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (d31654c50cfffd2b3f4b931ccf07b5c8362d365a)
+
+> git diff
+diff --git a/python_ex1/ID.py b/python_ex1/ID.py
+index f5b74fc..22038a5 100644
+--- a/python_ex1/ID.py
++++ b/python_ex1/ID.py
+@@ -61,6 +61,11 @@ print(f"Accuracy of pi with N =    100:   {get_accuracy(   100):8.5f}")
+ print(f"Accuracy of pi with N =   1000:   {get_accuracy(  1000):8.5f}")
+ print(f"Accuracy of pi with N = 100000:   {get_accuracy(100000):8.5f}")
+ 
++# ----------------------------------------------
++# Alternative Implementation for (2)
++# ----------------------------------------------
++points = np.random.uniform(0, 1, [2, N])
++
+ 
+ # ----------------------------------------------
+ # (3) Gaussian density
+```
+
+With `git stash list` we can view different stashes. 
+
 # History
 
 The last thing we look into is the _history_. 
