@@ -51,8 +51,8 @@ cp PATH/TO/YOUR/FILE/solution_ex1.py python_ex1/{YOUR ID}.py
 ```
 In my case the command reads like this:
 ```bash
-> cp ../Exercixes/reference_solution.py python_ex1/ID.py
-'../Exercixes/reference_solution.py' -> 'python_ex1/ID.py'
+> cp ../Exercises/reference_solution.py python_ex1/ID.py
+'../Exercises/reference_solution.py' -> 'python_ex1/ID.py'
 ```
 
 This has we modified our _working directory_. In order to get an idea what Git thinks about this lets run `git status` in the working directory:
@@ -121,7 +121,7 @@ Any changes done to a file after running `git add <file>` will not be part of a 
 @@
 
 @@important
-My submitting an _empty_ commit message you can about a commit.
+My submitting an _empty_ commit message you can abort a commit.
 @@
 
 Now the changes are in the _local repository_ and you can continue working. 
