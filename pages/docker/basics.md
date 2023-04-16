@@ -206,7 +206,7 @@ This tells us already a lot what is happening here, we can split it in three par
    
    When you store an image in a _registry_ it gets a _tag_ or _image id_, where the _tag_ is usually a human readable alias to an _image id_.
    This is very similar to the commit id in Git. 
-   In fact it is again again a hash, this time with a SHA256 of the image's JSON configuration.
+   In fact it is again a hash, this time with a SHA256 of the image's JSON configuration.
 1. `6e3729cf69e0: Downloading` 
    
    The next lines all look similar.
