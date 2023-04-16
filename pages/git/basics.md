@@ -26,7 +26,7 @@ In order to get it onto you local machine type the following commands in the Ter
 
 ```bash
 #Navigate to a suitable directory
-git clone https://{YOUR ID}@git.uibk.ac.at/c102338/ulg22_playground.git
+git clone https://{YOUR ID}@git.uibk.ac.at/c702169/ulg22_playground.git
 ```
 This will perform the following two actions:
 1. _Checkout_ the content of the _remote repository_ into the _\color{#e67700}{working directory}_. By default this is the name of the repository, in your case the folder `ulg22_playground` is created and all files are put there. 
