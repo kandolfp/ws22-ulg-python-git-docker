@@ -109,7 +109,7 @@ The same can be achieved directly in the Terminal by writing
  create mode 100644 python_ex1/ID.py
 
 ```
-\figenv{Commiting changes the repository}{/assets/pages/git/commit.svg}{}
+\figenv{Committing changes the repository}{/assets/pages/git/commit.svg}{}
 
 In the above message you can see that your commit get some more meta data. 
 Specifically, it gets a [SHA-1](https://de.wikipedia.org/wiki/Secure_Hash_Algorithm) hash, namely `578e48f`
