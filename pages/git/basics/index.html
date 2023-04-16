@@ -143,8 +143,8 @@ python_ex1 README.md</code></pre>
 <p>First we copy the file to exercise directory</p>
 <pre><code class="bash hljs"><span class="hljs-built_in">cp</span> PATH/TO/YOUR/FILE/solution_ex1.py python_ex1/{YOUR ID}.py</code></pre>
 <p>In my case the command reads like this:</p>
-<pre><code class="bash hljs">&gt; <span class="hljs-built_in">cp</span> ../Exercixes/reference_solution.py python_ex1/ID.py
-<span class="hljs-string">&#x27;../Exercixes/reference_solution.py&#x27;</span> -&gt; <span class="hljs-string">&#x27;python_ex1/ID.py&#x27;</span></code></pre>
+<pre><code class="bash hljs">&gt; <span class="hljs-built_in">cp</span> ../Exercises/reference_solution.py python_ex1/ID.py
+<span class="hljs-string">&#x27;../Exercises/reference_solution.py&#x27;</span> -&gt; <span class="hljs-string">&#x27;python_ex1/ID.py&#x27;</span></code></pre>
 <p>This has we modified our <em>working directory</em>. In order to get an idea what Git thinks about this lets run <code>git status</code> in the working directory:</p>
 <pre><code class="bash hljs">On branch main
 Your branch is up to <span class="hljs-built_in">date</span> with <span class="hljs-string">&#x27;origin/main&#x27;</span>.
@@ -193,7 +193,7 @@ Changes to be committed:
 
 <p>In the above message you can see that your commit get some more meta data.  Specifically, it gets a <a href="https://de.wikipedia.org/wiki/Secure_Hash_Algorithm">SHA-1</a> hash, namely <code>578e48f</code> The hash is used to keep track of your commits and is one of the ground breaking ideas that makes Git so successful.  The hash is much longer but due to its nature in most cases already its first seven digits will make it unique. </p>
 <div class="important">Any changes done to a file after running <code>git add &lt;file&gt;</code> will not be part of a <em>commit</em>. If they should be included you need to rerun <code>git add &lt;file&gt;</code>.</div>
-<div class="important">My submitting an <em>empty</em> commit message you can about a commit.</div>
+<div class="important">My submitting an <em>empty</em> commit message you can abort a commit.</div>
 <p>Now the changes are in the <em>local repository</em> and you can continue working.  In order to share your changes with others you need to get them to the <em>remote repository</em>.  This is done by <em>pushing</em> the changes.  We do this by calling <code>git push</code> witch gives us an output similar to:</p>
 <pre><code class="bash hljs">Enumerating objects: 6, <span class="hljs-keyword">done</span>.
 Counting objects: 100% (6/6), <span class="hljs-keyword">done</span>.
@@ -588,7 +588,7 @@ a0f8f01 HEAD@{8}: <span class="hljs-built_in">clone</span>: from https://git.uib
 </li>
 </ul>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: April 15, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: April 16, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
