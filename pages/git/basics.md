@@ -232,7 +232,7 @@ With your favourite editor add the following content next to your `ID` (btw. thi
 ```markdown
 # ulg22_playground
 
-## List of handin the python exercises 
+## List of submitted python exercises 
 
 | Name/UID    | File        |
 | ----------- | ----------- |
