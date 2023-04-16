@@ -47,7 +47,7 @@ Or maybe you have a new Apple with an Mx chip and still want to use some softwar
 
 ## You need to test your software for X but you run Y
 
-Maybe you are developing software on Windwos but it should also run on Linux but it should also work on Android iOS and so forth. 
+Maybe you are developing software on Windows but it should also run on Linux but it should also work on Android iOS and so forth.
 
 ## You have no rights to install software but you can run jobs (High Performance Computing)
 
