@@ -222,4 +222,4 @@ Vienna           415     1794770  4324.746988
 ```
 
 # Link to the session notes
-[Session Notes](/assets/pages/python/Session1.html)
+[Session Notes](/assets/pages/python/Session2.html)
