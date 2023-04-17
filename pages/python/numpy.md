@@ -149,4 +149,4 @@ array([[ 5,  7,  9],
 $\,$}
 
 # Link to the session notes
-[Session Notes](/assets/pages/python/Session1.html)
+[Session Notes](/notebooks/html/Session1.html)
