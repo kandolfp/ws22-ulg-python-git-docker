@@ -13,6 +13,6 @@ In order to better understand the material in the two subsections and for the ex
 - [Python for Beginners](https://www.pythonforbeginners.com/basics/list-comprehensions-in-python) has a very nice section about _list comprehensions_.
 
 The actual sections can be found here:
-1. [Numpy](./numpy) 
-1. [Pandas](./pandas)
+1. [NumpPy](/pages/python/numpy/) 
+1. [Pandas](/pages/python/pandas/)
 

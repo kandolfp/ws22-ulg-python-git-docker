@@ -222,4 +222,8 @@ Vienna           415     1794770  4324.746988
 ```
 
 # Link to the session notes
+<<<<<<< HEAD
 [Session Notes](/notebooks/html/Session2)
+=======
+[Session Notes](/notebooks/html/Session2/)
+>>>>>>> 751cd32 (fix(verify_links): fix all lings that trigger verify_links and on the way some spelling)

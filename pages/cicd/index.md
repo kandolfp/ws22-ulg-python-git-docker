@@ -86,7 +86,7 @@ In the GitLab UI you can find the CI/CD section.
 
 This description is mainly based on [GitLab docs](https://docs.gitlab.com/runner/install/docker.html), and we focus on a Linux installation. 
 
-First we need to make sure that we have `docker` installed on the machine we want to run the GitLab runner on, see the [Docker](../docker/index) section for some basic information. 
+First we need to make sure that we have `docker` installed on the machine we want to run the GitLab runner on, see the [Docker](/pages/docker/) section for some basic information. 
 As the runner is using docker itself for executing our CI/CD pipeline we will need to make sure that we have access to the Docker socket inside the `gitlab-runner` container. 
 We can do this by mapping `/var/run/docker.sock` to the container, note the `-v` option later on. 
 
@@ -275,7 +275,7 @@ run_test:
 ```
 
 The main idea of this pipeline is to build a docker image and then test it in the next step. 
-For the test we use an image that is specified in the `Dockerfile` in [Add a second kernel to the notebook](../docker/basics#add_a_second_kernel_to_the_notebook).
+For the test we use an image that is specified in the `Dockerfile` in [Add a second kernel to the notebook](/pages/docker/basics/#add_a_second_kernel_to_the_notebook).
 We have a single stage that runs two jobs (`build` and `test`), this makes sure that they run in sequence.
 The _global_ variable `docker_image` is used to define the image name that should be build and tested. 
 
@@ -283,7 +283,7 @@ In the first part `run_build` we use the _Docker in Docker_ `docker:dind` image 
 The script to do the actual build is than simple. 
 
 In the second part `run_test` we use the build image as the base for the job.
-As this image is automatically starting a jupyter notebook we need to override the entrypoint, see [Docker](../docker/basics#additional_notes_on_dockerfiles). 
+As this image is automatically starting a jupyter notebook we need to override the entrypoint, see [additional notes on the dockerfiles](/pages/docker/basics/#additional_notes_on_dockerfiles). 
 We just tell the image to do nothing, that way the `script` section will take place, where we simply check the version of `R`.
 
 \note{
