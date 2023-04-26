@@ -69,18 +69,18 @@
         <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/" class="menu-list-link ">Start</a>
         <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/" class="menu-list-link ">Python</a>
           <ul class="menu-list-child-list ">
-            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/numpy/" class="menu-list-link ">Numpy</a>
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/numpy/" class="menu-list-link ">NumPy</a>
               <ul class="menu-list-child-list ">
-                <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/notebooks/html/Session1" class="menu-list-link ">Session Notes</a>
+                <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/notebooks/html/Session1/" class="menu-list-link ">Session Notes</a>
               </ul>
-            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/pandas/" class="menu-list-link ">pandas</a>
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/python/pandas/" class="menu-list-link ">Pandas</a>
               <ul class="menu-list-child-list ">
-                <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/notebooks/html/Session2" class="menu-list-link ">Session Notes</a>
+                <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/notebooks/html/Session2/" class="menu-list-link ">Session Notes</a>
               </ul>
           </ul>
            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/" class="menu-list-link ">Git</a>
           <ul class="menu-list-child-list ">
-            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/basics" class="menu-list-link ">Basics</a>
+            <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/git/basics/" class="menu-list-link ">Basics</a>
           </ul>
         <li class="menu-list-item "><a href="/ws22-ulg-python-git-docker/pages/docker/" class="menu-list-link ">Docker</a>
           <ul class="menu-list-child-list ">
@@ -177,7 +177,7 @@
 <p>The entire job is executed on a so called <a href="https://docs.gitlab.com/runner/">runner</a>. In the case of the used GitLab you have a public runner available to handle the jobs.  You can also just spin up a Docker container on your laptop as a runner, attach it and use it for the pipeline.  As no <em>triggers</em> are specified the pipeline is executed on every push to the remote repository.  In the GitLab UI you can find the CI/CD section.</p>
 <h2 id="set_up_your_own_gitlab_runner_within_docker"><a href="#set_up_your_own_gitlab_runner_within_docker" class="header-anchor">Set up your own GitLab runner within Docker</a></h2>
 <p>This description is mainly based on <a href="https://docs.gitlab.com/runner/install/docker.html">GitLab docs</a>, and we focus on a Linux installation. </p>
-<p>First we need to make sure that we have <code>docker</code> installed on the machine we want to run the GitLab runner on, see the <a href="../docker/index">Docker</a> section for some basic information.  As the runner is using docker itself for executing our CI/CD pipeline we will need to make sure that we have access to the Docker socket inside the <code>gitlab-runner</code> container.  We can do this by mapping <code>/var/run/docker.sock</code> to the container, note the <code>-v</code> option later on. </p>
+<p>First we need to make sure that we have <code>docker</code> installed on the machine we want to run the GitLab runner on, see the <a href="/ws22-ulg-python-git-docker/pages/docker/">Docker</a> section for some basic information.  As the runner is using docker itself for executing our CI/CD pipeline we will need to make sure that we have access to the Docker socket inside the <code>gitlab-runner</code> container.  We can do this by mapping <code>/var/run/docker.sock</code> to the container, note the <code>-v</code> option later on. </p>
 <p>The runner requires a configuration, and it should be not inside the container as this would not make it permanent. Go to the directory of the GitLab repository that you want to create the runner for, obviously you can use a shared directory, but sometimes it is good to have to runner configuration in this directory, and create the directory <code>./gitlab-runner/config/</code>.</p>
 <p>GitLab provides a runner on Docker-Hub, and we can simply use it, it is called <code>gitlab/gitlab-runner</code>.  As the runners should be forward and backward compatible with various GitLab versions we work with the <code>latest</code> tag.</p>
 <p>In order to do the configuration you need to talk to the gitlab-runner application inside the container.  This looks like:</p>
@@ -340,9 +340,9 @@ docker run -d --name gitlab-runner --restart always \
     <span class="hljs-bullet">-</span> <span class="hljs-string">R</span> <span class="hljs-string">--version</span>
   <span class="hljs-attr">rules:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">when:</span> <span class="hljs-string">on_success</span></code></pre>
-<p>The main idea of this pipeline is to build a docker image and then test it in the next step.  For the test we use an image that is specified in the <code>Dockerfile</code> in <a href="../docker/basics#add_a_second_kernel_to_the_notebook">Add a second kernel to the notebook</a>. We have a single stage that runs two jobs &#40;<code>build</code> and <code>test</code>&#41;, this makes sure that they run in sequence. The <em>global</em> variable <code>docker_image</code> is used to define the image name that should be build and tested. </p>
+<p>The main idea of this pipeline is to build a docker image and then test it in the next step.  For the test we use an image that is specified in the <code>Dockerfile</code> in <a href="/ws22-ulg-python-git-docker/pages/docker/basics/#add_a_second_kernel_to_the_notebook">Add a second kernel to the notebook</a>. We have a single stage that runs two jobs &#40;<code>build</code> and <code>test</code>&#41;, this makes sure that they run in sequence. The <em>global</em> variable <code>docker_image</code> is used to define the image name that should be build and tested. </p>
 <p>In the first part <code>run_build</code> we use the <em>Docker in Docker</em> <code>docker:dind</code> image to actually build the image, see the variable <code>image</code>.  The script to do the actual build is than simple. </p>
-<p>In the second part <code>run_test</code> we use the build image as the base for the job. As this image is automatically starting a jupyter notebook we need to override the entrypoint, see <a href="../docker/basics#additional_notes_on_dockerfiles">Docker</a>.  We just tell the image to do nothing, that way the <code>script</code> section will take place, where we simply check the version of <code>R</code>.</p>
+<p>In the second part <code>run_test</code> we use the build image as the base for the job. As this image is automatically starting a jupyter notebook we need to override the entrypoint, see <a href="/ws22-ulg-python-git-docker/pages/docker/basics/#additional_notes_on_dockerfiles">additional notes on the dockerfiles</a>.  We just tell the image to do nothing, that way the <code>script</code> section will take place, where we simply check the version of <code>R</code>.</p>
 <div class="note"><div class="title">⚠ Note</div>
 <div class="content"><ol>
 <li><p>The additional <code>rule</code> is there to make sure that this part is only run for a successful build before.</p>
@@ -365,7 +365,7 @@ docker run -d --name gitlab-runner --restart always \
 </li>
 </ul>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: April 17, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: April 26, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
