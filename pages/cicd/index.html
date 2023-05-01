@@ -296,7 +296,7 @@ Configuration (with the authentication token) was saved in &quot;/etc/gitlab-run
     <span class="hljs-attr">pull_policy</span> = <span class="hljs-string">&quot;if-not-present&quot;</span></code></pre>
 <p>If you also add the <code>pull-policy &#61; &quot;if-not-present&quot;</code> you will be able to use an image build with a <code>dind</code> in one stage as the base of a second stage. </p>
 <p>We can finally put all together and start the runner in a daemon mode that will always restart:</p>
-<pre><code class="bash hljs"><span class="hljs-built_in">mkdir</span> -p /gitlab-runner/config
+<pre><code class="bash hljs"><span class="hljs-built_in">mkdir</span> -p ./gitlab-runner/config
 docker run -d --name gitlab-runner --restart always \
   -v ./gitlab-runner/config:/etc/gitlab-runner \
   -v /var/run/docker.sock:/var/run/docker.sock \
