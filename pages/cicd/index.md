@@ -150,7 +150,7 @@ Note that we can get the required URL and token form GitLab by going to the _Set
 Furthermore, for _executor_ select _docker_.
 
 ```bash
-docker run -rm -t -i -v ./gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
+docker run --rm -t -i -v ./gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
 
 Runtime platform            arch=amd64 os=linux pid=7 revision=d540b510 version=15.9.1
 Running in system-mode.                            
