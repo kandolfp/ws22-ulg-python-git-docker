@@ -228,7 +228,7 @@ If you also add the `pull-policy = "if-not-present"` you will be able to use an 
 
 We can finally put all together and start the runner in a daemon mode that will always restart:
 ```bash
-mkdir -p /gitlab-runner/config
+mkdir -p ./gitlab-runner/config
 docker run -d --name gitlab-runner --restart always \
   -v ./gitlab-runner/config:/etc/gitlab-runner \
   -v /var/run/docker.sock:/var/run/docker.sock \
