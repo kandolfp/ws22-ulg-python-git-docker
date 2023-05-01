@@ -227,7 +227,7 @@ GLOBAL OPTIONS:
    --help, -h                   show help
    --version, -v                print the version</span></code></pre>
 <p>What we will need is the <code>register</code> command and make sure that the <em>result</em> is available for the container afterwards, so map the directory we created inside the container.  Note that we can get the required URL and token form GitLab by going to the <em>Settings-&gt;CI/CD-&gt;Runners</em> and <em>Specific Runners</em>.  Furthermore, for <em>executor</em> select <em>docker</em>.</p>
-<pre><code class="bash hljs">docker run -<span class="hljs-built_in">rm</span> -t -i -v ./gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
+<pre><code class="bash hljs">docker run --<span class="hljs-built_in">rm</span> -t -i -v ./gitlab-runner/config:/etc/gitlab-runner gitlab/gitlab-runner register
 
 Runtime platform            <span class="hljs-built_in">arch</span>=amd64 os=linux pid=7 revision=d540b510 version=15.9.1
 Running <span class="hljs-keyword">in</span> system-mode.                            
@@ -365,7 +365,7 @@ docker run -d --name gitlab-runner --restart always \
 </li>
 </ul>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: April 27, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: May 01, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
