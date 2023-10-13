@@ -59,7 +59,7 @@ On most of these systems you will not be allowed to install software randomly an
 
 Let us assume you created some nice data processing pipeline and you want to make it available to others. 
 Sure everybody can install the same environment that you have and run the code but you will get a lot of calls because something is not working. 
-Often the colleges work on other operating systems and you do not really know how you can get you barely know how you got it to run on your machine. 
+Often the colleagues work on other operating systems and you barely know how you got it to run on your machine. 
 
 ## You need to archive a working version (limited)
 
