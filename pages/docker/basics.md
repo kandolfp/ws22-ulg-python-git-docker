@@ -33,7 +33,7 @@ Instructions like `docker pull` are sent as an API call to `dockerd` and execute
 The daemon that you communicate with does not necessarily be on the local machine nor does it always have to be the same.
 
 ## The Docker registries
-The Docker registries are separate and strictly speaking not necessary for your to use Docker. 
+The Docker registries are separate and strictly speaking not necessary for you to use Docker. 
 There purpose is to store Docker images. 
 This can be public like [Docker Hub](https://hub.docker.com/) and [Autamus](https://autamus.io/registry/)[^1] or private for your organisation and tools like GitLab provide registries as well.
 
@@ -50,7 +50,7 @@ The various docker objects in the above image are
 > An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization. For example, you may build an image which is based on the ubuntu image, but installs the Apache web server and your application, as well as the configuration details needed to make your application run.
 
 In order to build you own image you need a so called `Dockerfile` which uses a specific syntax to allow the Docker daemon to build an image from it. 
-Each step in this image is called a layer and whenever you build an image only the layers that change need to be rebuild. 
+Each step in this image is called a layer and whenever you build an image only the layers that have changed need to be rebuild. 
 
 ## Container
 > A container is a runnable instance of an image. You can create, start, stop, move, or delete a container using the Docker API or CLI. You can connect a container to one or more networks, attach storage to it, or even create a new image based on its current state.
@@ -226,7 +226,7 @@ A note of caution right away.
 Please be careful when working with Docker! 
 As you could see there is no need to log in to get an image and we also don't directly see what these images do.
 Don't just randomly run images without considering the risks! 
-When you base your image on something be careful that the source is trust worthy. 
+When you base your image on something be careful that the source is trustworthy. 
 In this case Docker Hub helps us as _jupyter_ is a verified source.
 }
 
@@ -266,7 +266,7 @@ Executing the command: jupyter lab
      or http://127.0.0.1:8888/lab?token=074a04006ad89060e18cfc1bb3814d323741a832d2dcaa88
 
 ```
-\note{The `:lates` is not required as this is the only image you have here, but to have the syntax correct from the start never hurts. }
+\note{The `:latest` is not required as this is the only image you have here, but to have the syntax correct from the start never hurts. }
 
 You see a couple of log messages and at the end you are invited to access the server via `http://127.0.0.1:8888/lab?token=<token>`
 
@@ -473,7 +473,7 @@ This means all your action - including storing data - are run by the user that i
 (base) jovyan@82a302b74f60:~/work$ id
 uid=1000(jovyan) gid=100(users) groups=100(users)
 ```
-As a consequence, files that have not these access rights will not be shown and if you save a file it will belong to user `1000` on the _host machine_, whoever that is. 
+As a consequence, files that do not have these access rights will not be shown and if you save a file it will belong to user `1000` on the _host machine_, whoever that is. 
 If your _host user_ is different you can change the user inside the container by adding the option
 `--user <uid>:<gid>` to the run command.
 }
@@ -520,7 +520,7 @@ Now lets do something more fancy.
 
 ## Add a second kernel to the notebook
 
-The second language uses in the class is R so why not include it into the container. 
+The second language used in the class is R so why not include it into the container. 
 Checking the documentation of R reveals that we need the [`IRkernel` package](https://irkernel.github.io/installation/) and the installation instructions translate to 
 ```Dockerfile
 # Start from a core stack version
@@ -564,4 +564,4 @@ It is therefore used for the instructions `RUN`, `ENTRYPOINT`, etc.
 
 Similar to the `.gitignore` there is also the possibility to specify a `.dockerignore` file. 
 Before the Docker CLI sends the context of the build to the docker daemon (remote or local) it excludes the files and paths that are specified in this file. 
-This can be used to exclude sensitive or large files from being send to the daemon.
+This can be used to exclude sensitive or large files from being sent to the daemon.
