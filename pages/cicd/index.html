@@ -137,7 +137,7 @@
 </li>
 </ol>
 <div class="note"><div class="title">⚠ Note</div>
-<div class="content">Obviously, this does not prevent the notes from having some errors or typos but the authors always get a quick feedback if there work can still be displayed.</div></div>
+<div class="content">Obviously, this does not prevent the notes from having some errors or typos but the authors always get a quick feedback if their work can still be displayed.</div></div>
 <h1 id="cicd_in_gitlab"><a href="#cicd_in_gitlab" class="header-anchor">CI/CD in GitLab</a></h1>
 <p>GitLab supports and provides some tools for <a href="https://docs.gitlab.com/ee/ci/">CI/CD</a>. </p>
 <p>The main part is a CI/CD pipeline that is by default triggered when a <code>.gitlab-ci.yml</code> file is present in a directory. </p>
@@ -157,7 +157,7 @@
   <span class="hljs-attr">script:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-string">pytest</span> <span class="hljs-string">test.py</span></code></pre>
 <p>That simply executes some tests on the file <code>test.py</code> with the <a href="https://docs.pytest.org/en/7.2.x/index.html">pytest</a> framework. </p>
-<p>What is actually happening in that little yml file is the as follows:</p>
+<p>What is actually happening in that little yml file is this:</p>
 <ol>
 <li><p>Definition of the stages to run, here only one called <code>test</code></p>
 </li>
@@ -341,7 +341,7 @@ docker run -d --name gitlab-runner --restart always \
   <span class="hljs-attr">rules:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">when:</span> <span class="hljs-string">on_success</span></code></pre>
 <p>The main idea of this pipeline is to build a docker image and then test it in the next step.  For the test we use an image that is specified in the <code>Dockerfile</code> in <a href="/ws22-ulg-python-git-docker/pages/docker/basics/#add_a_second_kernel_to_the_notebook">Add a second kernel to the notebook</a>. We have a single stage that runs two jobs &#40;<code>build</code> and <code>test</code>&#41;, this makes sure that they run in sequence. The <em>global</em> variable <code>docker_image</code> is used to define the image name that should be build and tested. </p>
-<p>In the first part <code>run_build</code> we use the <em>Docker in Docker</em> <code>docker:dind</code> image to actually build the image, see the variable <code>image</code>.  The script to do the actual build is than simple. </p>
+<p>In the first part <code>run_build</code> we use the <em>Docker in Docker</em> <code>docker:dind</code> image to actually build the image, see the variable <code>image</code>.  The script to do the actual build is then simple. </p>
 <p>In the second part <code>run_test</code> we use the build image as the base for the job. As this image is automatically starting a jupyter notebook we need to override the entrypoint, see <a href="/ws22-ulg-python-git-docker/pages/docker/basics/#additional_notes_on_dockerfiles">additional notes on the dockerfiles</a>.  We just tell the image to do nothing, that way the <code>script</code> section will take place, where we simply check the version of <code>R</code>.</p>
 <div class="note"><div class="title">⚠ Note</div>
 <div class="content"><ol>
@@ -365,7 +365,7 @@ docker run -d --name gitlab-runner --restart always \
 </li>
 </ul>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: May 01, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 13, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->

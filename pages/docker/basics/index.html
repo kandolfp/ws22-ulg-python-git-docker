@@ -124,7 +124,7 @@
 <h2 id="the_docker_client"><a href="#the_docker_client" class="header-anchor">The Docker client</a></h2>
 <p>The docker client is your way to interact with Docker.  Instructions like <code>docker pull</code> are sent as an API call to <code>dockerd</code> and executed there.  The daemon that you communicate with does not necessarily be on the local machine nor does it always have to be the same.</p>
 <h2 id="the_docker_registries"><a href="#the_docker_registries" class="header-anchor">The Docker registries</a></h2>
-<p>The Docker registries are separate and strictly speaking not necessary for your to use Docker.  There purpose is to store Docker images.  This can be public like <a href="https://hub.docker.com/">Docker Hub</a> and <a href="https://autamus.io/registry/">Autamus</a><sup id="fnref:1"><a href="#fndef:1" class="fnref">[1]</a></sup> or private for your organisation and tools like GitLab provide registries as well.</p>
+<p>The Docker registries are separate and strictly speaking not necessary for you to use Docker.  There purpose is to store Docker images.  This can be public like <a href="https://hub.docker.com/">Docker Hub</a> and <a href="https://autamus.io/registry/">Autamus</a><sup id="fnref:1"><a href="#fndef:1" class="fnref">[1]</a></sup> or private for your organisation and tools like GitLab provide registries as well.</p>
 <p><table class="fndef" id="fndef:1">
     <tr>
         <td class="fndef-backref"><a href="#fnref:1">[1]</a></td>
@@ -138,7 +138,7 @@
 <blockquote>
 <p>An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization. For example, you may build an image which is based on the ubuntu image, but installs the Apache web server and your application, as well as the configuration details needed to make your application run.</p>
 </blockquote>
-<p>In order to build you own image you need a so called <code>Dockerfile</code> which uses a specific syntax to allow the Docker daemon to build an image from it.  Each step in this image is called a layer and whenever you build an image only the layers that change need to be rebuild. </p>
+<p>In order to build you own image you need a so called <code>Dockerfile</code> which uses a specific syntax to allow the Docker daemon to build an image from it.  Each step in this image is called a layer and whenever you build an image only the layers that have changed need to be rebuild. </p>
 <h2 id="container"><a href="#container" class="header-anchor">Container</a></h2>
 <blockquote>
 <p>A container is a runnable instance of an image. You can create, start, stop, move, or delete a container using the Docker API or CLI. You can connect a container to one or more networks, attach storage to it, or even create a new image based on its current state.</p>
@@ -293,7 +293,7 @@ docker.io/jupyter/minimal-notebook:latest</code></pre>
 </li>
 </ol>
 <div class="note"><div class="title">⚠ Note</div>
-<div class="content">A note of caution right away.  Please be careful when working with Docker&#33;  As you could see there is no need to log in to get an image and we also don&#39;t directly see what these images do. Don&#39;t just randomly run images without considering the risks&#33;  When you base your image on something be careful that the source is trust worthy.  In this case Docker Hub helps us as <em>jupyter</em> is a verified source.</div></div>
+<div class="content">A note of caution right away.  Please be careful when working with Docker&#33;  As you could see there is no need to log in to get an image and we also don&#39;t directly see what these images do. Don&#39;t just randomly run images without considering the risks&#33;  When you base your image on something be careful that the source is trustworthy.  In this case Docker Hub helps us as <em>jupyter</em> is a verified source.</div></div>
 <p>Now we have the image and we can run it. Let us do so by calling:</p>
 <h2 id="running_the_first_instance"><a href="#running_the_first_instance" class="header-anchor">Running the first instance</a></h2>
 <pre><code class="bash hljs">&gt; docker run jupyter/minimal-notebook:latest
@@ -326,7 +326,7 @@ Executing the <span class="hljs-built_in">command</span>: jupyter lab
         http://b702c7cbc0b9:8888/lab?token=074a04006ad89060e18cfc1bb3814d323741a832d2dcaa88
      or http://127.0.0.1:8888/lab?token=074a04006ad89060e18cfc1bb3814d323741a832d2dcaa88</code></pre>
 <div class="note"><div class="title">⚠ Note</div>
-<div class="content">The <code>:lates</code> is not required as this is the only image you have here, but to have the syntax correct from the start never hurts.</div></div>
+<div class="content">The <code>:latest</code> is not required as this is the only image you have here, but to have the syntax correct from the start never hurts.</div></div>
 <p>You see a couple of log messages and at the end you are invited to access the server via <code>http://127.0.0.1:8888/lab?token&#61;&lt;token&gt;</code></p>
 <p>If you try this you will see that the page can not be reached. </p>
 
@@ -483,7 +483,7 @@ CONTAINER ID   IMAGE                      COMMAND                  CREATED      
 <div class="content"><p>It is important to remember that you are nevertheless inside a container. This means all your action - including storing data - are run by the user that is present in the container. </p>
 <pre><code class="bash hljs">(base) jovyan@82a302b74f60:~/work$ <span class="hljs-built_in">id</span>
 uid=1000(jovyan) gid=100(<span class="hljs-built_in">users</span>) <span class="hljs-built_in">groups</span>=100(<span class="hljs-built_in">users</span>)</code></pre>
-<p>As a consequence, files that have not these access rights will not be shown and if you save a file it will belong to user <code>1000</code> on the <em>host machine</em>, whoever that is.  If your <em>host user</em> is different you can change the user inside the container by adding the option <code>--user &lt;uid&gt;:&lt;gid&gt;</code> to the run command.</p></div></div>
+<p>As a consequence, files that do not have these access rights will not be shown and if you save a file it will belong to user <code>1000</code> on the <em>host machine</em>, whoever that is.  If your <em>host user</em> is different you can change the user inside the container by adding the option <code>--user &lt;uid&gt;:&lt;gid&gt;</code> to the run command.</p></div></div>
 <h2 id="dockerfile"><a href="#dockerfile" class="header-anchor">Dockerfile</a></h2>
 <p>Now that you have all this in order you run your examples but are greeted with the response that <code>numpy</code> is not available.  Of course you can install it in the terminal - via pip - or directly via Python but next time you start the image you need to do it again. </p>
 <p>So we decide to create a new image and use that instead.  A new image is created with a <code>Dockerfile</code>, see<a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a> for full details. </p>
@@ -515,7 +515,7 @@ Successfully tagged ulg22:latest</code></pre>
 <pre><code class="bash hljs">&gt; docker run -it -p 8888:8888 ulg22</code></pre>
 <p>Now lets do something more fancy.</p>
 <h2 id="add_a_second_kernel_to_the_notebook"><a href="#add_a_second_kernel_to_the_notebook" class="header-anchor">Add a second kernel to the notebook</a></h2>
-<p>The second language uses in the class is R so why not include it into the container.  Checking the documentation of R reveals that we need the <a href="https://irkernel.github.io/installation/"><code>IRkernel</code> package</a> and the installation instructions translate to </p>
+<p>The second language used in the class is R so why not include it into the container.  Checking the documentation of R reveals that we need the <a href="https://irkernel.github.io/installation/"><code>IRkernel</code> package</a> and the installation instructions translate to </p>
 <pre><code class="Dockerfile hljs"><span class="hljs-comment"># Start from a core stack version</span>
 <span class="hljs-keyword">FROM</span> jupyter/minimal-notebook:latest
 
@@ -537,9 +537,9 @@ Successfully tagged ulg22:latest</code></pre>
 <p>or</p>
 <pre><code class="Dockerfile hljs"><span class="hljs-keyword">USER</span> &lt;UID&gt;[:&lt;GID&gt;]</code></pre>
 <p>to specify the user &#40;and group&#41; to use for the remainder of the current stage.  It is therefore used for the instructions <code>RUN</code>, <code>ENTRYPOINT</code>, etc.</p>
-<p>Similar to the <code>.gitignore</code> there is also the possibility to specify a <code>.dockerignore</code> file.  Before the Docker CLI sends the context of the build to the docker daemon &#40;remote or local&#41; it excludes the files and paths that are specified in this file.  This can be used to exclude sensitive or large files from being send to the daemon.</p>
+<p>Similar to the <code>.gitignore</code> there is also the possibility to specify a <code>.dockerignore</code> file.  Before the Docker CLI sends the context of the build to the docker daemon &#40;remote or local&#41; it excludes the files and paths that are specified in this file.  This can be used to exclude sensitive or large files from being sent to the daemon.</p>
 <div class="page-foot">
-    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: May 01, 2023.
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>  <a href="https://lfuonline.uibk.ac.at/public/people.vcard?id=59131">Peter Kandolf</a>. Last modified: October 13, 2023.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
