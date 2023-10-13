@@ -41,7 +41,7 @@ Let us use these notes as example to illustrate this process:
    - If the build was successful the page is moved over to [github pages](https://pages.github.com/)
 1. The reader of the notes always has the latest working copy of the notes. 
 
-\note{Obviously, this does not prevent the notes from having some errors or typos but the authors always get a quick feedback if there work can still be displayed.}
+\note{Obviously, this does not prevent the notes from having some errors or typos but the authors always get a quick feedback if their work can still be displayed.}
 
 # CI/CD in GitLab
 
@@ -68,7 +68,7 @@ run_test:
 ```
 That simply executes some tests on the file `test.py` with the [pytest](https://docs.pytest.org/en/7.2.x/index.html) framework. 
 
-What is actually happening in that little yml file is the as follows:
+What is actually happening in that little yml file is this:
 
 1. Definition of the stages to run, here only one called `test`
 1. Definition of the default Docker image to use for the stages
@@ -280,7 +280,7 @@ We have a single stage that runs two jobs (`build` and `test`), this makes sure 
 The _global_ variable `docker_image` is used to define the image name that should be build and tested. 
 
 In the first part `run_build` we use the _Docker in Docker_ `docker:dind` image to actually build the image, see the variable `image`. 
-The script to do the actual build is than simple. 
+The script to do the actual build is then simple. 
 
 In the second part `run_test` we use the build image as the base for the job.
 As this image is automatically starting a jupyter notebook we need to override the entrypoint, see [additional notes on the dockerfiles](/pages/docker/basics/#additional_notes_on_dockerfiles). 
