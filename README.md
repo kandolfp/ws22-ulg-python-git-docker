@@ -5,7 +5,7 @@ Course material for a ~4+4 hours introduction to git (with CI/CD and gitlab), do
 # Citing this software
 [Citation information](CITATION.cff)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10532424.svg)](https://doi.org/10.5281/zenodo.10532424)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10532727.svg)](https://doi.org/10.5281/zenodo.10532727)
 
 # Development
 We use [Franklin.jl](https://franklinjl.org) to generate the lecture material. To do so, simply activate the environment, use Franklin and run the local server:

@@ -6,7 +6,6 @@
             "name": "Kandolf, Peter"
         }
     ],
-    "doi": "10.5281/zenodo.10532424",
     "description": "Course material for a ~4+4 hours introduction to git (with CI/CD and gitlab), docker and a hint of python.",
     "keywords": ["git", "docker", "cicd", "gitlab", "containerisation"],
     "license": "cc-by-nc-sa-4.0",
