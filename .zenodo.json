@@ -1,19 +1,16 @@
 {
+    "access_right": "open",
     "creators": [
         {
             "orcid": "0000-0003-3601-0852",
             "name": "Kandolf, Peter"
         }
     ],
-
-    "upload_type": "lesson",
-    "publication_date": "2024-01-15",
-    "description": "Lecture notes for ULG VU 971001 Software",
-    "access_right": "open",
+    "doi": "10.5281/zenodo.10532424",
+    "description": "Course material for a ~4+4 hours introduction to git (with CI/CD and gitlab), docker and a hint of python.",
+    "keywords": ["git", "docker", "cicd", "gitlab", "containerisation"],
     "license": "cc-by-nc-sa-4.0",
-
-    "title": "971001 Software - Introduction to python, git and docker",
-
-    "keywords": ["git", "docker"]
-
+    "publication_date": "2024-01-19",
+    "title": "ULG Data Science - WS22 971001 Software - Introduction to python, git, and docker",
+    "upload_type": "lesson"
 }

@@ -9,8 +9,23 @@
 
 # Preface
 
-The lecture is over, the notes are sporadically updated.
- 
+Course material for a ~4+4 hours introduction to git (with CI/CD and gitlab), docker and a hint of python.
+
+## Citation
+In case you want to refer to this lecture material, use the following BibTex snippet:
+```Bibtex
+@misc{pgd2024,
+    doi = {10.5281/zenodo.10532424},
+    url = {https://kandolfp.github.io/ws22-ulg-python-git-docker/},
+    author = {Kandolf, Peter},
+    keywords = {FOS: Mathematics},
+    language = {en},
+    title = {ULG Data Science - WS22 971001 Software - Introduction to python, git, and docker},
+    year = {2024},
+    copyright = {Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International}
+}
+```
+or use [CITATION.cff](CITATION.cff).
 
 # Getting started 
 
