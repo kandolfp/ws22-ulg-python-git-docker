@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
+   <link rel="stylesheet" href="/ws22-ulg-python-git-docker/libs/highlight/github.min.css">
+   
+    <script src="/ws22-ulg-python-git-docker/libs/clipboard.min.js"></script>
   
   
   <script src="/ws22-ulg-python-git-docker/libs/plotly-1_58_5.min.js"></script> 
@@ -103,10 +106,23 @@
 <div class="franklin-content"><h1 id="971001_software_-_introduction_to_python_git_and_docker"><a href="#971001_software_-_introduction_to_python_git_and_docker" class="header-anchor">971001 Software - Introduction to python, git and docker</a></h1>
 
 <p class="author"><em>Peter Kandolf <a href='https://orcid.org/0000-0003-3601-0852' class='ORCID'></a></em></p>
-<p class="date"><em>Last updated: January 15, 2024</em></p>
+<p class="date"><em>Last updated: January 19, 2024</em></p>
 
 <h1 id="preface"><a href="#preface" class="header-anchor">Preface</a></h1>
-<p>The lecture is over, the notes are sporadically updated.</p>
+<p>Course material for a ~4&#43;4 hours introduction to git &#40;with CI/CD and gitlab&#41;, docker and a hint of python.</p>
+<h2 id="citation"><a href="#citation" class="header-anchor">Citation</a></h2>
+<p>In case you want to refer to this lecture material, use the following BibTex snippet:</p>
+<pre><code class="language-Bibtex">@misc&#123;pgd2024,
+    doi &#61; &#123;10.5281/zenodo.10532424&#125;,
+    url &#61; &#123;https://kandolfp.github.io/ws22-ulg-python-git-docker/&#125;,
+    author &#61; &#123;Kandolf, Peter&#125;,
+    keywords &#61; &#123;FOS: Mathematics&#125;,
+    language &#61; &#123;en&#125;,
+    title &#61; &#123;ULG Data Science - WS22 971001 Software - Introduction to python, git, and docker&#125;,
+    year &#61; &#123;2024&#125;,
+    copyright &#61; &#123;Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International&#125;
+&#125;</code></pre>
+<p>or use <a href="CITATION.cff">CITATION.cff</a>.</p>
 <h1 id="getting_started"><a href="#getting_started" class="header-anchor">Getting started </a></h1>
 <h2 id="acknowledgment"><a href="#acknowledgment" class="header-anchor">Acknowledgment</a></h2>
 <p>We want to thank the open source community for providing excellent tutorial and guides for Python, Git, and Docker on the web. Individual sources are cited at the appropriate spot.  We also want to thank Elias Tappeiner from the Department of <em>Biomedizinische Bildanalyse UMIT, Hall in Tirol, Österreich</em> for his slides on Git and Mirjam Ziselsberger for trying, checking, suggestions and additional material in the CI/CD section.</p>
@@ -133,7 +149,7 @@
 
 <p>That is about all we wanted to let you know, so let us get into it.</p>
 <div class="page-foot">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>  <a href="https://orcid.org/0000-0003-3601-0852">Peter Kandolf</a>. Last modified: January 15, 2024.
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>  <a href="https://orcid.org/0000-0003-3601-0852">Peter Kandolf</a>. Last modified: January 19, 2024.
     Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
 </div>
 </div><!-- CONTENT ENDS HERE -->
@@ -141,6 +157,69 @@
     </div> <!-- end of class main-content-wrap -->
     </div> <!-- end of class page-wrap-->
     
+    
+      <script src="/ws22-ulg-python-git-docker/libs/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();hljs.configure({tabReplace: '    '});</script>
+
+      <script>
+    (function(){
+    
+      // Get the elements.
+      // - the 'pre' element.
+      // - the 'div' with the 'paste-content' id.
+    
+      var pre = document.getElementsByTagName('pre');
+    
+      // Add a copy button in the 'pre' element.
+      // which only has the className of 'language-'.
+    
+      for (var i = 0; i < pre.length; i++) {
+        var isLanguage = pre[i].children[0].tagName == 'CODE';
+    
+        if ( isLanguage ) {
+          var button           = document.createElement('button');
+              button.className = 'copy-button';
+              button.textContent = 'Copy';
+    
+              pre[i].appendChild(button);
+        }
+      };
+    
+      // Run Clipboard
+    
+      var copyCode = new Clipboard('.copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+    
+      // On success:
+      // - Change the "Copy" text to "Copied".
+      // - Swap it to "Copy" in 2s.
+      // - Lead user to the "contenteditable" area with Velocity scroll.
+    
+      copyCode.on('success', function(event) {
+        event.clearSelection();
+        event.trigger.textContent = 'Copied';
+        window.setTimeout(function() {
+          event.trigger.textContent = 'Copy';
+        }, 2000);
+    
+      });
+    
+      // On error (Safari):
+      // - Change the  "Press Ctrl+C to copy"
+      // - Swap it to "Copy" in 2s.
+    
+      copyCode.on('error', function(event) {
+        event.trigger.textContent = 'Press "Ctrl + C" to copy';
+        window.setTimeout(function() {
+          event.trigger.textContent = 'Copy';
+        }, 5000);
+      });
+    
+    })();
+</script>
     
   </body>
 </html>
